@@ -9,7 +9,7 @@ function page() {
   return <div>
       <div className=" px-[10px] lg:px-[65px] py-4 ">
         <div className="relative">
-          <Image className="w-full h-[250px] rounded-lg flex" src="/freekundli2.jpg" alt="Icon" width={400} height={400} />
+          <Image className="w-full h-[250px] rounded-lg flex" src="/Freekundli.jpg" alt="Icon" width={400} height={400} />
           <h2 className="absolute top-1/2 left-2/3 transform -translate-x-1/2
                    -translate-y-1/2 text-yellow-300 text-[50px] font-heading font-bold
                    [text-shadow:_1px_1px_0_black,_-1px_1px_0_black,_1px_-1px_0_black,_-1px_-1px_0_black]">
