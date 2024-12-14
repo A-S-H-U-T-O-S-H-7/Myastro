@@ -93,7 +93,7 @@ const Navbar = () => {
               Kundli <RiArrowDropDownLine size={30} />
             </span>
             {isKundliDropdown && (
-              <ul className="absolute top-full bg-white border border-gray-400 rounded shadow-md w-[140px]">
+              <ul className="absolute top-full bg-white border border-gray-400 rounded shadow-md w-[150px]">
                 {/* Dropdown Options */}
                 {[
                   { name: "Free Kundli", href: "/horoscope/free-kundli" },
