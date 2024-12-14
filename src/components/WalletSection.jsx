@@ -10,8 +10,10 @@ const WalletSection = () => {
 
   return (
     <div className='px-[10px] lg:px-[65px] py-4 gap-3'>
+      
       <h3 className="text-lg font-bold">Wallet Balance: <span className='text-green-800 '>₹0.00</span> </h3>
-      <h3 className="text-xl font-bold mt-4">Recharge Options</h3>
+
+       <h3 className="text-xl font-bold mt-4">Recharge Options</h3>
       <p className="text-sm text-gray-500 mb-4">
         Minimum 5 min chat/ call balance is required
       </p>

@@ -5,12 +5,12 @@ import Image from "next/image";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { LuWallet } from "react-icons/lu";
 import { FaRupeeSign } from "react-icons/fa";
-import UserSignup from "./UserSignup";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for side-slider menu
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for Horoscope dropdown
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
   const [isProfileOpen, setProfileOpen] = useState(false);
+  const [isKundliDropdown,setIskundiDropdown] = useState(false);
 
 
 
@@ -55,17 +55,17 @@ const Navbar = () => {
               Horoscope <RiArrowDropDownLine size={30} />
             </span>
             {isDropdownOpen && (
-              <ul className="absolute top-full mt-1 bg-white border border-gray-400 rounded shadow-md w-[180px]">
+              <ul className="absolute top-full bg-white border border-gray-400 rounded shadow-md w-[180px]">
                 {/* Dropdown Options */}
                 {[
-                  { name: "Horoscope 2024!", href: "/horoscope/daily" },
-                  { name: "Daily Horoscope", href: "/horoscope/monthly" },
-                  { name: "Today's Horoscope", href: "/horoscope/yearly" },
-                  { name: "Weekly Horoscope", href: "/horoscope/yearly" },
-                  { name: "Monthly Horoscope", href: "/horoscope/yearly" },
-                  { name: "Yearly Horoscope", href: "/horoscope/yearly" },
-                  { name: "Yesterday Horoscope", href: "/horoscope/yearly" },
-                  { name: "Tomorrow Horoscope", href: "/horoscope/yearly" },
+                  { name: "Horoscope 2024!", href: "/horoscope/horoscope-2024" },
+                  { name: "Daily Horoscope", href: "/horoscope/daily-horoscope" },
+                  { name: "Today's Horoscope", href: "/horoscope/todays-horoscope" },
+                  { name: "Weekly Horoscope", href: "/horoscope/weekly-horoscope" },
+                  { name: "Monthly Horoscope", href: "/horoscope/monthly-horoscope" },
+                  { name: "Yearly Horoscope", href: "/horoscope/yearly-horoscope" },
+                  { name: "Yesterday Horoscope", href: "/horoscope/yesterdays-horoscope" },
+                  { name: "Tomorrow Horoscope", href: "/horoscope/tomorrows-horoscope" },
                 ].map((item, index) => (
                   <li
                     key={index}
@@ -77,14 +77,41 @@ const Navbar = () => {
               </ul>
             )}
           </li>
+
           {/* Additional Links */}
           <li className="font-hansenG px-4 py-[4px] leading-6 text-[#212529] font-bold mb-1">
             <Link className="hover:text-[#EE8722]" href="/astrologers">Astrologers</Link>
           </li>
-          <li className="font-hansenG px-4 py-[4px] leading-6 text-[#212529] font-bold mb-1">
-            <Link className="hover:text-[#EE8722] " href="/about">Kundli</Link>
+
+
+          <li
+            className="font-hansenG px-4 py-[4px] leading-6 text-[#212529] font-bold mb-1 relative"
+            onMouseEnter={() => setIskundiDropdown(true)}
+            onMouseLeave={() => setIskundiDropdown(false)}
+          >
+            <span className="cursor-pointer hover:text-[#EE8722] flex items-center">
+              Kundli <RiArrowDropDownLine size={30} />
+            </span>
+            {isKundliDropdown && (
+              <ul className="absolute top-full bg-white border border-gray-400 rounded shadow-md w-[140px]">
+                {/* Dropdown Options */}
+                {[
+                  { name: "Free Kundli", href: "/horoscope/free-kundli" },
+                  { name: "Kundli Matching", href: "/horoscope/daily-horoscope" },
+                 
+                ].map((item, index) => (
+                  <li
+                    key={index}
+                    className="px-4 py-2 hover:bg-gray-100 text-sm"
+                  >
+                    <Link href={item.href}>{item.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
-          <li className="font-hansenG px-4 py-[4px] leading-6 text-[#212529] font-bold mb-1">
+
+           <li className="font-hansenG px-4 py-[4px] leading-6 text-[#212529] font-bold mb-1">
             <Link className="hover:text-[#EE8722]" href="/services">Blogs</Link>
           </li>
           <li>

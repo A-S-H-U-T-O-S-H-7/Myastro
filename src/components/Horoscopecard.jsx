@@ -1,0 +1,37 @@
+import React from "react";
+import Image from "next/image";
+
+function Horoscopecard() {
+  return (
+    <div>
+      <div className="max-w-[520px] bg-purple-200 transition-transform 
+      duration-700 ease-out hover:scale-105 hover:shadow-xl hover:shadow-violet-800 justify-around border-[1px]
+       py-[20px] px-[5px] border-purple-400 rounded-md gap-3 flex flex-wrap ">
+
+        <div className="w-[120px] h-[100px] rounded-full overflow-hidden flex justify-center ">
+          <Image
+            src="/Aries.jpg"
+            alt="zodiacsign"
+            width={100}
+            height={100}
+          />
+        </div>
+
+        <div className="text-center max-w-[302px]  px-2 ">
+          <h3 className="font-heading font-semibold text-xl mb-1">
+            Aries Today's Horoscope
+          </h3>
+          <p className="text-[#666666] mb-2">
+            Aries is the first sign of the zodiac and is represented by the ram.
+            Individuals
+          </p>
+          <button className="text-xs rounded-[5px] px-4 py-[5px] text-white bg-purple-800">
+            More...
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Horoscopecard;
