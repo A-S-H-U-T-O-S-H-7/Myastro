@@ -1,13 +1,16 @@
+"use client"
 import Image from "next/image";
 import { LuPhoneCall } from "react-icons/lu";
 import { IoChatbox } from "react-icons/io5";
-
-
-
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const AstrologerCard = () => {
+  const pathname = usePathname();
+
   return (
-    <div className="min-w-[365px] h-[174px] px-[16px] py-[8px] bg-white hover:shadow-2xl transition-shadow duration-300 shadow-md hover:shadow-[#542875] rounded-lg flex border ">
+<Link href="/best-astrologer">
+    <div className="min-w-[360px] h-[174px] px-[12px] py-[8px] bg-white hover:shadow-2xl transition-shadow duration-300 shadow-md hover:shadow-[#542875] rounded-lg flex border ">
 
 
 
@@ -29,7 +32,7 @@ const AstrologerCard = () => {
       </div>
 
       {/* Right Column */}
-      <div className="ml-4 flex flex-col justify-between">
+      <div className="ml-4 flex flex-col w-full justify-between">
         {/* Astrologer Details */}
         <div>
           <h3 className="text-xl font-bold text-[#3C0184] font-heading">Ashutosh</h3>
@@ -43,19 +46,24 @@ const AstrologerCard = () => {
             <span className="line-through text-gray-400">₹100/min</span>
           </p>
           <div className="flex gap-2 mt-2">
-            <button className="px-1 font-semibold py-2 gap-2 border hover:bg-[#542875] hover:text-white hover:border-[#3C0184] border-[#3C0184] text-[#3C0184] text-xs flex items-center rounded-md">
-              <LuPhoneCall size={15}/>
-              Call Now
-            </button>
-            <button className="px-1 font-semibold py-2 gap-2 border hover:bg-[#317F7F] hover:text-white hover:border-[#317F7F] border-[#317F7F] text-[#317F7F] text-xs flex items-center rounded-md">
-            <IoChatbox size={15} />
-
-              Chat Now
-            </button>
+          {pathname !== "/chat-with-astrologer" && (
+              <button className="px-1 w-full justify-center font-semibold py-2 gap-2 border hover:bg-[#542875] hover:text-white hover:border-[#3C0184] border-[#3C0184] text-[#3C0184] text-xs flex items-center rounded-md">
+                <LuPhoneCall size={15} />
+                Call Now
+              </button>
+            )}
+            {/* Hide "Chat Now" button on /call-with-astrologer */}
+            {pathname !== "/talk-to-astrologer" && (
+              <button className="px-1  w-full justify-center font-semibold  py-2 gap-2 border hover:bg-[#317F7F] hover:text-white hover:border-[#317F7F] border-[#317F7F] text-[#317F7F] text-xs flex items-center rounded-md">
+                <IoChatbox size={15} />
+                Chat Now
+              </button>
+            )}
           </div>
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 

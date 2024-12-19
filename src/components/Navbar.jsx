@@ -97,7 +97,7 @@ const Navbar = () => {
                 {/* Dropdown Options */}
                 {[
                   { name: "Free Kundli", href: "/horoscope/free-kundli" },
-                  { name: "Kundli Matching", href: "/horoscope/daily-horoscope" },
+                  { name: "Kundli Matching", href: "/kundli-matching" },
                  
                 ].map((item, index) => (
                   <li
@@ -115,16 +115,18 @@ const Navbar = () => {
             <Link className="hover:text-[#EE8722]" href="/services">Blogs</Link>
           </li>
           <li>
+          <Link href="/userlogin">
        <button className="bg-[#396b6b] items-center text-white flex gap-[10px] px-4 py-2 rounded-md">
               Sign in <Image src="/signinicon.svg" width={20} height={20}/>
             </button>
+            </Link>
        </li>
 
         </ul>
 <div className="flex items-center gap-3">
  {/* Wallet Section */}
  <div className="flex sm:visible items-center">
- <Link href="/Wallet"><LuWallet
+ <Link href="/user/wallet"><LuWallet
    className="mr-2 ml-5 cursor-pointer text-[#585866]"
    size={20}
  /></Link>
@@ -141,7 +143,7 @@ const Navbar = () => {
    width={24}
    height={24}
  /> </Link>
- <Link href="/UserProfile">
+ <Link href="/user/userProfile">
  <p className="hidden  md:block text-[#212529]  cursor-pointer text-sm">Ashutosh</p></Link>
  <div className="relative">
    <RiArrowDropDownLine
@@ -246,9 +248,11 @@ const Navbar = () => {
             )}
           </li>
           <li>
+            <Link href="/userlogin">
             <button className="bg-[#396b6b] text-white flex gap-[10px] px-4 py-2 rounded-md">
               Sign in
             </button>
+            </Link>
           </li>
           </div>
         </ul>

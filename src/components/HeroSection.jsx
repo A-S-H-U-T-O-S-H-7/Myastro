@@ -1,6 +1,7 @@
 "use client";
 import { React, useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = () => {
   const phrases = [
@@ -58,6 +59,7 @@ const HeroSection = () => {
             </div>
 
             <div className="hidden lg:flex gap-7 py-10">
+            <Link href="/talk-to-astrologer" >
               <button
                 className="p-4 bg-[#FF9900] text-white max-w-[247px] flex rounded-[10px]"
                 type="button"
@@ -71,6 +73,9 @@ const HeroSection = () => {
                 />
                 Talk to Astrologer
               </button>
+              </Link>
+
+              <Link href="/chat-with-astrologer">
               <button
                 className="p-4 bg-[#317F7F] text-white max-w-[247px] flex rounded-[10px]"
                 type="button"
@@ -84,16 +89,18 @@ const HeroSection = () => {
                 />
                 Chat with Astrologer
               </button>
+              </Link>
             </div>
           </div>
         </div>
 
         <div className="lg:hidden flex gap-4 md:gap-7 py-6 md:py-8">
+        <Link href="/talk-to-astrologer" >
           <button
             className="p-3 bg-[#FF9900] text-white w-full flex items-center  justify-center rounded-[10px]"
             type="button"
           >
-            <Image
+           <Image
               className="pr-3"
               src="/call_white.svg"
               alt="Icon"
@@ -102,6 +109,9 @@ const HeroSection = () => {
             />
             Talk to Astrologer
           </button>
+          </Link>
+
+          <Link href="/chat-with-astrologer">
           <button
             className="p-3 bg-[#317F7F] w-full text-white items-center justify-center flex rounded-[10px]"
             type="button"
@@ -115,6 +125,7 @@ const HeroSection = () => {
             />
             Chat with Astrologer
           </button>
+          </Link>
         </div>
       </div>
     </div>

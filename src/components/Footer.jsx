@@ -44,6 +44,9 @@ const Footer = () => {
             <li className="text-sm text-[#d3d4d4]">
               <Link href="/horoscope/daily">Free Kundli</Link>
             </li>
+            <li className="text-sm text-[#d3d4d4]">
+              <Link href="/astrologer/login">Astrologer Registration</Link>
+            </li>
           </ul>
         </div>
 

@@ -4,6 +4,7 @@ import RecomendedAstro from '@/components/RecomendedAstro'
 import CallchatReusable from '@/components/CallchatReusable'
 import FAQ from '@/components/FAQ'
 import Freekundli from '@/components/Freekundli'
+import IndivisualAstrologer from '@/components/IndivisualAstrologer'
 
 function page() {
   return <div>

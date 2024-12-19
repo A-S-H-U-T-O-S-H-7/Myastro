@@ -125,7 +125,7 @@ const UserProfileInput = () => {
         {/* Wallet section */}
         <div className="bg-teal-100 min-h-[72px] flex justify-between  items-center px-2">
           <div className="w-[140px] flex gap-6 items-center">
-            <Link href="/Wallet">
+            <Link href="/user/wallet">
               <LuWallet className="bg-teal-200 p-2 cursor-pointer rounded-[6px] text-teal-800" size={36} />
             </Link>
             <div>
@@ -134,7 +134,7 @@ const UserProfileInput = () => {
             </div>
           </div>
 
-          <Link href="/Wallet">
+          <Link href="/user/wallet">
             <div className="min-w-[125px] flex gap-2 rounded-[6px] items-center px-4 h-[35px] bg-teal-800">
               <LuWallet className=" cursor-pointer text-white" size={20} />
               <p className="text-white">Recharge</p>
