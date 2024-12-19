@@ -54,9 +54,9 @@ export default function AstrologerLogin() {
         {/* Sign Up */}
         <p className="text-center mt-6 text-gray-600">
           Don't have an account?{" "}
-          <a href="/astrologer/registration" className="text-purple-500 underline">
+          <p className="text-purple-500 underline">
             Sign Up
-          </a>
+          </p>
         </p>
       </div>
     </div>
