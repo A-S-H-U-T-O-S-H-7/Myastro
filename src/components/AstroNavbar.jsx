@@ -54,7 +54,7 @@ const AstroNavbar = () => {
                   Sortby
                 </li>
                 <li className="px-4 py-2 text-sm hover:bg-gray-100">
-                  Exp: Lowto High
+                  Exp: Low to High
                 </li>
                 <li className="px-4 py-2  text-sm hover:bg-gray-100">
                   Exp: High to Low
