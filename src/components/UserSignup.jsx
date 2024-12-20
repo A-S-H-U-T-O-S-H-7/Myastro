@@ -1,6 +1,5 @@
 "use client";
 
-<<<<<<< HEAD
 import { showlodaer, loginSuccess, hidelodaer } from "@/redux/slices/userSlice";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -87,74 +86,24 @@ console.log(popup)
 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, "");
-=======
-import React, { useState, useEffect } from "react";
-
-const UserSignup = () => {
-  const [showPopup, setShowPopup] = useState(true); // Toggle popup visibility
-  const [step, setStep] = useState("login"); // Step state: 'login' or 'verify'
-  const [timeLeft, setTimeLeft] = useState(60); // Timer state for OTP resend
-  const [phoneNumber, setPhoneNumber] = useState(""); // State for phone number
-  const [otp, setOtp] = useState(new Array(6).fill("")); // State for OTP
-
-  // Handle closing the popup
-  const closePopup = () => setShowPopup(false);
-
-  // Handle OTP button click
-  const handleGetOtp = (e) => {
-    e.preventDefault();
-    if (phoneNumber.length === 10) {
-      setStep("verify");
-      setTimeLeft(60); // Reset timer for resend
-    } else {
-      alert("Please enter a valid 10-digit phone number.");
-    }
-  };
-
-  // Handle timer countdown
-  useEffect(() => {
-    if (step === "verify" && timeLeft > 0) {
-      const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-      return () => clearInterval(timer); // Cleanup on unmount
-    }
-  }, [step, timeLeft]);
-
-  // Handle phone number input change
-  const handlePhoneChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ""); // Only allow digits
->>>>>>> 3b3788d3aa9b7a9314d0b902fa80e405dd5a6bf6
     if (value.length <= 10) {
       setPhoneNumber(value);
     }
   };
 
-<<<<<<< HEAD
   const handleOtpChange = (element, index) => {
     const value = element.value.replace(/\D/g, "");
-=======
-  // Handle OTP input change
-  const handleOtpChange = (element, index) => {
-    const value = element.value.replace(/\D/g, ""); // Only allow digits
->>>>>>> 3b3788d3aa9b7a9314d0b902fa80e405dd5a6bf6
     if (value.length <= 1) {
       const updatedOtp = [...otp];
       updatedOtp[index] = value;
       setOtp(updatedOtp);
 
-<<<<<<< HEAD
-=======
-      // Move focus to the next input
->>>>>>> 3b3788d3aa9b7a9314d0b902fa80e405dd5a6bf6
       if (value && index < otp.length - 1) {
         document.getElementById(`otp-${index + 1}`).focus();
       }
     }
   };
 
-<<<<<<< HEAD
-=======
-  // Handle backspace in OTP
->>>>>>> 3b3788d3aa9b7a9314d0b902fa80e405dd5a6bf6
   const handleOtpKeyDown = (e, index) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       document.getElementById(`otp-${index - 1}`).focus();
@@ -163,13 +112,8 @@ const UserSignup = () => {
 
   return (
     <>
-<<<<<<< HEAD
       {popup && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-[100]">
-=======
-      {showPopup && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
->>>>>>> 3b3788d3aa9b7a9314d0b902fa80e405dd5a6bf6
           {/* Popup container */}
           <div className="relative bg-white w-full max-w-md rounded-lg shadow-lg p-6">
             {/* Close Button */}
@@ -213,7 +157,6 @@ const UserSignup = () => {
                     onChange={handlePhoneChange}
                     placeholder="Enter your mobile number"
                     className="flex-1 px-3 py-2 focus:outline-none "
-<<<<<<< HEAD
                   />
 
                 </div>
@@ -224,18 +167,6 @@ const UserSignup = () => {
                   className="w-full bg-[#9b57ed] text-white py-2 mt-8 rounded-md text-lg text-center font-medium hover:bg-[#723fb1] transition"
                 >
                  {loading?(  <span>Wait...</span>):( <span>GET OTP</span>)}
-=======
-                    required
-                  />
-                </div>
-
-                {/* GET OTP Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-[#9b57ed] text-white py-2 rounded-md text-lg font-medium hover:bg-[#723fb1] transition"
-                >
-                  GET OTP
->>>>>>> 3b3788d3aa9b7a9314d0b902fa80e405dd5a6bf6
                 </button>
               </form>
             ) : (
@@ -277,17 +208,11 @@ const UserSignup = () => {
                 {/* Verify Button */}
                 <button
                   type="button"
-<<<<<<< HEAD
                   onClick={(e) => { handleSubmitOtp(e) }}
                   className="w-full bg-[#9b57ed] text-white py-2 rounded-md text-lg font-medium hover:bg-[#6c3aa9] transition mt-10"
                 >
                   {loading?(  <div class="h-12 w-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>):( <span>Verify</span>)}
                   
-=======
-                  className="w-full bg-[#9b57ed] text-white py-2 rounded-md text-lg font-medium hover:bg-[#6c3aa9] transition mt-10"
-                >
-                  Verify
->>>>>>> 3b3788d3aa9b7a9314d0b902fa80e405dd5a6bf6
                 </button>
               </div>
             )}
