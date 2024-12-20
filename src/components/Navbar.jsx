@@ -117,7 +117,7 @@ const Navbar = () => {
           <li>
           <Link href="/userlogin">
        <button className="bg-[#396b6b] items-center text-white flex gap-[10px] px-4 py-2 rounded-md">
-              Sign in <Image src="/signinicon.svg" width={20} height={20}/>
+              Sign up <Image src="/signinicon.svg" width={20} height={20}/>
             </button>
             </Link>
        </li>
