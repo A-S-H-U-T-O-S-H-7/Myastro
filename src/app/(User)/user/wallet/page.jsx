@@ -1,6 +1,5 @@
 import WalletSection from '@/components/WalletSection'
 import React from 'react'
-import AstrologerForm from '@/components/AstrologerRegistration'
 
 const page = () => {
   return (
