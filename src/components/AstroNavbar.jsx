@@ -51,7 +51,7 @@ const AstroNavbar = () => {
             {sortIsOpen && (
               <ul className="absolute top-full mt-1 bg-white border border-gray-300 rounded shadow-md w-40">
                 <li className="px-4 py-2 bg-[#C8A2C8] text-white">
-                  Sortby
+                  Sort by
                 </li>
                 <li className="px-4 py-2 text-sm hover:bg-gray-100">
                   Exp: Low to High
