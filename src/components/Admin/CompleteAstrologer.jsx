@@ -7,79 +7,80 @@ import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
 
 
-
-const ManageTransection = () => {
+const CompleteAstrologer = () => {
   const [data, setData] = useState([
     {
+      photo: "/user1.jpg",
       name: "John Doe",
       walletAmount: 100,
-      orderId:"order_PXU6qsnGBo9V6Q",
+      gender: "Male",
       phone: "123-456-7890",
-      paymentId: "pay_PWivJDMZzDHtM",
+      email: "john.doe@example.com",
       date: "2024-01-01",
-      status:"success"
     },
     {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
+      photo: "/user2.jpg",
+      name: "Jane Smith",
+      walletAmount: 700,
+      gender: "Female",
+      phone: "987-654-3210",
+      email: "jane.smith@example.com",
+      date: "2024-02-15",
+    },
+    {
+        photo: "/user2.jpg",
+        name: "Jane Smith",
+        walletAmount: 200,
+        gender: "Female",
+        phone: "987-654-3210",
+        email: "jane.smith@example.com",
+        date: "2024-02-15",
       },
       {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
+        photo: "/user2.jpg",
+        name: "Jane Smith",
+        walletAmount: 900,
+        gender: "Female",
+        phone: "987-654-3210",
+        email: "jane.smith@example.com",
+        date: "2024-02-15",
       },
       {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 300,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
+        photo: "/user2.jpg",
+        name: "Jane Smith",
+        walletAmount: 500,
+        gender: "Female",
+        phone: "987-654-3210",
+        email: "jane.smith@example.com",
+        date: "2024-02-15",
       },
       {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 600,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-02",
-        status:"success"
+        photo: "/user2.jpg",
+        name: "Jane Smith",
+        walletAmount: 500,
+        gender: "Female",
+        phone: "987-654-3210",
+        email: "jane.smith@example.com",
+        date: "2024-02-15",
       },
       {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
+        photo: "/user2.jpg",
+        name: "Jane Smith",
+        walletAmount: 500,
+        gender: "Female",
+        phone: "987-654-3210",
+        email: "jane.smith@example.com",
+        date: "2024-02-15",
       },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
-      },
-    
+       {
+      photo: "/user2.jpg",
+      name: "Jane Smith",
+      walletAmount: 500,
+      gender: "Female",
+      phone: "987-654-3210",
+      email: "jane.smith@example.com",
+      date: "2024-02-15",
+    },
     // Add more sample data as needed
   ]);
   const [resultsPerPage, setResultsPerPage] = useState(10);
@@ -89,7 +90,6 @@ const ManageTransection = () => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
 
   // Memoized filtered data
   const filteredData = useMemo(() => {
@@ -139,24 +139,25 @@ const ManageTransection = () => {
 
   const totalPages = Math.ceil(filteredData.length / resultsPerPage);
 
+
   return (
     <div>
-    <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Transactions</h1>
-  <div className=" m-[15px] border border-[#22c7d5] rounded-[8px] ml-[120px]">
+  <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Complete Astrologers</h1>
+    <div className=" m-[15px] border border-[#22c7d5] rounded-[8px] ml-[120px]">
     <div className="p-4 bg-[#0e1726]  text-[#888ea8] rounded-lg shadow-md">
       {/* Top Section */}
       <div className="flex justify-between items-center mb-4">
       <DateFilter onFilter={(dates) => handleDateFilter(dates)} />
 
-<div className="flex items-center gap-6">
- <ResultsSelector
-   resultsPerPage={resultsPerPage}
-   onChange={(e) => setResultsPerPage(Number(e.target.value))}
- />
- <SearchBox searchTerm={searchTerm} onSearchChange={handleSearch} />
- </div>
-
+           <div className="flex items-center gap-6">
+            <ResultsSelector
+              resultsPerPage={resultsPerPage}
+              onChange={(e) => setResultsPerPage(Number(e.target.value))}
+            />
+            <SearchBox searchTerm={searchTerm} onSearchChange={handleSearch} />
+            </div>
       </div>
+      
 
       {/* Table */}
       <div className="overflow-x-auto">
@@ -176,26 +177,11 @@ const ManageTransection = () => {
                   )
                 )}
               </th>
+              <th className="px-4 py-2">Call</th>
+              <th className="px-4 py-2">Photo</th>
               <th className="px-4 py-2">Name</th>
-              
+              <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Phone</th>
-
-              <th className="px-4 py-2">Order Id</th>
-              <th className="px-4 py-2">Payment Id</th>
-              <th
-                className="px-4 py-2 cursor-pointer"
-                onClick={() => handleSort("walletAmount")}
-              >
-                Amount
-                {sortColumn === "walletAmount" && (
-                  sortDirection === "asc" ? (
-                    <FaArrowUp className="inline ml-2 text-green-500" />
-                  ) : (
-                    <FaArrowDown className="inline ml-2 text-red-500" />
-                  )
-                )}
-              </th>
-
               <th
                 className="px-4 py-2 cursor-pointer"
                 onClick={() => handleSort("date")}
@@ -210,6 +196,8 @@ const ManageTransection = () => {
                 )}
               </th>
               <th className="px-4 py-2">Status</th>
+
+              <th className="px-4 py-2">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -219,18 +207,22 @@ const ManageTransection = () => {
                 className="hover:bg-[#1e2737] transition-colors"
               >
                 <td className="px-4 py-2 text-center">{index + 1}</td>
-                <td className="px-4 text-centerr py-2">{item.name}</td>
-                <td className="px-4 text-center py-2">{item.phone}</td>
-
-                <td className="px-4 text-center py-2">{item.orderId}</td>
-                <td className="px-4 text-cneter py-2">{item.paymentId}</td>
-
-                <td className="px-4   py-2 text-center">{item.walletAmount}</td>
-
-                <td className="px-4 py-2 text-center">{item.date}</td>
-                <td className="px-4 py-2 text-center">{item.status}</td>
-
                 
+                <td className="px-4 text-center py-2">
+                    <FaPen className="text-blue-500  cursor-pointer" /></td>
+                    <td className="px-4 py-2 text-center">
+                  <img src={item.photo} alt="User" className="w-10 h-10 rounded-full mx-auto" />
+                </td>
+                    <td className="px-4 text-center py-2">{item.name}</td>
+                    <td className="px-4 text-center py-2">{item.email}</td>
+                    <td className="px-4 text-center py-2">{item.phone}</td>
+                    <td className="px-4 py-2 text-center">{item.date}</td>
+                    <td className="px-4 py-2 text-center">{item.status}</td>
+
+                <td className="px-4 py-2 flex justify-center gap-2">
+                  <FaPen className="text-blue-500 cursor-pointer" />
+                  <FaTrash className="text-red-500 cursor-pointer" />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -256,7 +248,7 @@ const ManageTransection = () => {
               className={`px-3 py-1 rounded-md ${
                 currentPage === i + 1
                   ? "bg-[#22c7d5] text-white"
-                  : "bg-[#1e2737] text-[#888ea8] hover:bg-[#2d3747]"
+                  : "bg-[#1e2737] text-[#22c7d5] hover:bg-[#2d3747]"
               }`}
               onClick={() => setCurrentPage(i + 1)}
             >
@@ -278,4 +270,4 @@ const ManageTransection = () => {
   );
 };
 
-export default ManageTransection;
+export default CompleteAstrologer;

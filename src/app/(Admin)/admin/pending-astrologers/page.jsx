@@ -1,12 +1,10 @@
-
-import Manageuser from '@/components/Admin/Manageuser'
+import PendingAstrologer from '@/components/Admin/PendingAstrologer'
 import React from 'react'
-
 
 function page() {
   return (
     <div>
-    <Manageuser/>
+      <PendingAstrologer/>
     </div>
   )
 }

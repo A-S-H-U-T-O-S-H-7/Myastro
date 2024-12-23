@@ -1,7 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import ResultsSelector from "./ResultSelector";
+import SearchBox from "./SearchBox";
+import DateFilter from "./DateFilter";
+
+
 
 const ChatReport = () => {
   const [data, setData] = useState([
@@ -80,31 +85,56 @@ const ChatReport = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState("srno");
   const [sortDirection, setSortDirection] = useState("asc");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-  useEffect(() => {
-    handleSort("srno"); // Default sorting by SR No. in ascending order
-  }, []);
+ // Memoized filtered data
+ const filteredData = useMemo(() => {
+  return data
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        String(value).toLowerCase().includes(searchTerm)
+      )
+    )
+    .filter((item) => {
+      if (!startDate && !endDate) return true;
+      const itemDate = new Date(item.date);
+      const start = startDate ? new Date(startDate) : null;
+      const end = endDate ? new Date(endDate) : null;
 
-  const totalPages = Math.ceil(data.length / resultsPerPage);
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value.toLowerCase());
-  };
-
-  const handleSort = (column) => {
-    const direction = sortColumn === column && sortDirection === "asc" ? "desc" : "asc";
-    setSortColumn(column);
-    setSortDirection(direction);
-
-    const sortedData = [...data].sort((a, b) => {
-      if (a[column] < b[column]) return direction === "asc" ? -1 : 1;
-      if (a[column] > b[column]) return direction === "asc" ? 1 : -1;
-      return 0;
+      return (!start || itemDate >= start) && (!end || itemDate <= end);
     });
+}, [data, searchTerm, startDate, endDate]);
 
-    setData(sortedData);
-  };
+// Memoized paginated data
+const paginatedData = useMemo(() => {
+  const startIndex = (currentPage - 1) * resultsPerPage;
+  return filteredData.slice(startIndex, startIndex + resultsPerPage);
+}, [filteredData, currentPage, resultsPerPage]);
 
+// Sorting logic
+const handleSort = (column) => {
+  const direction =
+    sortColumn === column && sortDirection === "asc" ? "desc" : "asc";
+  setSortColumn(column);
+  setSortDirection(direction);
+
+  const sortedData = [...data].sort((a, b) => {
+    if (a[column] < b[column]) return direction === "asc" ? -1 : 1;
+    if (a[column] > b[column]) return direction === "asc" ? 1 : -1;
+    return 0;
+  });
+  setData(sortedData);
+};
+
+const handleSearch = (event) => setSearchTerm(event.target.value.toLowerCase());
+
+const handleDateFilter = ({ startDate, endDate }) => {
+  setStartDate(startDate);
+  setEndDate(endDate);
+};
+
+const totalPages = Math.ceil(filteredData.length / resultsPerPage);
   const calculateDuration = (start, end) => {
     const [startHour, startMinute] = start.split(/[:\s]/).map(Number);
     const [endHour, endMinute] = end.split(/[:\s]/).map(Number);
@@ -117,43 +147,25 @@ const ChatReport = () => {
     return `${hours}h ${minutes}m`;
   };
 
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      String(value).toLowerCase().includes(searchTerm)
-    )
-  );
-
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * resultsPerPage,
-    currentPage * resultsPerPage
-  );
+ 
 
   return (
-    <div className="m-[15px] ml-[100px]">
+    <div>
+    <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Chats Report</h1>
+  <div className=" m-[15px] border border-[#22c7d5] rounded-[8px] ml-[120px]">
       <div className="p-4 bg-[#0e1726] text-[#888ea8] rounded-lg shadow-md">
         {/* Top Section */}
         <div className="flex justify-between items-center mb-4">
-          <div>
-            <label className="mr-2 text-[#bfc9d4]">Results:</label>
-            <select
-              className="border border-gray-500 bg-[#0e1726] text-[#888ea8] rounded-md px-2 py-1"
-              value={resultsPerPage}
+        <DateFilter onFilter={(dates) => handleDateFilter(dates)} />
+
+           <div className="flex items-center gap-6">
+            <ResultsSelector
+              resultsPerPage={resultsPerPage}
               onChange={(e) => setResultsPerPage(Number(e.target.value))}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-            </select>
-          </div>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="border border-gray-500 bg-[#0e1726] text-[#888ea8] rounded-md px-4 py-2"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </div>
+            />
+            <SearchBox searchTerm={searchTerm} onSearchChange={handleSearch} />
+            </div>
+      </div>
 
         {/* Table */}
         <div className="overflow-x-auto">
@@ -224,12 +236,12 @@ const ChatReport = () => {
 
         {/* Pagination */}
         <div className="flex justify-between items-center mt-4">
-          <span>
-            Showing page {currentPage} of {totalPages}
-          </span>
+        <span className="text-[#22c7d5] border border-[#22c7d5] rounded-[8px] px-4 py-2">
+          Showing page <span className="font-bold font-heading">{currentPage}</span> of <span className="font-bold font-heading">{totalPages}</span>
+        </span>
           <div className="flex items-center gap-2">
             <button
-              className="px-3 py-1 bg-[#1e2737] text-[#888ea8] rounded-md hover:bg-[#2d3747]"
+              className="px-3 py-1 bg-[#1e2737] text-[#22c7d5] rounded-md hover:bg-[#2d3747]"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             >
@@ -240,8 +252,8 @@ const ChatReport = () => {
                 key={i}
                 className={`px-3 py-1 rounded-md ${
                   currentPage === i + 1
-                    ? "bg-green-500 text-white"
-                    : "bg-[#1e2737] text-[#888ea8] hover:bg-[#2d3747]"
+                    ? "bg-[#22c7d5] text-white"
+                    : "bg-[#1e2737] text-[#22c7d5] hover:bg-[#2d3747]"
                 }`}
                 onClick={() => setCurrentPage(i + 1)}
               >
@@ -258,6 +270,7 @@ const ChatReport = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

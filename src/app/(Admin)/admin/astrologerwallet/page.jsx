@@ -1,12 +1,10 @@
-
-import Manageuser from '@/components/Admin/Manageuser'
+import AstrologerWallet from '@/components/Admin/AstrologerWallet'
 import React from 'react'
-
 
 function page() {
   return (
     <div>
-    <Manageuser/>
+      <AstrologerWallet/>
     </div>
   )
 }

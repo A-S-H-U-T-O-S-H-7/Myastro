@@ -1,12 +1,10 @@
-
-import Manageuser from '@/components/Admin/Manageuser'
+import PaymentHistory from '@/components/Admin/PaymentHistory'
 import React from 'react'
-
 
 function page() {
   return (
     <div>
-    <Manageuser/>
+      <PaymentHistory/>
     </div>
   )
 }

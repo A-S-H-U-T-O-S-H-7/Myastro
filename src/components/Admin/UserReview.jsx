@@ -8,80 +8,17 @@ import DateFilter from "./DateFilter";
 
 
 
-const ManageTransection = () => {
-  const [data, setData] = useState([
-    {
-      name: "John Doe",
-      walletAmount: 100,
-      orderId:"order_PXU6qsnGBo9V6Q",
-      phone: "123-456-7890",
-      paymentId: "pay_PWivJDMZzDHtM",
-      date: "2024-01-01",
-      status:"success"
-    },
-    {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
-      },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
-      },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 300,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
-      },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 600,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-02",
-        status:"success"
-      },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
-      },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
-      },
-    
+const UserReview = () => {
+    const [data, setData] = useState([
+        { srNo: 1, date: "2024-12-20", title: "Welcome", message: "Hello User!", user: "John Doe" },
+        { srNo: 2, date: "2024-12-19", title: "Alert", message: "System Update!", user: "Jane Smith" },
+        { srNo: 3, date: "2024-12-18", title: "Notification", message: "New Feature!", user: "Alice Brown" },
+        { srNo: 4, date: "2024-12-17", title: "Reminder", message: "Meeting at 3 PM", user: "Bob White" },
+      ]);
     // Add more sample data as needed
-  ]);
+  
+
+    
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -90,6 +27,17 @@ const ManageTransection = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+
+  const handleEdit = (srNo) => {
+    alert(`Edit action for SR No. ${srNo}`);
+  };
+
+  const handleDelete = (srNo) => {
+    const confirmDelete = confirm(`Are you sure you want to delete SR No. ${srNo}?`);
+    if (confirmDelete) {
+      setData(data.filter((item) => item.srNo !== srNo));
+    }
+  };
 
   // Memoized filtered data
   const filteredData = useMemo(() => {
@@ -141,10 +89,12 @@ const ManageTransection = () => {
 
   return (
     <div>
-    <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Transactions</h1>
+    <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">User Reviews</h1>
   <div className=" m-[15px] border border-[#22c7d5] rounded-[8px] ml-[120px]">
     <div className="p-4 bg-[#0e1726]  text-[#888ea8] rounded-lg shadow-md">
+
       {/* Top Section */}
+
       <div className="flex justify-between items-center mb-4">
       <DateFilter onFilter={(dates) => handleDateFilter(dates)} />
 
@@ -155,7 +105,6 @@ const ManageTransection = () => {
  />
  <SearchBox searchTerm={searchTerm} onSearchChange={handleSearch} />
  </div>
-
       </div>
 
       {/* Table */}
@@ -176,26 +125,11 @@ const ManageTransection = () => {
                   )
                 )}
               </th>
-              <th className="px-4 py-2">Name</th>
-              
-              <th className="px-4 py-2">Phone</th>
-
-              <th className="px-4 py-2">Order Id</th>
-              <th className="px-4 py-2">Payment Id</th>
-              <th
-                className="px-4 py-2 cursor-pointer"
-                onClick={() => handleSort("walletAmount")}
-              >
-                Amount
-                {sortColumn === "walletAmount" && (
-                  sortDirection === "asc" ? (
-                    <FaArrowUp className="inline ml-2 text-green-500" />
-                  ) : (
-                    <FaArrowDown className="inline ml-2 text-red-500" />
-                  )
-                )}
-              </th>
-
+              <th className="px-4 py-2">Photo</th>
+              <th className="px-4 py-2">Astrologer Name</th>
+              <th className="px-4 py-2">User Name</th>
+              <th className="px-4 py-2">Rating</th>
+              <th className="px-4 py-2">Review</th>
               <th
                 className="px-4 py-2 cursor-pointer"
                 onClick={() => handleSort("date")}
@@ -209,7 +143,9 @@ const ManageTransection = () => {
                   )
                 )}
               </th>
-              <th className="px-4 py-2">Status</th>
+              <th className="px-4 py-2">Action</th>
+
+              
             </tr>
           </thead>
           <tbody>
@@ -219,18 +155,33 @@ const ManageTransection = () => {
                 className="hover:bg-[#1e2737] transition-colors"
               >
                 <td className="px-4 py-2 text-center">{index + 1}</td>
-                <td className="px-4 text-centerr py-2">{item.name}</td>
-                <td className="px-4 text-center py-2">{item.phone}</td>
-
-                <td className="px-4 text-center py-2">{item.orderId}</td>
-                <td className="px-4 text-cneter py-2">{item.paymentId}</td>
-
-                <td className="px-4   py-2 text-center">{item.walletAmount}</td>
-
+                <td className="px-4 py-2 text-center">
+                  <img src={item.photo} alt="User" className="w-10 h-10 rounded-full mx-auto" />
+                </td>
+                <td className="px-4 text-center py-2">{item.user}</td>
+                <td className="px-4 text-center py-2">{item.user}</td>
+                <td className="px-4 text-center py-2">{item.rating}</td>
+                <td className="px-4   py-2 text-center">{item.review}</td>
                 <td className="px-4 py-2 text-center">{item.date}</td>
-                <td className="px-4 py-2 text-center">{item.status}</td>
-
+               
+                <td className="px-4 py-2 flex justify-center gap-2">
+                  <button
+                    className="bg-[#22c7d5] flex items-center gap-2 px-[20px] py-[7px] rounded-[6px] text-[11px] text-white text-center"
+                    onClick={() => handleEdit(item.srNo)}
+                  >
+                    <FaPen />
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-500 flex items-center gap-2 px-[20px] py-[7px] rounded-[6px] text-[11px] text-white text-center"
+                    onClick={() => handleDelete(item.srNo)}
+                  >
+                    <FaTrash />
+                    Delete
+                  </button>
                 
+                  
+                </td>
               </tr>
             ))}
           </tbody>
@@ -278,4 +229,4 @@ const ManageTransection = () => {
   );
 };
 
-export default ManageTransection;
+export default UserReview;

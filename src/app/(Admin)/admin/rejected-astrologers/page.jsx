@@ -1,12 +1,10 @@
-
-import Manageuser from '@/components/Admin/Manageuser'
+import RejectedAstrologer from '@/components/Admin/RejectedAstrologer'
 import React from 'react'
-
 
 function page() {
   return (
     <div>
-    <Manageuser/>
+      <RejectedAstrologer/>
     </div>
   )
 }

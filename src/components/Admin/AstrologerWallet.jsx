@@ -1,13 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
-import DateFilter from "./DateFilter";
 
-
-const Manageuser = () => {
+const AstrologerWallet = () => {
   const [data, setData] = useState([
     {
       photo: "/user1.jpg",
@@ -88,80 +86,62 @@ const Manageuser = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState("srno");
   const [sortDirection, setSortDirection] = useState("asc");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
 
-   // Memoized filtered data
-    const filteredData = useMemo(() => {
-      return data
-        .filter((item) =>
-          Object.values(item).some((value) =>
-            String(value).toLowerCase().includes(searchTerm)
-          )
-        )
-        .filter((item) => {
-          if (!startDate && !endDate) return true;
-          const itemDate = new Date(item.date);
-          const start = startDate ? new Date(startDate) : null;
-          const end = endDate ? new Date(endDate) : null;
-  
-          return (!start || itemDate >= start) && (!end || itemDate <= end);
-        });
-    }, [data, searchTerm, startDate, endDate]);
-  
-    // Memoized paginated data
-    const paginatedData = useMemo(() => {
-      const startIndex = (currentPage - 1) * resultsPerPage;
-      return filteredData.slice(startIndex, startIndex + resultsPerPage);
-    }, [filteredData, currentPage, resultsPerPage]);
-  
-    // Sorting logic
-    const handleSort = (column) => {
-      const direction =
-        sortColumn === column && sortDirection === "asc" ? "desc" : "asc";
-      setSortColumn(column);
-      setSortDirection(direction);
-  
-      const sortedData = [...data].sort((a, b) => {
-        if (a[column] < b[column]) return direction === "asc" ? -1 : 1;
-        if (a[column] > b[column]) return direction === "asc" ? 1 : -1;
-        return 0;
-      });
-      setData(sortedData);
-    };
-  
-    const handleSearch = (event) => setSearchTerm(event.target.value.toLowerCase());
-  
-    const handleDateFilter = ({ startDate, endDate }) => {
-      setStartDate(startDate);
-      setEndDate(endDate);
-    };
-  
-    const totalPages = Math.ceil(filteredData.length / resultsPerPage);
-  
+  useEffect(() => {
+    handleSort("srno"); // Default sorting by SR No. in ascending order
+  }, []);
+
+  const totalPages = Math.ceil(data.length / resultsPerPage);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
+
+  const handleSort = (column) => {
+    const direction = sortColumn === column && sortDirection === "asc" ? "desc" : "asc";
+    setSortColumn(column);
+    setSortDirection(direction);
+
+    const sortedData = [...data].sort((a, b) => {
+      if (a[column] < b[column]) return direction === "asc" ? -1 : 1;
+      if (a[column] > b[column]) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setData(sortedData);
+  };
+
+  const filteredData = data.filter((item) =>
+    Object.values(item).some((value) =>
+      String(value).toLowerCase().includes(searchTerm)
+    )
+  );
+
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * resultsPerPage,
+    currentPage * resultsPerPage
+  );
 
   return (
     <div>
-      <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Users</h1>
+      <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Astrologers Wallet</h1>
     <div className=" m-[15px] border border-[#22c7d5] rounded-[8px] ml-[120px]">
     <div className="p-4 bg-[#0e1726]  text-[#888ea8] rounded-lg shadow-md">
       {/* Top Section */}
       <div className="flex justify-between items-center mb-4">
-      <DateFilter onFilter={(dates) => handleDateFilter(dates)} />
-
-           <div className="flex items-center gap-6">
-            <ResultsSelector
-              resultsPerPage={resultsPerPage}
-              onChange={(e) => setResultsPerPage(Number(e.target.value))}
-            />
-            <SearchBox searchTerm={searchTerm} onSearchChange={handleSearch} />
-            </div>
-
+      <ResultsSelector
+            resultsPerPage={resultsPerPage}
+            onChange={(e) => setResultsPerPage(Number(e.target.value))}
+          />
+          <SearchBox
+            searchTerm={searchTerm}
+            onSearchChange={handleSearch}
+          />
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full table-auto border-collapse min-w-[1200px]">
+        <table className="w-full table-auto border-collapse min-w-[1000px]">
           <thead>
             <tr className="bg-gradient-to-r from-[#1e2737] to-[#0e1726] text-[#bfc9d4]">
               <th
@@ -178,7 +158,8 @@ const Manageuser = () => {
                 )}
               </th>
               <th className="px-4 py-2">Photo</th>
-              <th className="px-4 py-2">Name</th>
+              <th className="px-4 py-2">Astrologer</th>
+              <th className="px-4 py-2">Phone</th>
               <th
                 className="px-4 py-2 cursor-pointer"
                 onClick={() => handleSort("walletAmount")}
@@ -192,22 +173,7 @@ const Manageuser = () => {
                   )
                 )}
               </th>
-              <th className="px-4 py-2">Gender</th>
-              <th className="px-4 py-2">Phone</th>
-              <th className="px-4 py-2">Email</th>
-              <th
-                className="px-4 py-2 cursor-pointer"
-                onClick={() => handleSort("date")}
-              >
-                Date
-                {sortColumn === "date" && (
-                  sortDirection === "asc" ? (
-                    <FaArrowUp className="inline ml-2 text-green-500" />
-                  ) : (
-                    <FaArrowDown className="inline ml-2 text-red-500" />
-                  )
-                )}
-              </th>
+              
               <th className="px-4 py-2">Action</th>
             </tr>
           </thead>
@@ -221,15 +187,12 @@ const Manageuser = () => {
                 <td className="px-4 py-2 text-center">
                   <img src={item.photo} alt="User" className="w-10 h-10 rounded-full mx-auto" />
                 </td>
-                <td className="px-4 text-centerr py-2">{item.name}</td>
-                <td className="px-4   py-2 text-center">{item.walletAmount}</td>
-                <td className="px-4 text-center py-2">{item.gender}</td>
+                <td className="px-4 text-center py-2">{item.name}</td>
                 <td className="px-4 text-center py-2">{item.phone}</td>
-                <td className="px-4 text-cneter py-2">{item.email}</td>
-                <td className="px-4 py-2 text-center">{item.date}</td>
-                <td className="px-4 py-4 items-center justify-center text-center flex gap-2">
-                  <FaPen className="text-blue-500 cursor-pointer" />
-                  <FaTrash className="text-red-500 cursor-pointer" />
+
+                <td className="px-4   py-2 text-center">{item.walletAmount}</td>
+                <td className="px-4 py-2 flex justify-center gap-2">
+                 <button className="bg-[#00ab55] px-[20px] py-[7px] rounded-[6px] text-[11px] text-white text-center">Pay Now</button>
                 </td>
               </tr>
             ))}
@@ -278,4 +241,4 @@ const Manageuser = () => {
   );
 };
 
-export default Manageuser;
+export default AstrologerWallet;

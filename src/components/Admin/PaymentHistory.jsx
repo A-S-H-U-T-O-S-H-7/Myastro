@@ -7,79 +7,50 @@ import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
 
 
-
-const ManageTransection = () => {
+const PaymentHistory = () => {
   const [data, setData] = useState([
     {
-      name: "John Doe",
-      walletAmount: 100,
-      orderId:"order_PXU6qsnGBo9V6Q",
-      phone: "123-456-7890",
-      paymentId: "pay_PWivJDMZzDHtM",
-      date: "2024-01-01",
-      status:"success"
-    },
-    {
         photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
+        name: "Ashutosh kumar mohanty",
+        walletAmount: 1000,
+        totalAmount: 500,
+        phone: "9556508941",
         date: "2024-01-01",
-        status:"success"
+        astrologerAmount: 600,
+        astrologerAmountGST: 72,
+        astrologerAmountTDS: 60,
+        myastroAmount: 268,
+        transactionId: "TXN12345-TXN12345",
+        transactionBy: "Credit Card",
       },
       {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
+        photo: "/user2.jpg",
+        name: "Jane Smith",
+        walletAmount: 1500,
+        totalAmount: 500,
+        phone: "987-654-3210",
+        date: "2024-02-15",
+        astrologerAmount: 900,
+        astrologerAmountGST: 108,
+        astrologerAmountTDS: 90,
+        myastroAmount: 402,
+        transactionId: "TXN12346",
+        transactionBy: "UPI",
       },
       {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 300,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
+        photo: "/user3.jpg",
+        name: "Alice Brown",
+        walletAmount: 2000,
+        totalAmount: 500,
+        phone: "567-890-1234",
+        date: "2024-03-01",
+        astrologerAmount: 1200,
+        astrologerAmountGST: 144,
+        astrologerAmountTDS: 120,
+        myastroAmount: 536,
+        transactionId: "TXN12347",
+        transactionBy: "Debit Card",
       },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 600,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-02",
-        status:"success"
-      },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
-      },
-      {
-        photo: "/user1.jpg",
-        name: "John Doe",
-        walletAmount: 100,
-        orderId:"order_PXU6qsnGBo9V6Q",
-        phone: "123-456-7890",
-        paymentId: "pay_PWivJDMZzDHtM",
-        date: "2024-01-01",
-        status:"success"
-      },
-    
     // Add more sample data as needed
   ]);
   const [resultsPerPage, setResultsPerPage] = useState(10);
@@ -90,6 +61,7 @@ const ManageTransection = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  
 
   // Memoized filtered data
   const filteredData = useMemo(() => {
@@ -139,28 +111,28 @@ const ManageTransection = () => {
 
   const totalPages = Math.ceil(filteredData.length / resultsPerPage);
 
+
   return (
     <div>
-    <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Transactions</h1>
-  <div className=" m-[15px] border border-[#22c7d5] rounded-[8px] ml-[120px]">
+      <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Payment History</h1>
+    <div className=" m-[15px] border border-[#22c7d5] rounded-[8px] ml-[120px]">
     <div className="p-4 bg-[#0e1726]  text-[#888ea8] rounded-lg shadow-md">
       {/* Top Section */}
       <div className="flex justify-between items-center mb-4">
       <DateFilter onFilter={(dates) => handleDateFilter(dates)} />
 
-<div className="flex items-center gap-6">
- <ResultsSelector
-   resultsPerPage={resultsPerPage}
-   onChange={(e) => setResultsPerPage(Number(e.target.value))}
- />
- <SearchBox searchTerm={searchTerm} onSearchChange={handleSearch} />
- </div>
-
+           <div className="flex items-center gap-6">
+            <ResultsSelector
+              resultsPerPage={resultsPerPage}
+              onChange={(e) => setResultsPerPage(Number(e.target.value))}
+            />
+            <SearchBox searchTerm={searchTerm} onSearchChange={handleSearch} />
+            </div>
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full table-auto border-collapse min-w-[1200px]">
+        <table className="w-full table-auto border-collapse min-w-[2200px]">
           <thead>
             <tr className="bg-gradient-to-r from-[#1e2737] to-[#0e1726] text-[#bfc9d4]">
               <th
@@ -176,26 +148,7 @@ const ManageTransection = () => {
                   )
                 )}
               </th>
-              <th className="px-4 py-2">Name</th>
-              
-              <th className="px-4 py-2">Phone</th>
-
-              <th className="px-4 py-2">Order Id</th>
-              <th className="px-4 py-2">Payment Id</th>
-              <th
-                className="px-4 py-2 cursor-pointer"
-                onClick={() => handleSort("walletAmount")}
-              >
-                Amount
-                {sortColumn === "walletAmount" && (
-                  sortDirection === "asc" ? (
-                    <FaArrowUp className="inline ml-2 text-green-500" />
-                  ) : (
-                    <FaArrowDown className="inline ml-2 text-red-500" />
-                  )
-                )}
-              </th>
-
+              {/* date */}
               <th
                 className="px-4 py-2 cursor-pointer"
                 onClick={() => handleSort("date")}
@@ -209,7 +162,80 @@ const ManageTransection = () => {
                   )
                 )}
               </th>
-              <th className="px-4 py-2">Status</th>
+              {/* others */}
+              <th className="px-4 py-2">Astrologer</th>
+              <th className="px-4 py-2">Phone</th>
+
+              <th
+                className="px-4 py-2 cursor-pointer"
+                onClick={() => handleSort("walletAmount")}
+              >
+                Total Amount
+                {sortColumn === "totalAmount" && (
+                  sortDirection === "asc" ? (
+                    <FaArrowUp className="inline ml-2 text-green-500" />
+                  ) : (
+                    <FaArrowDown className="inline ml-2 text-red-500" />
+                  )
+                )}
+              </th>
+              <th
+                className="px-4 py-2 cursor-pointer"
+                onClick={() => handleSort("walletAmount")}
+              >
+                Astrologer Amount
+                {sortColumn === "astrologerAmount" && (
+                  sortDirection === "asc" ? (
+                    <FaArrowUp className="inline ml-2 text-green-500" />
+                  ) : (
+                    <FaArrowDown className="inline ml-2 text-red-500" />
+                  )
+                )}
+              </th>
+              <th
+                className="px-4 py-2 cursor-pointer"
+                onClick={() => handleSort("walletAmount")}
+              >
+                Astrologer Amount GST
+                {sortColumn === "walletAmount" && (
+                  sortDirection === "asc" ? (
+                    <FaArrowUp className="inline ml-2 text-green-500" />
+                  ) : (
+                    <FaArrowDown className="inline ml-2 text-red-500" />
+                  )
+                )}
+              </th>
+              <th
+                className="px-4 py-2 cursor-pointer"
+                onClick={() => handleSort("walletAmount")}
+              >
+               Astrologer Amount TDS
+                {sortColumn === "walletAmount" && (
+                  sortDirection === "asc" ? (
+                    <FaArrowUp className="inline ml-2 text-green-500" />
+                  ) : (
+                    <FaArrowDown className="inline ml-2 text-red-500" />
+                  )
+                )}
+              </th>
+              <th
+                className="px-4 py-2 cursor-pointer"
+                onClick={() => handleSort("walletAmount")}
+              >
+               Myastro Amount
+                {sortColumn === "walletAmount" && (
+                  sortDirection === "asc" ? (
+                    <FaArrowUp className="inline ml-2 text-green-500" />
+                  ) : (
+                    <FaArrowDown className="inline ml-2 text-red-500" />
+                  )
+                )}
+              </th>
+              
+
+              <th className="px-4 py-2">Transaction Id</th>
+              <th className="px-4 py-2">Transaction By</th>
+              
             </tr>
           </thead>
           <tbody>
@@ -219,18 +245,17 @@ const ManageTransection = () => {
                 className="hover:bg-[#1e2737] transition-colors"
               >
                 <td className="px-4 py-2 text-center">{index + 1}</td>
-                <td className="px-4 text-centerr py-2">{item.name}</td>
-                <td className="px-4 text-center py-2">{item.phone}</td>
-
-                <td className="px-4 text-center py-2">{item.orderId}</td>
-                <td className="px-4 text-cneter py-2">{item.paymentId}</td>
-
-                <td className="px-4   py-2 text-center">{item.walletAmount}</td>
-
                 <td className="px-4 py-2 text-center">{item.date}</td>
-                <td className="px-4 py-2 text-center">{item.status}</td>
+                <td className="px-4 text-center py-2">{item.name}</td>
+                <td className="px-4 text-center py-2">{item.phone}</td>
+                <td className="px-4 text-center py-2">{item.totalAmount}</td>
+                <td className="px-4 text-center py-2">{item.astrologerAmount}</td>
+                <td className="px-4 text-center py-2">{item.astrologerAmountGST}</td>
+                <td className="px-4 text-center py-2">{item.astrologerAmountTDS}</td>
+                <td className="px-4 text-center py-2">{item.myastroAmount}</td>
+                <td className="px-4 text-center py-2">{item.transactionId}</td>
+                <td className="px-4 text-center py-2">{item.transactionBy}</td>
 
-                
               </tr>
             ))}
           </tbody>
@@ -278,4 +303,4 @@ const ManageTransection = () => {
   );
 };
 
-export default ManageTransection;
+export default PaymentHistory;

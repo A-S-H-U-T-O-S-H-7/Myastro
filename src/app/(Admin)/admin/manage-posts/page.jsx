@@ -1,12 +1,10 @@
-
-import Manageuser from '@/components/Admin/Manageuser'
+import ManagePosts from '@/components/Admin/ManagePosts'
 import React from 'react'
-
 
 function page() {
   return (
     <div>
-    <Manageuser/>
+      <ManagePosts/>
     </div>
   )
 }

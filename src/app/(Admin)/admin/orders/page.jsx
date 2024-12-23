@@ -1,12 +1,10 @@
-
-import Manageuser from '@/components/Admin/Manageuser'
+import Orders from '@/components/Admin/Orders'
 import React from 'react'
-
 
 function page() {
   return (
     <div>
-    <Manageuser/>
+      <Orders/>
     </div>
   )
 }
