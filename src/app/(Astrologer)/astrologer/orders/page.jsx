@@ -1,10 +1,10 @@
+import Orders from '@/components/Astrologer/Orders'
 import React from 'react'
-import AstrologerLogin from '@/components/AstrologerLogin'
 
 function page() {
   return (
     <div>
-      <AstrologerLogin/>
+      <Orders/>
     </div>
   )
 }

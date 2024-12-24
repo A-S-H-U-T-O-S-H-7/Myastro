@@ -1,7 +1,7 @@
 import React,{ useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 
-const DateFilter = ({ onFilter }) => {
+const AstroDateFilter = ({ onFilter }) => {
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
 
@@ -28,11 +28,11 @@ const DateFilter = ({ onFilter }) => {
               setStartDate(e.target.value);
               onFilter({ startDate: e.target.value, endDate }); // Apply filter automatically
             }}
-            className="px-2 py-1 border-[0.5px] border-[#22c7d5] bg-transparent rounded-md focus:outline-none text-[#22c7d5]"
+            className="px-2 py-1 border-[0.5px] border-purple-500 dark:border-[#22c7d5] bg-white dark:bg-transparent rounded-md focus:outline-none text-purple-500 dark:text-[#22c7d5]"
           />
           <FaCalendarAlt
             onClick={() => document.getElementById("startDate").showPicker()}
-            className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-[#22c7d5] cursor-pointer"
+            className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-purple-500 dark:text-[#22c7d5] cursor-pointer"
           />
         </div>
       </div>
@@ -51,11 +51,11 @@ const DateFilter = ({ onFilter }) => {
               setEndDate(e.target.value);
               onFilter({ startDate, endDate: e.target.value }); // Apply filter automatically
             }}
-            className="px-2 py-1 border-[0.5px] border-[#22c7d5] bg-transparent rounded-md focus:outline-none text-[#22c7d5]"
+            className="px-2 py-1 border-[0.5px] border-purple-500 dark:border-[#22c7d5] bg-white dark:bg-transparent rounded-md focus:outline-none text-purple-500 dark:text-[#22c7d5]"
           />
           <FaCalendarAlt
             onClick={() => document.getElementById("endDate").showPicker()}
-            className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-[#22c7d5] cursor-pointer"
+            className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-purple-500 dark:text-[#22c7d5] cursor-pointer"
           />
         </div>
       </div>
@@ -73,4 +73,4 @@ const DateFilter = ({ onFilter }) => {
   );
 };
 
-export default DateFilter;
+export default AstroDateFilter;
