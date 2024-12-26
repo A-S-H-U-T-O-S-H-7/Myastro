@@ -158,22 +158,22 @@ const ProfileBlock = () => {
           <h3 className="text-xl h-10 pl-2 pt-1 rounded-t-md font-bold mb-4 dark:bg-[#22c7d5] bg-purple-500 text-white ">Other Details</h3>
 
           <div className="space-y-3 px-6 text-sm text-[#212529] dark:text-[#888ea8]">
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold ">PAN No.:</span> ABCDE1234F
             </p> 
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">Contribute Hours:</span> 40 hours/month
             </p>
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">Marital Status:</span> Married
             </p>
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">Pincode:</span> 110001
             </p>
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">Aadhar Number:</span> 1234-5678-9101
             </p>
-            <p className="flex justify-between font-heading py-1 ">
+            <p className="flex justify-between  py-1 ">
               <span className="font-bold">Qualification:</span> M.Sc in Astrology
             </p>
           </div>
@@ -191,7 +191,7 @@ const ProfileBlock = () => {
         className="flex justify-between items-center py-2 px-4 bg-white dark:bg-[#2b3545] rounded-md shadow hover:shadow-lg transition cursor-pointer"
         onClick={() => openDocument(doc.file)}
       >
-        <span className="text-black dark:text-white font-heading">{doc.name}</span>
+        <span className="text-black dark:text-white ">{doc.name}</span>
         <div className="text-blue-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -216,22 +216,22 @@ const ProfileBlock = () => {
           <h3 className="text-xl h-10 pl-2 pt-1 rounded-t-md font-bold mb-4 dark:bg-[#22c7d5] bg-purple-500 text-white ">Payment Details</h3>
 
           <div className="space-y-3 px-6 text-sm text-[#212529] dark:text-[#888ea8]">
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold "> Bank Name:</span> Union Bank of India
             </p>
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">Bank Branch:</span> C R PARK
             </p>
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">IFSC Code:</span> UBIN0562670
             </p>
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">A/c Number:</span> 690708719807764
             </p>
-            <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
+            <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">UPI ID:</span> singhanveeksha21@okicici
             </p>
-            <p className="flex justify-between font-heading py-1 ">
+            <p className="flex justify-between  py-1 ">
               <span className="font-bold">Profit Share %:</span> 30%
             </p>
           </div>
