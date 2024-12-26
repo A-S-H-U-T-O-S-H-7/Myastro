@@ -3,14 +3,18 @@
 import { showlodaer, loginSuccess, hidelodaer } from "@/redux/slices/userSlice";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+
+
 const UserSignup = () => {
   const { isAuthenticated, loading, popup } = useSelector((state) => state.user);
   const [step, setStep] = useState("login");
   const [error, setError] = useState("");
   const [timeLeft, setTimeLeft] = useState(60);
   const [phoneNumber, setPhoneNumber] = useState("");
-console.log(popup)
+   console.log(popup)
   const [otp, setOtp] = useState(new Array(6).fill(""));
+
+
   const dispatch = useDispatch();
   const closePopup = () => setShowPopup(false);
   const handleGetOtp = async (e) => {
@@ -25,7 +29,7 @@ console.log(popup)
             "Accept": "application/json"
           },
           body: JSON.stringify({
-            "mobile": 9569584126
+            "mobile": phoneNumber,
           }),
         });
 
@@ -59,7 +63,7 @@ console.log(popup)
           "Accept": "application/json"
         },
         body: JSON.stringify({
-          "mobile": 9569584126,
+          "mobile": phoneNumber,
           "otp": Number(otp.join(""))
         }),
       });
@@ -82,7 +86,7 @@ console.log(popup)
       const timer = setTimeout(() => setTimeLeft((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
     }
-  }, [step]);
+  }, [step, timeLeft]);
 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, "");

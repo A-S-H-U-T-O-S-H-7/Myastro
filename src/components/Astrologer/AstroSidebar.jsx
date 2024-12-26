@@ -28,8 +28,8 @@ const AstroSidebar = () => {
   };
 
   const menuItems = [
-    { icon: <FaHome className="text-xl" />, label: "Dashboard", link: "/astrologer/call-history" },
-    { icon: <FaUser className="text-xl" />, label: "Profile", link: "/astrologer/call-history" },
+    { icon: <FaHome className="text-xl" />, label: "Dashboard", link: "/astrologer/dashboard" },
+    { icon: <FaUser className="text-xl" />, label: "Profile", link: "/astrologer/profile" },
     { icon: <FaPhoneAlt className="text-xl" />, label: "Calls History", link: "/astrologer/call-history" },
     { icon: <FaCommentDots className="text-xl" />, label: "Chats Report", link: "/astrologer/call-history" },
     { icon: <FaShoppingBag className="text-xl" />, label: "Orders", link: "/astrologer/orders" },

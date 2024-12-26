@@ -1,14 +1,67 @@
-import React from 'react'
+"use client"
+import React, {useState, useEffect} from 'react'
 import Image from 'next/image'
 import { LuWallet } from "react-icons/lu";
 import RecomendedAstro from './RecomendedAstro';
-import Footer from './Footer';
-import Subfooter from './Subfooter';
-import WalletSection from './WalletSection';
 import Link from 'next/link';
 
 
 const UserProfileInput = () => {
+
+  const [userData, setUserData] = useState(null);
+  const [token, setToken] = useState(null);
+  
+
+
+// API: Fetch User Data
+const fetchUserData = async () => {
+  if (!token) return;
+  try {
+    const response = await fetch("http://13.201.226.189/user/getuser", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const result = await response.json();
+    if (response.ok) {
+      setUserData(result.user);
+    } else {
+      alert(result.message || "Error fetching user data");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Error fetching user data");
+  }
+};
+
+// API: Update User Data
+const updateUserData = async () => {
+  if (!token) return;
+  try {
+    const response = await fetch("http://13.201.226.189/user/update", {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    const result = await response.json();
+    if (response.ok) {
+      alert(result.message); // Notify update success
+    } else {
+      alert(result.message || "Error updating user data");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Error updating user data");
+  }
+};
+
+// Fetch user data when token is set
+useEffect(() => {
+  fetchUserData();
+}, [token]);
+
   return <div>
       {" "}<div className="px-[10px] justify-center lg:px-[65px] py-4 gap-3 ">
         <div className=" pt-2 pb-5">
@@ -32,7 +85,9 @@ const UserProfileInput = () => {
                 <label className="block text-[10px] text-[#333333]" htmlFor="Fname">
                   First Name
                 </label>
-                <input type="text" class="w-[284px] min-w-[200px] px-4 py-2 border border-gray-300
+                <input type="text"
+                value={userData?.name?.firstname || ""}
+                 class="w-[284px] min-w-[200px] px-4 py-2 border border-gray-300
                rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500
                 focus:border-indigo-500" placeholder="First Name" />
               </div>
@@ -48,9 +103,11 @@ const UserProfileInput = () => {
 
               <div className="px-3 ">
                 <label className="block text-[10px] text-[#333333]" htmlFor="Fname">
-                  Mobile Number
-                </label>
-                <input type="text" class="w-[284px] min-w-[200px] px-4 py-2 border border-gray-300
+                Mobile   
+                 </label>
+                <input type="text" 
+                value={userData?.name?.mobile || ""}
+                class="w-[284px] min-w-[200px] px-4 py-2 border border-gray-300
                rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500
                 focus:border-indigo-500" placeholder="Mobile Number" />
               </div>

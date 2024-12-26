@@ -136,7 +136,7 @@ const Navbar = () => {
 
             {/* Profile Section */}
             {isAuthenticated ? (<div className="flex gap-2 items-center">
-              <Link href="/UserProfile"> <Image
+              <Link href="/user/userProfile"> <Image
                 className="rounded-full"
                 src="/profileplaceholder.png"
                 alt="logo"
