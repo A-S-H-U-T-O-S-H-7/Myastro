@@ -159,22 +159,22 @@ const ProfileBlock = () => {
 
           <div className="space-y-3 px-6 text-sm text-[#212529] dark:text-[#888ea8]">
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold ">PAN No.:</span> ABCDE1234F
+              <span className="font-bold font-heading ">PAN No.:</span> ABCDE1234F
             </p> 
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold">Contribute Hours:</span> 40 hours/month
+              <span className="font-bold font-heading">Contribute Hours:</span> 40 hours/month
             </p>
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold">Marital Status:</span> Married
+              <span className="font-bold font-heading">Marital Status:</span> Married
             </p>
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold">Pincode:</span> 110001
+              <span className="font-bold font-heading">Pincode:</span> 110001
             </p>
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold">Aadhar Number:</span> 1234-5678-9101
+              <span className="font-bold font-heading">Aadhar Number:</span> 1234-5678-9101
             </p>
             <p className="flex justify-between  py-1 ">
-              <span className="font-bold">Qualification:</span> M.Sc in Astrology
+              <span className="font-bold font-heading">Qualification:</span> M.Sc in Astrology
             </p>
           </div>
         </div>
@@ -217,22 +217,22 @@ const ProfileBlock = () => {
 
           <div className="space-y-3 px-6 text-sm text-[#212529] dark:text-[#888ea8]">
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold "> Bank Name:</span> Union Bank of India
+              <span className="font-bold font-heading "> Bank Name:</span> Union Bank of India
             </p>
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold">Bank Branch:</span> C R PARK
+              <span className="font-bold font-heading">Bank Branch:</span> C R PARK
             </p>
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold">IFSC Code:</span> UBIN0562670
+              <span className="font-bold font-heading">IFSC Code:</span> UBIN0562670
             </p>
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold">A/c Number:</span> 690708719807764
+              <span className="font-bold font-heading">A/c Number:</span> 690708719807764
             </p>
             <p className="flex justify-between  py-1 border-b border-[#c5bfbf]">
-              <span className="font-bold">UPI ID:</span> singhanveeksha21@okicici
+              <span className="font-bold font-heading">UPI ID:</span> singhanveeksha21@okicici
             </p>
             <p className="flex justify-between  py-1 ">
-              <span className="font-bold">Profit Share %:</span> 30%
+              <span className="font-bold font-heading">Profit Share %:</span> 30%
             </p>
           </div>
         </div>
