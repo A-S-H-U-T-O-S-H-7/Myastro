@@ -160,7 +160,7 @@ const ProfileBlock = () => {
           <div className="space-y-3 px-6 text-sm text-[#212529] dark:text-[#888ea8]">
             <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
               <span className="font-bold ">PAN No.:</span> ABCDE1234F
-            </p>
+            </p> 
             <p className="flex justify-between font-heading py-1 border-b border-[#c5bfbf]">
               <span className="font-bold">Contribute Hours:</span> 40 hours/month
             </p>
@@ -191,7 +191,7 @@ const ProfileBlock = () => {
         className="flex justify-between items-center py-2 px-4 bg-white dark:bg-[#2b3545] rounded-md shadow hover:shadow-lg transition cursor-pointer"
         onClick={() => openDocument(doc.file)}
       >
-        <span className="text-black dark:text-white">{doc.name}</span>
+        <span className="text-black dark:text-white font-heading">{doc.name}</span>
         <div className="text-blue-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
