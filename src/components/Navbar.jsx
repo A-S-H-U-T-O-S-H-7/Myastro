@@ -120,7 +120,7 @@ const Navbar = () => {
             </li>
 
             <li className="font-hansenG px-4 py-[4px] leading-6 text-[#212529] font-bold mb-1">
-              <Link className="hover:text-[#EE8722]" href="/services">Blogs</Link>
+              <Link className="hover:text-[#EE8722]" href="/blogs">Blogs</Link>
             </li>
           </ul>
           <div className="flex items-center gap-3">
