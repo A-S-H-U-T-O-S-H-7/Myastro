@@ -8,7 +8,7 @@ function BlogCard() {
 
       <div className="min-w-[250px] h-[290px]  hover:shadow-xl flex justify-between flex-col gap-3  relative cursor-pointer rounded-xl border border-purple-700">
         <div className='h-[150px] rounded-t-xl overflow-hidden'>
-        <Image src="/Blog1.jpg" alt="demo" width={300} layout="responsive"  height={250}  />
+        <Image src="/blog1.jpg" alt="demo" width={300} layout="responsive"  height={250}  />
        
 
         <div className='w-[80px] z-20 min-h-[24px] absolute top-1 right-1 gap-2 px-1 justify-center py-1 items-center  bg-[#f6f7f6] flex rounded-full'>
