@@ -3,10 +3,7 @@ import IndivisualAstrologer from '@/components/IndivisualAstrologer'
 
 function page() {
   return (
-    <div>
-
-      <IndivisualAstrologer/>
-    </div>
+    <IndivisualAstrologer />
   )
 }
 

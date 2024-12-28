@@ -1,25 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  astrologers: [], 
-  selectedAstrologer: null, 
+  selectAstrologersData: {},
+  astrologerFetched: false,
 };
 
 const astrologersSlice = createSlice({
-  name: 'astrologers',
+  name: "astrologers",
   initialState,
   reducers: {
-    setAstrologers(state, action) {
-      state.astrologers = action.payload;
-    },
-    selectAstrologer(state, action) {
-      state.selectedAstrologer = action.payload;
+    setSelectAstrologer(state, action) {
+      state.selectAstrologersData = action.payload;
+      state.astrologerFetched = true;
     },
     clearSelectedAstrologer(state) {
-      state.selectedAstrologer = null;
+      state.astrologerFetched = false;
+      state.selectAstrologersData = {};
     },
   },
 });
 
-export const { setAstrologers, selectAstrologer, clearSelectedAstrologer } = astrologersSlice.actions;
+export const { setSelectAstrologer, clearSelectedAstrologer } =
+  astrologersSlice.actions;
 export default astrologersSlice.reducer;
