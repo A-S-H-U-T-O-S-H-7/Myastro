@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import AstrologerCard from './AstrologerCrad'
 import { PropagateLoader } from 'react-spinners';
-import env from './Env';
+import ENV from './Env';
 
 const AstrologerCardContainer = () => {
   const [pageno, setPageNo] = useState(1);
@@ -18,7 +18,7 @@ const AstrologerCardContainer = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
       const response = await fetch(
-        `${env.API_URL}/load-astrologers/${pageno}`,
+        `${ENV.API_URL}/load-astrologers/${pageno}`,
         {
           cache: "no-store",
         }

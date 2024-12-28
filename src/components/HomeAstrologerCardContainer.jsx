@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import AstrologerCard from './AstrologerCrad'
 import Link from 'next/link';
-import env from './Env';
+import ENV from './Env';
 
 const AstrologerCardContainer = () => {
 
@@ -15,7 +15,7 @@ const AstrologerCardContainer = () => {
     setLoader(true);
     try {
       const response = await fetch(
-        `${env.API_URL}/load-astrologers/${pageno}`,
+        `${ENV.API_URL}/load-astrologers/${pageno}`,
         {
           cache: "no-store",
         }

@@ -6,7 +6,7 @@ import { Fullscreen } from 'lucide-react'
 function BlogCard() {
   return <div>
 
-      <div className="min-w-[250px] h-[290px]  hover:shadow-xl flex justify-between flex-col gap-3  relative cursor-pointer rounded-xl border">
+      <div className="min-w-[250px] h-[290px]  hover:shadow-xl flex justify-between flex-col gap-3  relative cursor-pointer rounded-xl border border-purple-700">
         <div className='h-[150px] rounded-t-xl overflow-hidden'>
         <Image src="/Blog1.jpg" alt="demo" width={300} layout="responsive"  height={250}  />
        

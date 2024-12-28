@@ -5,15 +5,8 @@ const nextConfig = {
     CUSTOM_VAR: process.env.SECRET_API_KEY,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "13.201.226.189",
-        port: "",
-        pathname: "/statics/**",
-      },
-    ],
+    domains: ["astrosearch.in"],
   },
 };
 
-export default nextConfig;
+export default nextConfig;

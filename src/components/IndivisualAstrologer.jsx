@@ -6,7 +6,7 @@ import { setSelectAstrologer } from "@/redux/slices/astrologersSlice";
 import { LiaLanguageSolid } from "react-icons/lia";
 import Image from "next/image";
 import { PropagateLoader } from "react-spinners";
-import env from "./Env";
+import ENV from "./Env";
 
 function IndivisualAstrologer() {
 
@@ -27,7 +27,7 @@ function IndivisualAstrologer() {
   ];
   const handleSingleAstrologer = async (id) => {
     try {
-      const response = await fetch(`${env.API_URL}/load-astrologer/${id}`);
+      const response = await fetch(`${ENV.API_URL}/load-astrologer/${id}`);
       if (!response.ok) {
         router.back();
         return;

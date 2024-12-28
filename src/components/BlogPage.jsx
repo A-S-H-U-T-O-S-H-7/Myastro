@@ -18,19 +18,19 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-purple-50">
+    <div className="min-h-screen px-[10px] lg:px-[65px] bg-purple-50">
       {/* Banner */}
       <div className="h-[250px] w-full bg-purple-700 flex items-center justify-center">
         <h1 className="text-4xl text-white font-bold">Our Blogs</h1>
       </div>
 
       {/* Content */}
-      <div className="flex flex-col lg:flex-row lg:px-8 py-6 gap-6 relative">
+      <div className="flex flex-col lg:flex-row pt-[70px] y-6 gap-6 relative">
         {/* Left Sidebar */}
         <div
           className={`${
             sidebarVisible ? 'translate-x-0' : '-translate-x-full'
-          } lg:translate-x-0 fixed lg:static top-0 left-0 bg-white lg:bg-transparent w-[80%] lg:w-[20%] h-full lg:h-auto shadow-lg lg:shadow-none transform transition-transform duration-300 z-50 lg:z-auto p-6`}
+          } lg:translate-x-0 fixed lg:static top-0 left-0 bg-white lg:bg-transparent w-[80%] lg:w-[20%] h-full lg:h-auto shadow-lg lg:shadow-none transform transition-transform duration-300 z-50 lg:z-auto pt-8 `}
         >
           <h2 className="text-xl font-bold text-purple-700 mb-4">Categories</h2>
           <ul className="space-y-3">
@@ -45,7 +45,7 @@ export default function BlogPage() {
             ].map((category) => (
               <li
                 key={category}
-                className="cursor-pointer hover:text-purple-500 transition-colors duration-300"
+                className="cursor-pointer border px-4 py-2 bg-purple-200 rounded-lg hover:bg-purple-500 transition-colors duration-300"
               >
                 {category}
               </li>
@@ -64,13 +64,15 @@ export default function BlogPage() {
         {/* Right Section */}
         <div className="flex-1 lg:w-[80%]">
           {/* Search Box */}
-          <div className="flex items-center gap-2 bg-white p-3 shadow-md rounded-lg mb-6">
+          <div className='flex justify-end'>
+          <div className="flex items-center w-[300px]  gap-2 bg-white p-3 shadow-md rounded-lg mb-6">
             <input
               type="text"
               placeholder="Search Blogs..."
               className="flex-1 outline-none"
             />
             <span className="material-icons text-purple-500 cursor-pointer">search</span>
+          </div>
           </div>
 
           {/* Blog Cards */}
@@ -81,7 +83,7 @@ export default function BlogPage() {
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-end items-center mt-6 space-x-3">
+          <div className="flex justify-end items-center mt-6 mb-10 space-x-3">
             <button
               onClick={() => handlePageChange('prev')}
               disabled={currentPage === 1}
