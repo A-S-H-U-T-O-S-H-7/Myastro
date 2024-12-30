@@ -16,7 +16,7 @@ const HoroscopePage = () => {
   return (
     <div>
       <div className="px-[10px] lg:px-[65px]">
-        <h1 className="text-[#212529] py-1 flex justify-center text-[40px] font-heading font-bold">
+        <h1 className=" py-1 flex text-[#3C0184] justify-center text-[40px] font-heading font-bold">
           {formattedName}
         </h1>
         <p className="flex justify-center font-semibold py-1 text-[#6c757d]">

@@ -63,10 +63,10 @@ const Navbar = () => {
                 Horoscope <RiArrowDropDownLine size={30} />
               </span>
               {isDropdownOpen && (
-                <ul className="absolute top-full bg-white border border-gray-400 rounded shadow-md w-[180px]">
+                <ul className="absolute top-full text-[#3C0184] bg-white border border-gray-400 rounded shadow-md w-[180px]">
                   {/* Dropdown Options */}
                   {[
-                    { name: "Horoscope 2024!", href: "/horoscope/horoscope-2024" },
+                    { name: "Horoscope 2025!", href: "/horoscope/horoscope-2025" },
                     { name: "Daily Horoscope", href: "/horoscope/daily-horoscope" },
                     { name: "Today's Horoscope", href: "/horoscope/todays-horoscope" },
                     { name: "Weekly Horoscope", href: "/horoscope/weekly-horoscope" },
@@ -101,7 +101,7 @@ const Navbar = () => {
                 Kundli <RiArrowDropDownLine size={30} />
               </span>
               {isKundliDropdown && (
-                <ul className="absolute top-full bg-white border border-gray-400 rounded shadow-md w-[160px]">
+                <ul className="absolute top-full text-[#3C0184] bg-white border border-gray-400 rounded shadow-md w-[160px]">
                   {/* Dropdown Options */}
                   {[
                     { name: "Free Kundli", href: "/horoscope/free-kundli" },

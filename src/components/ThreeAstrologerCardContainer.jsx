@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import AstrologerCard from "./AstrologerCrad";
+import ENV from "./Env";
 
 const ThreeAstrologerCardContainer = () => {
   const [astrologers, setAstrologers] = useState([]);
@@ -12,7 +13,7 @@ const ThreeAstrologerCardContainer = () => {
     setError(null);
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/load-astrologers/1`, 
+        `${ENV.API_URL}/load-astrologers/1`, 
         {
           cache: "no-store",
         }

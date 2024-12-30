@@ -3,6 +3,7 @@
 import { showlodaer, loginSuccess, hidelodaer } from "@/redux/slices/userSlice";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import ENV from "./Env";
 
 
 const UserSignup = () => {
@@ -22,7 +23,7 @@ const UserSignup = () => {
     if (phoneNumber.length === 10) {
       try {
         dispatch(showlodaer());
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/otp`, {
+        const response = await fetch(`${ENV.API_URL}/otp`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -52,11 +53,12 @@ const UserSignup = () => {
 
     }
   };
+  
   const handleSubmitOtp = async (e) => {
     e.preventDefault();
     try {
       dispatch(showlodaer());
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-otp-verify`, {
+      const response = await fetch(`${API_URL}/user-otp-verify`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

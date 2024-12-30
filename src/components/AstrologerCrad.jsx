@@ -5,13 +5,19 @@ import { IoChatbox } from "react-icons/io5";
 import { setSelectAstrologer } from '@/redux/slices/astrologersSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { debounce } from "lodash";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname  } from "next/navigation";
+import {} from "next/navigation";
+
 import { useCallback } from "react";
 
 const AstrologerCard = ({ data }) => {
+  const pathname = usePathname();
+
+
   const router = useRouter();
   const dispatch = useDispatch();
   const { selectAstrologersData } = useSelector((state) => state.astrologers);
+  
   const handleSelectAstrologer = useCallback(
     debounce((astrologer) => {
       dispatch(setSelectAstrologer({ ...astrologer }));
@@ -85,16 +91,23 @@ const AstrologerCard = ({ data }) => {
               ₹{data.maximumperminutescharges}/min
             </span>
           </p>
+
           <div className="flex gap-2 mt-2">
-            <button className="px-1 w-full justify-center font-semibold py-2 gap-2 border hover:bg-[#542875] hover:text-white hover:border-[#3C0184] border-[#3C0184] text-[#3C0184] text-xs flex items-center rounded-md">
-              <LuPhoneCall size={15} />
-              Call Now
-            </button>
-            <button className="px-1 w-full justify-center font-semibold py-2 gap-2 border hover:bg-[#317F7F] hover:text-white hover:border-[#317F7F] border-[#317F7F] text-[#317F7F] text-xs flex items-center rounded-md">
-              <IoChatbox size={15} />
-              Chat Now
-            </button>
+          {pathname !== "/chat-with-astrologer" && (
+              <button className="px-1 w-full justify-center font-semibold py-2 gap-2 border hover:bg-[#542875] hover:text-white hover:border-[#3C0184] border-[#3C0184] text-[#3C0184] text-xs flex items-center rounded-md">
+                <LuPhoneCall size={15} />
+                Call Now
+              </button>
+            )}
+            {/* Hide "Chat Now" button on /call-with-astrologer */}
+            {pathname !== "/talk-to-astrologer" && (
+              <button className="px-1  w-full justify-center font-semibold  py-2 gap-2 border hover:bg-[#317F7F] hover:text-white hover:border-[#317F7F] border-[#317F7F] text-[#317F7F] text-xs flex items-center rounded-md">
+                <IoChatbox size={15} />
+                Chat Now
+              </button>
+            )}
           </div>
+
         </div>
       </div>
     </div>

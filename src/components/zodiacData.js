@@ -1,7 +1,7 @@
 const zodiacData = [
     {
       name: 'Aries',
-      image: '/aries.jpg',
+      image: '/horoscope-icon/Aries.jpg',
       luckyColors: 'Red, White',
       luckyNumbers: '1, 9',
       luckyAlphabets: 'A, L',

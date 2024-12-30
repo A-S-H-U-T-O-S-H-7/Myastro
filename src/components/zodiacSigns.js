@@ -1,62 +1,62 @@
 export const zodiacSigns = [
   {
     name: 'Aries',
-    image: '/Aries.jpg',
+    image: '/Horoscope-icon/Aries.png',
     description: 'Aries is the first sign of the zodiac and is represented by the ram.',
   },
   {
     name: 'Taurus',
-    image: '/Taurus.jpeg',
+    image: '/Horoscope-icon/Taurus.png',
     description: 'Taurus is grounded and determined, represented by the bull.',
   },
   {
     name: 'Gemini',
-    image: '/Gemini.jpg',
+    image: '/Horoscope-icon/Gemini.png',
     description: 'Gemini is represented by the twins and is known for their versatility and wit.',
   },
   {
     name: 'Cancer',
-    image: '/Cancer.jpg',
+    image: '/Horoscope-icon/Cancer.png',
     description: 'Cancer is represented by the crab and is deeply intuitive and emotional.',
   },
   {
     name: 'Leo',
-    image: '/Leo.jpg',
+    image: '/Horoscope-icon/Leo.png',
     description: 'Leo is represented by the lion and is known for their confidence.',
   },
   {
     name: 'Virgo',
-    image: '/Virgo.jpg',
+    image: '/Horoscope-icon/virgo.png',
     description: 'Virgo is represented by the maiden and is analytical, practical, and reliable.',
   },
   {
     name: 'Libra',
-    image: '/Libra.jpg',
+    image: '/Horoscope-icon/Libra.png',
     description: 'Libra is represented by the scales and is known for their love of balance and harmony.',
   },
   {
     name: 'Scorpio',
-    image: '/Scorpio.jpg',
+    image: '/Horoscope-icon/Scorpio.png',
     description: 'Scorpio is represented by the scorpion and is intense, passionate, and resourceful.',
   },
   {
     name: 'Sagittarius',
-    image: '/Sagittarius.jpg',
+    image: '/Horoscope-icon/Sagitarius.png',
     description: 'Sagittarius is represented by the archer and is adventurous, optimistic, and philosophical.',
   },
   {
     name: 'Capricorn',
-    image: '/Capricorn.jpg',
+    image: '/Horoscope-icon/Capricornus.png',
     description: 'Capricorn is represented by the goat and is ambitious, disciplined, and practical.',
   },
   {
     name: 'Aquarius',
-    image: '/Aquarius.jpg',
+    image: '/Horoscope-icon/Aquarius.png',
     description: 'Aquarius is represented by the water bearer and is innovative, independent, and humanitarian.',
   },
   {
     name: 'Pisces',
-    image: '/Pisces.jpg',
+    image: '/Horoscope-icon/Pisces.png',
     description: 'Pisces is represented by the fish and is compassionate, artistic, intuitive and Practical.',
   },
 ];
