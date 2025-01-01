@@ -5,19 +5,22 @@ import { IoChatbox } from "react-icons/io5";
 import { setSelectAstrologer } from '@/redux/slices/astrologersSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { debounce } from "lodash";
-import { useRouter, usePathname  } from "next/navigation";
-import {} from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { showLoginPopup } from "@/redux/slices/userSlice";
+import { toast } from "react-toastify";
+import ENV from "./Env";
 
 const AstrologerCard = ({ data }) => {
+
   const pathname = usePathname();
-
-
   const router = useRouter();
   const dispatch = useDispatch();
   const { selectAstrologersData } = useSelector((state) => state.astrologers);
-  
+  const { isAuthenticated, popup, details, userToken } = useSelector((state) => state.user);
+  const [callStatus, setCallStatus] = useState(false);
+
   const handleSelectAstrologer = useCallback(
     debounce((astrologer) => {
       dispatch(setSelectAstrologer({ ...astrologer }));
@@ -27,8 +30,50 @@ const AstrologerCard = ({ data }) => {
       router.push(`/best-astrologer/${formattedUsername}`);
     }, 300), []);
 
-  console.log(selectAstrologersData);
+  const handleCall = async (astrologer) => {
+    if (!isAuthenticated) {
+      dispatch(showLoginPopup());
+      return;
+    }
 
+    if (callStatus) {
+      toast.warning(`Already making a call to ${astrologer?.username}`);
+      console.log(callStatus);
+      return;
+    }
+
+    const walletAmount = details?.wallet_amount || 0;
+    const requiredAmount = 100;
+
+    if (walletAmount >= requiredAmount) {
+      const call = await fetch(`${ENV.API_URL}/user/user-connect-call-astrologer`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}`,
+          "Accept": 'application/json'
+        },
+        body: JSON.stringify({
+          astrologerId: astrologer.id,
+          chargeperminute: requiredAmount
+        }),
+      });
+      const response = await call.json();
+      if (response.status === true) {
+        toast.success(`Calling ${response?.message}`);
+        setCallStatus(true);
+      } else {
+        toast.error(`Failed to call ${astrologer?.username}`);
+        setCallStatus(false);
+      }
+
+    } else {
+      toast.error(`Please recharge, your wallet must have at least ${requiredAmount} to make a call.`);
+      setCallStatus(false);
+    }
+  };
+
+ console.log(details)
   return (
     <div
       className="min-w-[360px] h-[174px] px-[12px] py-[8px] bg-gray-100 hover:shadow-2xl transition-shadow duration-300 shadow-md hover:shadow-[#542875] rounded-lg flex border "
@@ -93,8 +138,11 @@ const AstrologerCard = ({ data }) => {
           </p>
 
           <div className="flex gap-2 mt-2">
-          {pathname !== "/chat-with-astrologer" && (
-              <button className="px-1 w-full justify-center font-semibold py-2 gap-2 border hover:bg-[#542875] hover:text-white hover:border-[#3C0184] border-[#3C0184] text-[#3C0184] text-xs flex items-center rounded-md">
+            {pathname !== "/chat-with-astrologer" && (
+              <button className="px-1 w-full justify-center font-semibold py-2 gap-2 border hover:bg-[#542875] hover:text-white hover:border-[#3C0184] border-[#3C0184] text-[#3C0184] text-xs flex items-center rounded-md"
+                onClick={() => { handleCall(data); }}
+                disabled={callStatus}
+              >
                 <LuPhoneCall size={15} />
                 Call Now
               </button>

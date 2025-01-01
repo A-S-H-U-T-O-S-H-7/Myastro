@@ -1,14 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isAuthenticated: false, 
-  loading: false,  
-  popup:false,                  
-  details: {},          
+  isAuthenticated: false,
+  loading: false,
+  popup: false,
+  details: {},
+  userToken:""
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     showlodaer(state) {
@@ -17,14 +18,18 @@ const userSlice = createSlice({
     hidelodaer(state) {
       state.loading = false;
     },
-    showLoginPopup(state){
+    showLoginPopup(state) {
       state.popup = true;
+    },
+    setLoginPopupOff(state) {
+      state.popup = false;
     },
     loginSuccess(state, action) {
       state.loading = false;
       state.isAuthenticated = true;
       state.popup = false;
-      state.details = action.payload;
+      state.details = action.payload.user;
+      state.userToken = action.payload.token;
     },
 
     loginFailure(state, action) {
@@ -36,17 +41,19 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
       state.popup = false;
       state.details = {};
-    }
+      state.userToken = "";
+    },
   },
 });
 
-export const { 
-  showlodaer, 
+export const {
+  showlodaer,
   hidelodaer,
   showLoginPopup,
-  loginSuccess, 
-  loginFailure, 
-  logout
+  setLoginPopupOff,
+  loginSuccess,
+  loginFailure,
+  logout,
 } = userSlice.actions;
 
 export default userSlice.reducer;

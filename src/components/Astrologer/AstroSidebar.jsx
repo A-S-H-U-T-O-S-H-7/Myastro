@@ -1,16 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import {
   FaHome,
   FaUser,
-  FaWallet,
-  FaHistory,
-  FaBell,
-  FaList,
   FaArrowDown,
   FaArrowUp,
-  FaBlog,
   FaShoppingBag,
   FaPhoneAlt,
   FaCommentDots,
@@ -35,9 +31,6 @@ const AstroSidebar = () => {
     { icon: <FaShoppingBag className="text-xl" />, label: "Orders", link: "/astrologer/orders" },
     { icon: <FaMoneyCheckAlt className="text-xl" />, label: "Payment Details", link: "/astrologer/payments" },
     { icon: <FaStar className="text-xl" />, label: "Reviews", link: "/astrologer/reviews" },
-
-
-    
   ];
 
   return (
@@ -55,9 +48,8 @@ const AstroSidebar = () => {
           <img
             src="/myastrologo.png"
             alt="Logo"
-            className={` transition-all duration-500 ${
-              isExpanded ? "w-[40px] h-[40px]" : "w-[40px] h-[40px]"
-            }`}
+            className={` transition-all duration-500 ${isExpanded ? "w-[40px] h-[40px]" : "w-[40px] h-[40px]"
+              }`}
           />
           {isExpanded && (
             <h1 className="ml-3 text-lg font-heading font-bold text-[#3C0184] dark:text-white transition-opacity duration-500">
@@ -79,9 +71,8 @@ const AstroSidebar = () => {
 
                     <div className="text-center w-[40px]">{item.icon}</div>
                     <span
-                      className={`text-base font-medium transition-opacity ${
-                        isExpanded ? "opacity-100" : "opacity-0"
-                      }`}
+                      className={`text-base font-medium transition-opacity ${isExpanded ? "opacity-100" : "opacity-0"
+                        }`}
                     >
                       {item.label}
                     </span>
@@ -100,36 +91,35 @@ const AstroSidebar = () => {
                 {dropdowns[item.dropdownKey] && isExpanded && (
                   <div className="pl-8 bg-white dark:bg-[#1a2330] space-y-2">
                     {item.subItems.map((subItem, subIndex) => (
-                      <a
+                      <Link
                         key={subIndex}
                         href={subItem.link}
                         className="flex items-center gap-2 px-4 py-2 hover:bg-[#dee2e6] dark:hover:bg-[#1e2737] text-sm text-white"
                       >
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                         {subItem.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
               </div>
-            ) :(
-              <a
+            ) : (
+              <Link
                 key={index}
                 href={item.link}
                 className="flex items-center gap-4 px-4 py-3 hover:bg-[#dee2e6] dark:hover:bg-[#1e2737] transition-colors"
               >
                 <div className="text-center text-purple-700 dark:text-[#22c7d5] w-[40px]">{item.icon}</div>
                 <span
-                  className={`text-base font-medium w-[150px] text-ellipsis overflow-hidden transition-opacity ${
-                    isExpanded ? "opacity-100" : "opacity-0"
-                  }`}
+                  className={`text-base font-medium w-[150px] text-ellipsis overflow-hidden transition-opacity ${isExpanded ? "opacity-100" : "opacity-0"
+                    }`}
                   style={{ whiteSpace: "nowrap" }}
                 >
                   {item.label}
                 </span>
-              </a>
+              </Link>
             )
-            
+
           )}
         </nav>
       </div>

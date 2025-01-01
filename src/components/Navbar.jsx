@@ -33,6 +33,7 @@ const Navbar = () => {
   const handleLogoutButton = () => {
     dispatch(logout());
   }
+  console.log(details)
   return (
     <nav className="bg-white/60 backdrop-blur-md text-[#212529] sticky top-0 z-50 border-b-2 border-solid border-neutral-200">
       {/* Logo Container */}
@@ -66,7 +67,7 @@ const Navbar = () => {
                 <ul className="absolute top-full text-[#3C0184] bg-white border border-gray-400 rounded shadow-md w-[180px]">
                   {/* Dropdown Options */}
                   {[
-                    { name: "Horoscope 2025!", href: "/horoscope/horoscope-2025" },
+                    { name: "Horoscope 2024!", href: "/horoscope/horoscope-2024" },
                     { name: "Daily Horoscope", href: "/horoscope/daily-horoscope" },
                     { name: "Today's Horoscope", href: "/horoscope/todays-horoscope" },
                     { name: "Weekly Horoscope", href: "/horoscope/weekly-horoscope" },
@@ -131,7 +132,7 @@ const Navbar = () => {
                 size={20}
               /></Link>
               <FaRupeeSign size={12} className="text-[#585866]" />
-              <p className="text-sm">0.00</p>
+              <p className="text-sm">{details?.wallet_amount ? (details?.wallet_amount) : ("0.00")}</p>
             </div>
 
             {/* Profile Section */}
@@ -144,7 +145,7 @@ const Navbar = () => {
                 height={24}
               /> </Link>
               <Link href="/user/userProfile">
-                <p className="hidden  md:block text-[#212529]  cursor-pointer text-sm">Ashutosh</p></Link>
+                <p className="hidden  md:block text-[#212529]  cursor-pointer text-sm">{details.name.firstname != null ? (details.name.firstname) : ("")}</p></Link>
               <div className="relative">
                 <RiArrowDropDownLine
                   className="text-[#212529] cursor-pointer"

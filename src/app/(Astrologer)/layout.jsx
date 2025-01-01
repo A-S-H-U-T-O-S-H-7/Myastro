@@ -6,10 +6,10 @@ import AstroSidebar from "@/components/Astrologer/AstroSidebar";
 export default function Main({ children }) {
   return (
     <div className="bg-white dark:bg-[#060818] pt-3 min-h-[600px]">
-     <AstrologerNavbar/>
-     <AstroSidebar/>
+      <AstrologerNavbar />
+      <AstroSidebar />
       {children}
-      <AstroFooter/>
+      <AstroFooter />
     </div>
   );
 }

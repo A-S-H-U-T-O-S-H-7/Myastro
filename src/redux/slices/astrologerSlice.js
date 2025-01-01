@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isAuthenticated: false,
-  details: {},
+  isAstrologerAuthenticated: false,
+  astrologerDetails: {},
+  astrologerToken:null
 };
 
 const astrologerSlice = createSlice({
@@ -10,12 +11,14 @@ const astrologerSlice = createSlice({
   initialState,
   reducers: {
     login(state, action) {
-      state.isAuthenticated = true;
-      state.details = action.payload;
+      state.isAstrologerAuthenticated = true;
+      state.astrologerDetails = action.payload.astrologer;
+      state.astrologerToken = action.payload.token;
     },
     logout(state) {
-      state.isAuthenticated = false;
-      state.details = {};
+      state.isAstrologerAuthenticated = false;
+      state.astrologerDetails = {};
+      state.astrologerToken = null;
     },
   },
 });

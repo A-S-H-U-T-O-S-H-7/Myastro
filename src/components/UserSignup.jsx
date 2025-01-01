@@ -1,6 +1,6 @@
 "use client";
 
-import { showlodaer, loginSuccess, hidelodaer } from "@/redux/slices/userSlice";
+import { showlodaer, loginSuccess, hidelodaer, setLoginPopupOff } from "@/redux/slices/userSlice";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import ENV from "./Env";
@@ -12,12 +12,11 @@ const UserSignup = () => {
   const [error, setError] = useState("");
   const [timeLeft, setTimeLeft] = useState(60);
   const [phoneNumber, setPhoneNumber] = useState("");
-   console.log(popup)
   const [otp, setOtp] = useState(new Array(6).fill(""));
 
 
   const dispatch = useDispatch();
-  const closePopup = () => setShowPopup(false);
+  const closePopup = () => dispatch(setLoginPopupOff());
   const handleGetOtp = async (e) => {
     e.preventDefault();
     if (phoneNumber.length === 10) {
@@ -53,12 +52,11 @@ const UserSignup = () => {
 
     }
   };
-  
   const handleSubmitOtp = async (e) => {
     e.preventDefault();
     try {
       dispatch(showlodaer());
-      const response = await fetch(`${API_URL}/user-otp-verify`, {
+      const response = await fetch(`${ENV.API_URL}/user-otp-verify`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,8 +70,7 @@ const UserSignup = () => {
       const result = await response.json();
       if (response.ok) {
         dispatch(hidelodaer());
-        dispatch(loginSuccess({ ...result.user }))
-        setShowPopup(false);
+        dispatch(loginSuccess({ user:{...result.user},token: result.token}))
       } else {
         setError(result.error || "Something went wrong.");
         dispatch(hidelodaer());

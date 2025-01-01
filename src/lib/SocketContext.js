@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://13.201.226.189";
+const SOCKET_URL = "https://astrosearch.in";
 
 const SocketContext = createContext();
 

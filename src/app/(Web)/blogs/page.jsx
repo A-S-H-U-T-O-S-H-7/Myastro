@@ -9,7 +9,7 @@ function page() {
   return (
     <div>
       <BlogPage/>
-      
+      <UserChatInterface/>
     </div>
   )
 }
