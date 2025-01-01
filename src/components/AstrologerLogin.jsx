@@ -242,7 +242,7 @@ export default function AstrologerLogin() {
                     ref={ref}
                     type="text"
                     maxLength="1"
-                    className="w-12 h-12 border-2 border-indigo-400 text-center rounded text-gray-700 shadow focus:outline-none focus:border-purple-500"
+                    className="w-8 h-8 lg:w-12 lg:h-12 border-2 border-indigo-400 text-center rounded text-gray-700 shadow focus:outline-none focus:border-purple-500"
                     onInput={(e) => handleOtpInput(e, index)}
                     onKeyDown={(e) => handleBackspace(e, index)}
                     onKeyUp={handleEnterKey}
