@@ -49,11 +49,11 @@ export default function AstrologerLogin() {
     }
   };
 
-  const handleEnterKey = (e) => {
-    if (e.key === "Enter") {
-      alert("OTP Verified!");
-    }
-  };
+  // const handleEnterKey = (e) => {
+  //   if (e.key === "Enter") {
+  //     alert("OTP Verified!");
+  //   }
+  // };
   const handleGetOtp = async (e) => {
     if (/^\d{10}$/.test(mobile)) {
       try {

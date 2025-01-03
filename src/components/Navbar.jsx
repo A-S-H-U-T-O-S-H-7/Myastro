@@ -174,7 +174,7 @@ const Navbar = () => {
 
                 )}
               </div>
-            </div>) : (<button onClick={() => handleLoginButoon()} className="bg-[#396b6b] items-center text-white flex gap-[10px] px-6 py-2 rounded-md">
+            </div>) : (<button onClick={() => handleLoginButoon()} className="bg-[#3C0184] items-center text-white flex gap-[10px] px-6 py-2 rounded-md">
               Sign In <Image src="/signinicon.svg" width={20} height={20} />
             </button>)}
 

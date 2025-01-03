@@ -86,7 +86,7 @@ const Footer = () => {
               </Link>
             </li>
             <li className="text-sm  hover:text-purple-500 text-red-500">
-              <Link href="/astrologer/call-history ">Astrologer Login (testing)</Link>
+              <Link href="/astrologer-registration">Astrologer Registration (testing)</Link>
             </li>
             <li className="text-sm hover:text-purple-500 text-red-500">
               <Link href="/admin/manageuser">Admin (testing)</Link>

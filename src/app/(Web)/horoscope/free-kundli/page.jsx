@@ -4,18 +4,56 @@ import RecomendedAstro from '@/components/RecomendedAstro'
 import CallchatReusable from '@/components/CallchatReusable'
 import FAQ from '@/components/FAQ'
 import Freekundli from '@/components/Freekundli'
-import IndivisualAstrologer from '@/components/IndivisualAstrologer'
 
 function page() {
+  const faqsData = [
+    {
+      key: 1,
+      question: "Why is creating a Kundli important for me?",
+      answer:
+        "Creating a Kundli is essential for understanding various aspects of your life, including your personality, strengths, weaknesses, and potential future events. It serves as a roadmap to navigate your life’s journey with better clarity. By analyzing the planetary positions at the time of your birth, a Kundli can help uncover your natural talents, suitable career paths, relationships, and even life challenges. It’s a tool that empowers self-awareness and decision-making.",
+    },
+    {
+      key: 2,
+      question: "How can I create a Kundli online that resonates with my personal details?",
+      answer:
+        "To create an accurate Kundli online, you need to provide your exact date, time, and place of birth. These details are crucial because even minor variations can change the planetary positions in your chart. Once you enter this information, the system generates a personalized birth chart that reflects your unique astrological profile. The online process is simple, efficient, and eliminates the need to manually calculate complex astrological elements.",
+    },
+    {
+      key: 3,
+      question: "Can an online Kundli truly reflect who I am?",
+      answer:
+        "Yes, an online Kundli can provide an accurate and detailed picture of your astrological identity, provided your birth details are correct. These charts are based on precise Vedic astrology principles, which have been trusted for centuries. The insights offered often resonate deeply with an individual’s life experiences, from career and relationships to personal challenges. While interpretations can vary, the fundamental calculations are accurate and reliable.",
+    },
+    {
+      key: 4,
+      question: "Do I need to know astrology to understand my Kundli?",
+      answer:
+        "Absolutely not! Online Kundli tools are designed to be user-friendly and accessible to everyone. You don’t need any prior knowledge of astrology. Most tools provide detailed explanations and summaries of the key elements in your chart, such as your Lagna (ascendant), planetary placements, and life periods. These interpretations are presented in simple terms, making it easy for anyone to explore and understand their astrological profile.",
+    },
+    {
+      key: 5,
+      question: "What specific benefits will I gain from creating my Kundli?",
+      answer:
+        "Creating your Kundli offers numerous benefits. It can help you understand your personality traits, identify your strengths, and discover areas where improvement is needed. You can also gain insights into your career path, financial opportunities, and compatibility with others. Many people use their Kundli to plan important life events, such as marriage or career changes, as it provides a broader perspective on the timing and likelihood of success.",
+    },
+    {
+      key: 6,
+      question: "Is creating a Kundli online really free, and are there any hidden costs?",
+      answer:
+        "Yes, the basic process of generating a Kundli online is completely free. This means you can access your birth chart, planetary positions, and basic interpretations without any charges. However, some platforms may offer optional premium services, such as detailed reports or personalized consultations, which you can choose to purchase if needed. Rest assured, the free version itself provides significant value.",
+    },
+  ];
+  
   return <div>
       <div className=" px-[10px] lg:px-[65px] py-4 ">
         <div className="relative">
-          <Image className="w-full h-[250px] rounded-lg flex" src="/FreeKundli.png" alt="Icon" width={400} height={400} />
-          <h2 className="absolute top-1/2 left-2/3 transform -translate-x-1/2
+          <Image className="w-full h-[250px] rounded-lg flex" src="/FreeKundliBanner.png" alt="Icon" width={400} height={400} />
+          {/* <h2 className="absolute top-1/2 left-2/3 transform -translate-x-1/2
                    -translate-y-1/2 text-yellow-300 text-[50px] font-heading font-bold
                    [text-shadow:_1px_1px_0_black,_-1px_1px_0_black,_1px_-1px_0_black,_-1px_-1px_0_black]">
             Kundli Patrika
-          </h2>
+          </h2> */}
 
         </div>
         <div className="font-sans pt-10">
@@ -55,7 +93,7 @@ function page() {
       </div>
 
       <CallchatReusable />
-      <FAQ />
+      <FAQ faqs={faqsData}/>
       <RecomendedAstro />
     </div>;
 }
