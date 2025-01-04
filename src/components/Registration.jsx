@@ -268,13 +268,14 @@ const AstrologerRegistration = () => {
 
   // Steps Data
   const steps = [
-    { icon: <FaUser />, label: "Personal Details" },
-    { icon: <FaSms />, label: "OTP Verify" },
-    { icon: <FaBrain />, label: "Skill Details" },
-    { icon: <FaClipboardList />, label: "Other Details" },
-    { icon: <FaUniversity />, label: "Bank Details" },
-    { icon: <FaCloudUploadAlt />, label: "Uploads" },
+    { icon: <FaUser />, label: "Personal Details", shortLabel: "Personal" },
+    { icon: <FaSms />, label: "OTP Verify", shortLabel: "OTP" },
+    { icon: <FaBrain />, label: "Skill Details", shortLabel: "Skills" },
+    { icon: <FaClipboardList />, label: "Other Details", shortLabel: "Other" },
+    { icon: <FaUniversity />, label: "Bank Details", shortLabel: "Bank" },
+    { icon: <FaCloudUploadAlt />, label: "Uploads", shortLabel: "Uploads" },
   ];
+  
 
   // Handle Next Button
   const handleNext = (values) => {
@@ -315,45 +316,48 @@ const AstrologerRegistration = () => {
         Astrologer Registration
       </h1>
 
-      {/* Progress Bar */}
-      <div className="w-full px-[10px] max-w-[600px] mb-16 mt-8 relative">
-        <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 z-0 transform -translate-y-1/2 rounded-full shadow-lg">
-          <div
-            className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-500"
-            style={{ width: `${(step / 6) * 100}%` }}
-          ></div>
+     {/* Progress Bar */}
+<div className="w-full px-[10px] max-w-[600px] mb-16 mt-8 relative">
+  <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 z-0 transform -translate-y-1/2 rounded-full shadow-lg">
+    <div
+      className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-500"
+      style={{ width: `${(step / 6) * 100}%` }}
+    ></div>
+  </div>
+  <div className="relative z-10 flex justify-between items-center">
+    {steps.map((item, index) => (
+      <div
+        key={index}
+        className="relative flex flex-col items-center text-center"
+        style={{
+          position: "absolute",
+          left: `${(index / (steps.length - 1)) * 100}%`,
+          transform: "translateX(-50%)",
+        }}
+      >
+        <div
+          className={`w-8 h-8 md:w-10 md:h-10 mt-5 rounded-full flex items-center justify-center text-2xl font-bold transition-all duration-300 ${
+            step >= index + 1
+              ? "bg-gradient-to-r from-green-400 to-blue-500 text-white shadow-lg"
+              : "bg-gray-400 text-gray-800"
+          }`}
+        >
+          {item.icon}
         </div>
-        <div className="relative z-10 flex justify-between items-center">
-          {steps.map((item, index) => (
-            <div
-              key={index}
-              className="relative flex flex-col items-center text-center"
-              style={{
-                position: "absolute",
-                left: `${(index / (steps.length - 1)) * 100}%`,
-                transform: "translateX(-50%)",
-              }}
-            >
-              <div
-                className={` w-8 h-8  md:w-10 md:h-10 mt-5 rounded-full flex items-center justify-center text-2xl font-bold transition-all duration-300 ${
-                  step >= index + 1
-                    ? "bg-gradient-to-r from-green-400 to-blue-500 text-white shadow-lg"
-                    : "bg-gray-400 text-gray-800"
-                }`}
-              >
-                {item.icon}
-              </div>
-              <p
-                className={`text-xs lg:text-sm mt-2 ${
-                  step >= index + 1 ? "text-white" : "text-gray-300"
-                }`}
-              >
-                {item.label}
-              </p>
-            </div>
-          ))}
-        </div>
+        {/* Responsive Label */}
+        <p
+          className={`text-xs lg:text-sm mt-2 ${
+            step >= index + 1 ? "text-white" : "text-gray-300"
+          }`}
+        >
+          <span className="hidden sm:inline">{item.label}</span> {/* Full label for larger screens */}
+          <span className="sm:hidden">{item.shortLabel}</span> {/* Short label for smaller screens */}
+        </p>
       </div>
+    ))}
+  </div>
+</div>
+
 
       {/* Form */}
 {step === 1 && (<Formik
