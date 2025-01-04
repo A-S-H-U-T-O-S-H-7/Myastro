@@ -22,17 +22,15 @@ const AstrologerRegistration = () => {
     }));
   };
 
-  const handleMultiSelect = (field, value, setFieldValue, values) => {
-    const currentValues = values[field] || [];
-    if (currentValues.includes(value)) {
-      setFieldValue(
-        field,
-        currentValues.filter((item) => item !== value) // Remove value if selected
-      );
-    } else {
-      setFieldValue(field, [...currentValues, value]); // Add value if not selected
-    }
+  const handleMultiSelect = (fieldName, value, setFieldValue, values) => {
+    const currentValues = values[fieldName] || [];
+    const updatedValues = currentValues.includes(value)
+      ? currentValues.filter((item) => item !== value) 
+      : [...currentValues, value]; 
+    setFieldValue(fieldName, updatedValues);
   };
+  
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -81,9 +79,28 @@ const AstrologerRegistration = () => {
 
 //   skill Schema
   const skillDetailsSchema = Yup.object().shape({
+    profileImage: Yup.mixed()
+      .required("Profile picture is required")
+      .test(
+        "fileType",
+        "Unsupported file type (only jpg, png, jpeg allowed)",
+        (value) => {
+          return (
+            !value ||
+            ["image/jpeg", "image/png", "image/jpg"].includes(value.type)
+          );
+        }
+      )
+      .test(
+        "fileSize",
+        "File size exceeds 2MB",
+        (value) => !value || value.size <= 2 * 1024 * 1024
+      ),
     username: Yup.string().required("Full Name is required"),
     gender: Yup.string().required("Gender is required"),
     dob: Yup.string().required("Date of Birth is required"),
+    state: Yup.string().required("State is required"),
+    city: Yup.string().required("city is required"),
     completeAddress: Yup.string().required("Complete Address is required"),
     pincode: Yup.string()
       .matches(/^[0-9]{6}$/, "Must be a valid 6-digit pincode")
@@ -96,9 +113,9 @@ const AstrologerRegistration = () => {
       .required("Aadhar number is required"),
     maritalstatus: Yup.string().required("Marital Status is required"),
     primaryskill: Yup.string().required("Primary Skill is required"),
-    allskills: Yup.array()
-      .of(Yup.string())
-      .min(1, "At least one skill must be selected"),
+    // allskills: Yup.array()
+    //   .of(Yup.string())
+    //   .min(1, "At least one skill must be selected"),
     languages: Yup.array()
       .of(Yup.string())
       .min(1, "At least one language must be selected"),
@@ -116,10 +133,10 @@ const AstrologerRegistration = () => {
     workinginonlineplatform: Yup.string().required(
       "Please indicate if you are working on another platform"
     ),
-    platform: Yup.string().when("workinginonlineplatform", {
-      is: "yes",
-      then: Yup.string().required("Platform name is required"),
-    }),
+    // platform: Yup.string().when("workinginonlineplatform", {
+    //   is: "yes",
+    //   then: Yup.string().required("Platform name is required"),
+    // }),
   });
 
 
@@ -299,7 +316,7 @@ const AstrologerRegistration = () => {
       </h1>
 
       {/* Progress Bar */}
-      <div className="w-full max-w-[650px] mb-10 relative">
+      <div className="w-full px-[10px] max-w-[600px] mb-16 mt-8 relative">
         <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 z-0 transform -translate-y-1/2 rounded-full shadow-lg">
           <div
             className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-500"
@@ -318,7 +335,7 @@ const AstrologerRegistration = () => {
               }}
             >
               <div
-                className={`w-10 h-10 mt-5 rounded-full flex items-center justify-center text-2xl font-bold transition-all duration-300 ${
+                className={` w-8 h-8  md:w-10 md:h-10 mt-5 rounded-full flex items-center justify-center text-2xl font-bold transition-all duration-300 ${
                   step >= index + 1
                     ? "bg-gradient-to-r from-green-400 to-blue-500 text-white shadow-lg"
                     : "bg-gray-400 text-gray-800"
@@ -327,7 +344,7 @@ const AstrologerRegistration = () => {
                 {item.icon}
               </div>
               <p
-                className={`text-sm mt-2 ${
+                className={`text-xs lg:text-sm mt-2 ${
                   step >= index + 1 ? "text-white" : "text-gray-300"
                 }`}
               >
@@ -339,7 +356,7 @@ const AstrologerRegistration = () => {
       </div>
 
       {/* Form */}
-      {step === 1 && (<Formik
+{step === 1 && (<Formik
         initialValues={{
           fullName: "",
           email: "",
@@ -358,7 +375,7 @@ const AstrologerRegistration = () => {
 
             {/* Full Name */}
             <div className="flex flex-col space-y-1">
-              <label className=" font-medium text-gray-700 dark:text-white">
+              <label className=" font-medium text-gray-700 ">
                 Full Name<span className="text-red-500">*</span>
               </label>
               <Field
@@ -457,7 +474,7 @@ const AstrologerRegistration = () => {
          <div className="w-full max-w-4xl bg-gradient-to-b from-white via-[#f8f4ff] to-[#eae0ff]  shadow-lg rounded-lg p-8 space-y-6">
 
               <Form className="space-y-6">
-                <h2 className="text-lg font-bold text-center text-gray-800 mb-4">
+                <h2 className="text-2xl font-bold text-center text-gray-800">
                   OTP VERIFICATION
                 </h2>
                 <p className="text-gray-700 text-center mb-2">
@@ -468,7 +485,7 @@ const AstrologerRegistration = () => {
                 </p>
 
                 <div>
-                  <label className="block text-lg font-semibold text-gray-700 dark:text-white mb-1">
+                  <label className="block text-lg font-semibold text-gray-700 mb-1">
                     OTP<span className="text-red-500">*</span>
                   </label>
                   <Field
@@ -523,8 +540,544 @@ const AstrologerRegistration = () => {
             )}
           </Formik>
         )}
-
 {step === 3 && (
+  <Formik
+    initialValues={{
+         profileImage: null,
+         username: "",
+         gender: "",
+         dob: "",
+         state:"",
+         city:"",
+         completeAddress: "",
+         pincode: "",
+         pannumber: "",
+         adharnumber: "",
+         maritalstatus: "",
+         primaryskill: "",
+         allskills: [],
+         languages: [],
+         dailycontributionhour: "",
+         experience: "",
+         wheredidyouhereaboutmyastro: "",
+         
+    }}
+    validationSchema={skillDetailsSchema}
+    onSubmit={handleNext}
+  >
+    {({  values, setFieldValue, errors, touched}) => (
+      <div className="w-full max-w-4xl bg-gradient-to-b from-white via-[#f8f4ff] to-[#eae0ff] shadow-lg rounded-lg p-8 space-y-6">
+        <Form className="space-y-6">
+          <h2 className="text-2xl font-bold text-center text-gray-800 mb-2 ">
+            SKILL DETAILS
+          </h2>
+
+ {/* Profile Photo */}
+ <div className="flex flex-col items-center space-y-2">
+        <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-purple-500 dark:border-cyan-500">
+          {values.profileImage ? (
+            <img
+              src={URL.createObjectURL(values.profileImage)}
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span className="text-center w-full h-full flex items-center justify-center text-sm text-gray-500 dark:text-[#888ea8]">
+              Upload Photo
+            </span>
+          )}
+          <label
+            htmlFor="profileImage"
+            className="absolute bottom-0 right-0 bg-purple-500 dark:bg-cyan-500 text-white p-1 rounded-full cursor-pointer"
+          >
+            <FaPen />
+          </label>
+          <input
+            id="profileImage"
+            type="file"
+            accept="image/jpeg,image/png,image/jpg"
+            className="hidden"
+            onChange={(e) => {
+              setFieldValue("profileImage", e.target.files[0]);
+            }}
+          />
+        </div>
+        {errors.profileImage && touched.profileImage && (
+          <p className="text-red-500 text-sm">{errors.profileImage}</p>
+        )}
+        <p className="text-red-500 border border-dashed rounded-md py-1 px-1 border-gray-800 text-xs">
+          Only Passport size photo is accepted
+        </p>
+        <p className="text-orange-500 text-xs">
+          Supported formats: jpg, png, jpeg. Max size: 2MB.
+        </p>
+      </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+{/* Full name */}
+<div className="flex flex-col gap-2">
+  <label className="text-sm font-semibold text-gray-800">
+  Full Name
+    <span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="username"
+    type="text"
+    placeholder="Enter your name"
+    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
+  />
+  <ErrorMessage
+    name="username"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
+
+{/* Gender Dropdown */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Gender<span className="text-red-500">*</span>
+  </label>
+  <div
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 flex items-center justify-between text-sm placeholder-gray-500 cursor-pointer relative"
+    onClick={() => toggleDropdown("gender")}
+  >
+    <span>{values.gender ? values.gender : "Select Gender"}</span>
+    {dropdownStates?.gender ? (
+      <FaCaretUp className="text-gray-600" />
+    ) : (
+      <FaCaretDown className="text-gray-600" />
+    )}
+  </div>
+  {dropdownStates?.gender && (
+    <div
+      className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-md z-10"
+    >
+      {["Male", "Female", "Other"].map((option) => (
+        <div
+          key={option}
+          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+          onClick={() => {
+            setFieldValue("gender", option);
+            toggleDropdown("gender");
+          }}
+        >
+          {option}
+        </div>
+      ))}
+    </div>
+  )}
+  <ErrorMessage name="gender" component="p" className="text-red-500 text-sm" />
+</div>
+{/* Date of Birth */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Date of Birth<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="dob"
+    type="date"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage name="dob" component="p" className="text-red-500 text-sm" />
+</div>
+{/* Country */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Country<span className="text-red-500">*</span>
+  </label>
+  <Field
+    as="select"
+    name="country"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  >
+    <option value="" disabled>
+      Select Country
+    </option>
+    <option value="India">India</option>
+  </Field>
+  <ErrorMessage name="country" component="p" className="text-red-500 text-sm" />
+</div>
+{/* State */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    State<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="state"
+    type="text"
+    placeholder="Enter State"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage name="state" component="p" className="text-red-500 text-sm" />
+</div>
+{/* City */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    City<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="city"
+    type="text"
+    placeholder="Enter City"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage name="city" component="p" className="text-red-500 text-sm" />
+</div>
+{/* Complete Address */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Address<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="completeAddress"
+    type="text"
+    placeholder="Enter your full address"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage name="completeAddress" component="p" className="text-red-500 text-sm" />
+</div>
+{/* Pincode */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Pincode<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="pincode"
+    type="text"
+    maxLength={6}
+    placeholder="Enter your 6-digit pincode"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage name="pincode" component="p" className="text-red-500 text-sm" />
+</div>
+{/* PAN Number */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    PAN Number<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="pannumber"
+    type="text"
+    maxLength={10}
+    placeholder="Enter your PAN (e.g., ABCDE1234F)"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+    onInput={(e) => {
+      e.target.value = e.target.value.toUpperCase();
+    }}
+  />
+  <ErrorMessage name="pannumber" component="p" className="text-red-500 text-sm" />
+</div>
+{/* Aadhar Number */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Aadhar Number<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="adharnumber"
+    type="text"
+    maxLength={12}
+    placeholder="Enter your 12-digit Aadhar number"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+    onInput={(e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Ensures only digits are entered.
+    }}
+  />
+  <ErrorMessage name="adharnumber" component="p" className="text-red-500 text-sm" />
+</div>
+{/* GST Number */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    GST (Optional)
+  </label>
+  <Field
+    name="gst"
+    type="text"
+    placeholder="Enter your GST number (optional)"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+</div>
+{/* Marital Status Dropdown */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Marital Status<span className="text-red-500">*</span>
+  </label>
+  <div
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 flex items-center justify-between text-sm placeholder-gray-500 cursor-pointer"
+    onClick={() => toggleDropdown("maritalstatus")}
+  >
+    <span>{values.maritalstatus ? values.maritalstatus : "Select Status"}</span>
+    {dropdownStates.maritalstatus ? (
+      <FaCaretUp className="text-gray-600" />
+    ) : (
+      <FaCaretDown className="text-gray-600" />
+    )}
+  </div>
+  {dropdownStates.maritalstatus && (
+    <div className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-md z-10">
+      {["Single", "Married"].map((option) => (
+        <div
+          key={option}
+          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+          onClick={() => {
+            setFieldValue("maritalstatus", option);
+            toggleDropdown("maritalstatus");
+          }}
+        >
+          {option}
+        </div>
+      ))}
+    </div>
+  )}
+  <ErrorMessage name="maritalstatus" component="p" className="text-red-500 text-sm" />
+</div>
+{/* Primary Skill Dropdown */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Primary Skill<span className="text-red-500">*</span>
+  </label>
+  <div
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 flex items-center justify-between text-sm placeholder-gray-500 cursor-pointer"
+    onClick={() => toggleDropdown("primaryskill")}
+  >
+    <span>{values.primaryskill ? values.primaryskill : "Select Primary Skill"}</span>
+    {dropdownStates?.primaryskill ? (
+      <FaCaretUp className="text-gray-600" />
+    ) : (
+      <FaCaretDown className="text-gray-600" />
+    )}
+  </div>
+  {dropdownStates?.primaryskill && (
+    <div className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-md z-10">
+      {["Tarot", "Numerology", "Vastu", "Vedic"].map((skill) => (
+        <div
+          key={skill}
+          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+          onClick={() => {
+            setFieldValue("primaryskill", skill);
+            toggleDropdown("primaryskill");
+          }}
+        >
+          {skill}
+        </div>
+      ))}
+    </div>
+  )}
+  <ErrorMessage name="primaryskill" component="p" className="text-red-500 text-sm" />
+</div>
+
+
+
+{/* Languages Multi-Select */}
+<div className="relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Languages<span className="text-red-500">*</span>
+  </label>
+  <div
+    className="w-full border border-gray-300 bg-white rounded-lg px-4 py-2 flex items-center flex-wrap gap-2 cursor-pointer"
+    onClick={() => toggleDropdown("languages")}
+  >
+    {values.languages?.length > 0 ? (
+      values.languages.map((lang) => (
+        <span
+          key={lang}
+          className="bg-blue-500 border border-gray-300 rounded-md px-3 text-white  flex items-center gap-2"
+        >
+          {lang}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleMultiSelect("languages", lang, setFieldValue, values);
+            }}
+            className="text-red-500 hover:text-red-700"
+          >
+            &times;
+          </button>
+        </span>
+      ))
+    ) : (
+      <span className="text-gray-500">Select Languages</span>
+    )}
+    <div className="ml-auto">
+      {dropdownStates.languages ? (
+        <FaCaretUp className="text-gray-500" />
+      ) : (
+        <FaCaretDown className="text-gray-500" />
+      )}
+    </div>
+  </div>
+  {dropdownStates.languages && (
+    <div className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-md z-10">
+      {["Hindi", "English", "Odia"].map((lang) => (
+        <div
+          key={lang}
+          className={`px-4 py-2 hover:bg-gray-200 cursor-pointer ${
+            values.languages?.includes(lang) ? "bg-gray-100 font-semibold" : ""
+          }`}
+          onClick={() => handleMultiSelect("languages", lang, setFieldValue, values)}
+        >
+          {lang}
+        </div>
+      ))}
+    </div>
+  )}
+  <ErrorMessage name="languages" component="p" className="text-red-500 text-sm" />
+</div>
+
+{/* Daily Contribution Hours */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Daily Contribution Hours<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="dailycontributionhour"
+    type="number"
+    min="1"
+    max="20"
+    placeholder="Enter hours (1-20)"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage
+    name="dailycontributionhour"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
+{/* Experience in Years */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Experience in Years<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="experience"
+    type="number"
+    min="0"
+    placeholder="Enter your experience in years"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage
+    name="experience"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
+{/* Where Did You Hear About MyAstro */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Where Did You Hear About MyAstro?<span className="text-red-500">*</span>
+  </label>
+  <div
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 flex items-center justify-between text-sm placeholder-gray-500 cursor-pointer relative"
+    onClick={() => toggleDropdown("myAstroSource")}
+  >
+    <span>
+      {values.wheredidyouhereaboutmyastro
+        ? values.wheredidyouhereaboutmyastro
+        : "Select Source"}
+    </span>
+    {dropdownStates?.myAstroSource ? (
+      <FaCaretUp className="text-gray-600" />
+    ) : (
+      <FaCaretDown className="text-gray-600" />
+    )}
+  </div>
+  {dropdownStates?.myAstroSource && (
+    <div
+      className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-md z-10"
+    >
+      {["Facebook", "Instagram", "Twitter", "LinkedIn"].map((source) => (
+        <div
+          key={source}
+          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+          onClick={() => {
+            setFieldValue("wheredidyouhereaboutmyastro", source);
+            toggleDropdown("myAstroSource");
+          }}
+        >
+          {source}
+        </div>
+      ))}
+    </div>
+  )}
+  <ErrorMessage
+    name="wheredidyouhereaboutmyastro"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
+{/* Radio Buttons: Working on Other Platforms */}
+<div className="flex flex-col gap-2">
+  <label className="text-sm font-semibold text-gray-800">
+    Are You Working on Any Other Online Platform?<span className="text-red-500">*</span>
+  </label>
+  <div className="flex gap-6 items-center">
+    <label className="flex items-center gap-2 text-sm text-gray-800">
+      <Field
+        type="radio"
+        name="workinginonlineplatform"
+        value="yes"
+        className="text-purple-500 focus:ring-purple-500"
+      />
+      Yes
+    </label>
+    <label className="flex items-center gap-2 text-sm text-gray-800">
+      <Field
+        type="radio"
+        name="workinginonlineplatform"
+        value="no"
+        className="text-purple-500 focus:ring-purple-500"
+      />
+      No
+    </label>
+  </div>
+  <ErrorMessage
+    name="workinginonlineplatform"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
+{/* Platform
+{values.workinginonlineplatform === "yes" && (
+  <div className="flex flex-col gap-2">
+    <label className="text-sm font-semibold text-gray-800">
+      Platform<span className="text-red-500">*</span>
+    </label>
+    <Field
+      name="platform"
+      type="text"
+      placeholder="Enter the platform name"
+      className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+    />
+    <ErrorMessage
+      name="platform"
+      component="p"
+      className="text-red-500 text-sm"
+    />
+  </div>
+)} */}
+
+
+
+
+</div>
+
+          <div className="flex justify-end mt-6">
+          
+          <button
+            type="submit"
+            className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg"
+          >
+            Next
+          </button>
+        </div>
+        </Form>
+      </div>
+    )}
+  </Formik>
+)}     
+
+{step === 4 && (
   <Formik
     initialValues={{
       minCharges: "",
@@ -543,125 +1096,133 @@ const AstrologerRegistration = () => {
     {({ values, setFieldValue, isValid, touched, validateForm }) => (
       <div className="w-full max-w-4xl bg-gradient-to-b from-white via-[#f8f4ff] to-[#eae0ff] shadow-lg rounded-lg p-8 space-y-6">
         <Form className="space-y-6">
-          <h2 className="text-lg font-bold text-center text-gray-800 mb-4">
+          <h2 className="text-2xl font-bold text-center text-gray-800 mb-2 ">
             ADDITIONAL DETAILS
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-            {/* Why do you think we should onboard you */}
-            <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
-                Why do you think we should onboard you?:
-                <span className="text-red-500">*</span>
-              </label>
-              <Field
-                name="whyOnboard"
-                type="text"
-                placeholder="Type here..."
-                className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-              />
-              <ErrorMessage
-                name="whyOnboard"
-                component="p"
-                className="text-red-500 text-sm"
-              />
-            </div>
+           {/* Why do you think we should onboard you */}
+<div className="flex flex-col gap-2">
+  <label className="text-sm font-semibold text-gray-800">
+    Why do you think we should onboard you?:
+    <span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="whyOnboard"
+    type="text"
+    placeholder="Why do you think we should onboard you..."
+    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
+  />
+  <ErrorMessage
+    name="whyOnboard"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
 
-            {/* Main Source of Income */}
-            <div className="relative ">
-              <label className="block font-semibold mb-1 text-gray-800 ">
-                Main source of income (other than astrology)?*
-              </label>
-              <div
-                className="w-full border border-gray-300 bg-white rounded-md px-4 py-2 flex items-center justify-between cursor-pointer"
-                onClick={() => toggleDropdown("mainIncomeSource")}
-              >
-                <span>
-                  {values.mainIncomeSource
-                    ? values.mainIncomeSource
-                    : "--Select Source Income--"}
-                </span>
-                {dropdownStates?.mainIncomeSource ? (
-                  <FaCaretUp />
-                ) : (
-                  <FaCaretDown />
-                )}
-              </div>
-              {dropdownStates?.mainIncomeSource && (
-                <div className="absolute w-full bg-white dark:bg-[#1e2737] shadow-md rounded-md z-10">
-                  {["Business", "Private Job", "Government Job"].map((option) => (
-                    <div
-                      key={option}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-[#2d3747] cursor-pointer"
-                      onClick={() => {
-                        setFieldValue("mainIncomeSource", option);
-                        toggleDropdown("mainIncomeSource");
-                      }}
-                    >
-                      {option}
-                    </div>
-                  ))}
-                </div>
-              )}
-              <ErrorMessage
-                name="mainIncomeSource"
-                component="p"
-                className="text-red-500 text-sm"
-              />
-            </div>
+{/* Main source of income (other than astrology) */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Main source of income (other than astrology)?:
+    <span className="text-red-500">*</span>
+  </label>
+  <div
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 flex items-center justify-between text-sm placeholder-gray-500 cursor-pointer relative"
+    onClick={() => toggleDropdown("mainIncomeSource")}
+  >
+    <span>
+      {values.mainIncomeSource
+        ? values.mainIncomeSource
+        : "--Select Source Income--"}
+    </span>
+    {dropdownStates?.mainIncomeSource ? (
+      <FaCaretUp className="text-gray-600" />
+    ) : (
+      <FaCaretDown className="text-gray-600" />
+    )}
+  </div>
+  {dropdownStates?.mainIncomeSource && (
+    <div
+      className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-md z-10"
+    >
+      {["Business", "Private Job", "Government Job"].map((option) => (
+        <div
+          key={option}
+          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+          onClick={() => {
+            setFieldValue("mainIncomeSource", option);
+            toggleDropdown("mainIncomeSource");
+          }}
+        >
+          {option}
+        </div>
+      ))}
+    </div>
+  )}
+  <ErrorMessage
+    name="mainIncomeSource"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
 
- {/* Highest Qualification */}
- <div className="relative">
-              <label className="block font-semibold mb-1 text-gray-800">
-                Select your highest qualification:*
-              </label>
-              <div
-                className="w-full border border-gray-300 bg-white  rounded-md px-4 py-2 flex items-center justify-between cursor-pointer"
-                onClick={() => toggleDropdown("highestQualification")}
-              >
-                <span>
-                  {values.highestQualification
-                    ? values.highestQualification
-                    : "--Select Qualification--"}
-                </span>
-                {dropdownStates.highestQualification ? <FaCaretUp /> : <FaCaretDown />}
-              </div>
-              {dropdownStates.highestQualification && (
-                <div className="absolute w-full bg-white  shadow-md rounded-md z-10">
-                  {["10th", "12th", "Graduate", "Post Graduate", "PhD"].map(
-                    (option) => (
-                      <div
-                        key={option}
-                        className="px-4 py-2 hover:bg-gray-200  cursor-pointer"
-                        onClick={() => {
-                          setFieldValue("highestQualification", option);
-                          toggleDropdown("highestQualification");
-                        }}
-                      >
-                        {option}
-                      </div>
-                    )
-                  )}
-                </div>
-              )}
-              <ErrorMessage
-                name="highestQualification"
-                component="p"
-                className="text-red-500 text-sm"
-              />
-            </div>
+{/* Highest Qualification */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Select your highest qualification:
+    <span className="text-red-500">*</span>
+  </label>
+  <div
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 flex items-center justify-between text-sm placeholder-gray-500 cursor-pointer relative"
+    onClick={() => toggleDropdown("highestQualification")}
+  >
+    <span>
+      {values.highestQualification
+        ? values.highestQualification
+        : "--Select Qualification--"}
+    </span>
+    {dropdownStates?.highestQualification ? (
+      <FaCaretUp className="text-gray-600" />
+    ) : (
+      <FaCaretDown className="text-gray-600" />
+    )}
+  </div>
+  {dropdownStates?.highestQualification && (
+    <div
+      className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-md z-10"
+    >
+      {["10th", "12th", "Graduate", "Post Graduate", "PhD"].map((option) => (
+        <div
+          key={option}
+          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+          onClick={() => {
+            setFieldValue("highestQualification", option);
+            toggleDropdown("highestQualification");
+          }}
+        >
+          {option}
+        </div>
+      ))}
+    </div>
+  )}
+  <ErrorMessage
+    name="highestQualification"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
 
             {/* From where did you learn Astrology? */}
-            <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-800">
               From where did you learn Astrology?:
                 <span className="text-red-500">*</span>
               </label>
               <Field
                 name="learnAstrology"
                 type="text"
-                placeholder="Type here..."
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-              />
+                placeholder="From where did you learn Astrology..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
+                />
               <ErrorMessage
                 name="learnAstrology"
                 component="p"
@@ -669,86 +1230,85 @@ const AstrologerRegistration = () => {
               />
             </div>
 
-              {/* Instagram profile link (optional): */}
-              <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
-              Instagram profile link (optional):
-                
-              </label>
-              <Field
-                name="instalink"
-                type="text"
-                placeholder="Type here..."
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-              />
-              </div>
+             {/* Instagram profile link (optional): */}
+<div className="flex flex-col gap-2">
+  <label className="text-sm font-semibold text-gray-800">
+    Instagram Profile Link (optional)
+  </label>
+  <Field
+    name="instalink"
+    type="text"
+    placeholder="Enter your Instagram profile link..."
+    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
+  />
+</div>
 
                {/*Facebook profile link (optional): */}
-               <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
+               <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-800 ">
               Facebook profile link (optional):
                 
               </label>
               <Field
                 name="facebooklink"
                 type="text"
-                placeholder="Type here..."
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-              />
+                placeholder="Enter your Facebook profile link..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
+                />
               </div>
 
                {/* LinkedIn profile link (optional): */}
-               <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
+               <div className="flex flex-col gap-2">
+              <label className=" text-sm font-semibold text-gray-800 ">
               LinkedIn profile link (optional):
                 
               </label>
               <Field
                 name="linkedinlink"
                 type="text"
-                placeholder="Type here..."
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                placeholder="Enter your LinkedIn link..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
               />
               </div>
 
                {/* Youtube channel link (optional): */}
-               <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
+               <div className="flex flex-col gap-2">
+              <label className=" text-sm font-semibold text-gray-800 ">
               Youtube channel link (optional):
                 
               </label>
               <Field
                 name="youtubelink"
                 type="text"
-                placeholder="Type here..."
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                placeholder="Enter your Youtube link..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
               />
               </div>
                {/*Website profile link (optional): */}
-               <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
+               <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-800 ">
               Website profile link (optional):
                 
               </label>
               <Field
                 name="websitelink"
                 type="text"
-                placeholder="Type here..."
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                placeholder="Enter your Website link.."
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
               />
               </div>
 
               {/* Minimum charges per minutes from customer*/}
-            <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-800 ">
               Minimum charges per minutes from customer:
                 <span className="text-red-500">*</span>
               </label>
               <Field
                 name="minCharges"
                 type="number"
-                placeholder="Type here..."
-                className="w-full border border-gray-300  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                placeholder="Enter Minimum charges per minute..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
               />
               <ErrorMessage
                 name="minCharges"
@@ -758,16 +1318,16 @@ const AstrologerRegistration = () => {
             </div>
 
              {/*Minimum Monthly Earning Expectation from Myastro*/}
-             <div className="flex flex-col space-y-1">
-              <label className=" text-gray-800 font-semibold ">
+             <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-800  ">
               Monthly Earning Expectation from Myastro:
                 <span className="text-red-500">*</span>
               </label>
               <Field
                 name="minEarnings"
                 type="number"
-                placeholder="Type here..."
-                className="w-full border border-gray-300  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                placeholder="Enter Expected Monthly Earning ..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
               />
               <ErrorMessage
                 name="minEarnings"
@@ -778,12 +1338,12 @@ const AstrologerRegistration = () => {
 
             {/* Are you currently working a full-time job */}
 <div className="relative">
-  <label className="block font-semibold mb-1 text-gray-800">
+  <label className="block text-sm font-semibold mb-1 text-gray-800">
     Are you currently working a full-time job?
     <span className="text-red-500">*</span>
   </label>
   <div
-    className="w-full border border-gray-300 bg-white rounded-md px-4 py-2 flex items-center justify-between cursor-pointer"
+    className="w-full border border-gray-300 bg-white rounded-lg px-4 py-2 text-sm placeholder-gray-500 flex items-center focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 justify-between cursor-pointer"
     onClick={() => toggleDropdown("fulltimeJob")}
   >
     <span>
@@ -816,12 +1376,12 @@ const AstrologerRegistration = () => {
 
  {/* Did anybody refer you to Myastro? */}
  <div className="relative">
-  <label className="block font-semibold mb-1 text-gray-800">
+  <label className="block text-sm font-semibold mb-1 text-gray-800">
   Did anybody refer you to Myastro?:
   <span className="text-red-500">*</span>
   </label>
   <div
-    className="w-full border border-gray-300 bg-white rounded-md px-4 py-2 flex items-center justify-between cursor-pointer"
+    className="w-full border border-gray-300 bg-white rounded-lg px-4 py-2 text-sm placeholder-gray-500 flex items-center focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 justify-between cursor-pointer"
     onClick={() => toggleDropdown("referredBySomeone")}
   >
     <span>
@@ -853,8 +1413,8 @@ const AstrologerRegistration = () => {
 </div>
 
  {/* words */}
-<div className="flex flex-col space-y-1">
-<label className="block font-semibold mb-1 text-gray-800 ">
+<div className="flex flex-col gap-2">
+<label className="block text-sm font-semibold mb-1 text-gray-800 ">
                 Long Bio:
                 <span className="text-red-500">* </span>
                  <span className="text-sm text-gray-500 mt-1">
@@ -880,7 +1440,14 @@ const AstrologerRegistration = () => {
 
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-between">
+          <button
+            type="button"
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-lg"
+            onClick={() => setStep(step - 1)}
+          >
+            Previous
+          </button>
             <button
               type="submit"
               className={`bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 ${
@@ -897,7 +1464,7 @@ const AstrologerRegistration = () => {
 )}
   
 
-  {step === 4 && (
+  {step === 5 && (
   <Formik
     initialValues={{
       ifscCode: "",
@@ -913,150 +1480,158 @@ const AstrologerRegistration = () => {
   >
     {({ values, setFieldValue, validateForm }) => (
       <Form className="space-y-6 w-full max-w-4xl mx-auto bg-gradient-to-b from-white via-[#f8f4ff] to-[#eae0ff] shadow-lg rounded-lg p-8">
-        <h2 className="text-lg font-bold text-center text-gray-800 mb-4">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2 ">
           BANK DETAILS
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* IFSC Code */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-gray-800 font-semibold">IFSC Code
-            <span className="text-red-500">*</span>
-            </label>
-            <Field
-              name="ifscCode"
-              type="text"
-              placeholder="Enter IFSC Code"
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-            />
-            <ErrorMessage
-              name="ifscCode"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
+
+         {/* IFSC Code */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    IFSC Code<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="ifscCode"
+    type="text"
+    placeholder="Enter your IFSC Code"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage
+    name="ifscCode"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
 
           {/* Bank Name */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-gray-800 font-semibold">Bank Name
-            <span className="text-red-500">*</span>
-            </label>
-            <Field
-              name="bankName"
-              type="text"
-              placeholder="Enter Bank Name"
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-            />
-            <ErrorMessage
-              name="bankName"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Bank Name<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="bankName"
+    type="text"
+    placeholder="Enter your Bank Name"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage
+    name="bankName"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
 
-          {/* Bank Branch */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-gray-800 font-semibold">Bank Branch
-            <span className="text-red-500">*</span>
-            </label>
-            <Field
-              name="bankBranch"
-              type="text"
-              placeholder="Enter Bank Branch"
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-            />
-            <ErrorMessage
-              name="bankBranch"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
+         {/* Bank Branch */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Bank Branch<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="bankBranch"
+    type="text"
+    placeholder="Enter your Bank Branch"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage
+    name="bankBranch"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
 
-          {/* Account Type */}
-          <div className="relative">
-            <label className="text-gray-800 font-semibold">Account Type
-            <span className="text-red-500">*</span>
-            </label>
-            <div
-              className="w-full border border-gray-300 bg-white rounded-md px-4 py-2 flex items-center justify-between cursor-pointer"
-              onClick={() => toggleDropdown("accountType")}
-            >
-              <span>
-                {values.accountType ? values.accountType : "--Choose account type--"}
-              </span>
-              {dropdownStates.accountType ? <FaCaretUp /> : <FaCaretDown />}
-            </div>
-            {dropdownStates.accountType && (
-              <div className="absolute w-full bg-white shadow-md rounded-md z-10">
-                {["Savings", "Current"].map((type) => (
-                  <div
-                    key={type}
-                    className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                    onClick={() => {
-                      setFieldValue("accountType", type);
-                      toggleDropdown("accountType");
-                    }}
-                  >
-                    {type}
-                  </div>
-                ))}
-              </div>
-            )}
-            <ErrorMessage
-              name="accountType"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
+         {/* Account Type */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Account Type<span className="text-red-500">*</span>
+  </label>
+  <div
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 flex items-center justify-between text-sm placeholder-gray-500 cursor-pointer relative"
+    onClick={() => toggleDropdown("accountType")}
+  >
+    <span>
+      {values.accountType ? values.accountType : "--Choose Account Type--"}
+    </span>
+    {dropdownStates?.accountType ? (
+      <FaCaretUp className="text-gray-600" />
+    ) : (
+      <FaCaretDown className="text-gray-600" />
+    )}
+  </div>
+  {dropdownStates?.accountType && (
+    <div
+      className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-md z-10"
+    >
+      {["Savings", "Current"].map((type) => (
+        <div
+          key={type}
+          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+          onClick={() => {
+            setFieldValue("accountType", type);
+            toggleDropdown("accountType");
+          }}
+        >
+          {type}
+        </div>
+      ))}
+    </div>
+  )}
+  <ErrorMessage
+    name="accountType"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
 
-          {/* Account Number */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-gray-800 font-semibold">
-              Account Number
-              <span className="text-red-500">*</span>
-            </label>
-            <Field
-              name="accountNumber"
-              type="text"
-              placeholder="Enter your bank account number"
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-            />
-            <ErrorMessage
-              name="accountNumber"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
+       {/* Account Number */}
+       <div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Account Number<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="accountNumber"
+    type="text"
+    placeholder="Enter your bank account number"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+  <ErrorMessage
+    name="accountNumber"
+    component="p"
+    className="text-red-500 text-sm"
+  />
+</div>
+         
+         {/* Confirm Account Number */}
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Confirm Account Number<span className="text-red-500">*</span>
+  </label>
+  <Field
+    name="confirmAccountNumber"
+    type="text"
+    placeholder="Re-enter your bank account number"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+    onInput={(e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Ensures only digits are entered.
+    }}
+  />
+  <ErrorMessage name="confirmAccountNumber" component="p" className="text-red-500 text-sm" />
+</div>
 
-          {/* Confirm Account Number */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-gray-800 font-semibold">
-              Confirm Account Number
-              <span className="text-red-500">*</span>
-            </label>
-            <Field
-              name="confirmAccountNumber"
-              type="text"
-              placeholder="Re-enter your bank account number"
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-            />
-            <ErrorMessage
-              name="confirmAccountNumber"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
 
           {/* UPI ID (Optional) */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-gray-800 font-semibold">Bank UPI ID</label>
-            <Field
-              name="bankUPI"
-              type="text"
-              placeholder="Enter your UPI ID (optional)"
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500"
-            />
-          </div>
+<div className="flex flex-col gap-2 relative">
+  <label className="text-sm font-semibold text-gray-800">
+    Bank UPI ID
+  </label>
+  <Field
+    name="bankUPI"
+    type="text"
+    placeholder="Enter your UPI ID (optional)"
+    className="w-full border bg-white border-gray-300 rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+  />
+</div>
+
         </div>
 
         <div className="flex justify-between mt-6">
@@ -1079,7 +1654,7 @@ const AstrologerRegistration = () => {
   </Formik>
 )}
 
-{step === 5 && (
+{step === 6 && (
   <Formik
     initialValues={{
       astrologyCertificate: null,
@@ -1093,24 +1668,64 @@ const AstrologerRegistration = () => {
   >
     {({ setFieldValue, values, errors, touched }) => (
       <Form className="space-y-6 w-full max-w-4xl mx-auto bg-gradient-to-b from-white via-[#f3f4f6] to-[#eae0ff] shadow-lg rounded-lg p-8">
-        <h2 className="text-lg font-bold text-center text-gray-800 mb-4">
+        <h2 className="text-lg font-bold text-center text-gray-800 mb-6">
           UPLOAD DOCUMENTS
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* File Upload Component */}
+          {/* File Upload Boxes */}
           {[
-            { name: "astrologyCertificate", label: "Astrology Certificate*", type: "pdf or JPG" },
-            { name: "biodata", label: "Biodata (Optional)", type: "PDF or JPG" },
-            { name: "panCard", label: "Pan Card*", type: "JPG or JPEG" },
-            { name: "aadharFront", label: "Aadhar Front*", type: "JPG or JPEG" },
-            { name: "aadharBack", label: "Aadhar Back*", type: "JPG or JPEG" },
+            {
+              name: "astrologyCertificate",
+              label: "Astrology Certificate*",
+              type: "pdf or JPG",
+              icon: "/certificate.png", 
+            },
+            {
+              name: "biodata",
+              label: "Biodata (Optional)",
+              type: "PDF or JPG",
+              icon: "/personal-data.png",
+            },
+            {
+              name: "panCard",
+              label: "Pan Card*",
+              type: "JPG or JPEG",
+              icon: "/pancard.webp",
+            },
+            {
+              name: "aadharFront",
+              label: "Aadhar Front*",
+              type: "JPG or JPEG",
+              icon: "/adharfront.png",
+            },
+            {
+              name: "aadharBack",
+              label: "Aadhar Back*",
+              type: "JPG or JPEG",
+              icon: "/adharfront.png",
+            },
           ].map((field) => (
-            <div key={field.name} className="flex flex-col space-y-2">
-              <label className="text-gray-800 font-semibold">
-                {field.label}
-              </label>
+            <div
+              key={field.name}
+              className="flex flex-col space-y-2 bg-white shadow-md rounded-lg p-4 border border-gray-200"
+            >
               <div className="flex items-center space-x-4">
+                <img
+                  src={field.icon}
+                  alt={`${field.label} icon`}
+                  className="w-10 h-10"
+                />
+                <div>
+                  <label className="text-sm font-semibold text-gray-800">
+                    {field.label}
+                  </label>
+                  <p className="text-xs text-orange-500">
+                    Upload {field.type} files. Maximum file size: 2MB.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
                 <input
                   type="file"
                   id={field.name}
@@ -1126,7 +1741,7 @@ const AstrologerRegistration = () => {
                 />
                 <label
                   htmlFor={field.name}
-                  className={`cursor-pointer px-4 py-2 rounded-lg transition-all duration-300 ${
+                  className={`cursor-pointer px-4 py-2 rounded-md transition-all duration-300 ${
                     values[field.name]
                       ? "bg-green-500 text-white"
                       : "bg-purple-500 hover:bg-purple-600 text-white"
@@ -1140,9 +1755,6 @@ const AstrologerRegistration = () => {
                   </div>
                 )}
               </div>
-              <p className="text-orange-500 text-sm">
-                Upload {field.type} files. Maximum file size: 2MB.
-              </p>
               {errors[field.name] && touched[field.name] && (
                 <p className="text-red-500 text-sm">{errors[field.name]}</p>
               )}
@@ -1174,501 +1786,8 @@ const AstrologerRegistration = () => {
 
 
 
-{step === 6 && (
-<div>
-<div className="w-full max-w-4xl bg-gradient-to-b from-white via-[#f8f4ff] to-[#eae0ff]  shadow-lg rounded-lg p-8 space-y-6">
-     <h2 className="text-lg font-bold text-center text-gray-800 dark:text-white mb-4">
-       SKILL DETAILS
-     </h2>
-
-     <Formik
-       initialValues={{
-         username: "",
-         gender: "",
-         dob: "",
-         completeAddress: "",
-         pincode: "",
-         pannumber: "",
-         adharnumber: "",
-         maritalstatus: "",
-         primaryskill: "",
-         allskills: [],
-         languages: [],
-         dailycontributionhour: "",
-         experience: "",
-         wheredidyouhereaboutmyastro: "",
-         workinginonlineplatform: "",
-         platform: "",
-       }}
-       validationSchema={skillDetailsSchema}
-       onSubmit={handleNext}
-     >
-       {({ values, setFieldValue }) => (
-
-         <Form>
-           {/* Profile Photo */}
-           <div className="flex flex-col items-center space-y-2">
-             <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-purple-500 dark:border-cyan-500">
-               {profileImage ? (
-                 <img
-                   src={profileImage}
-                   alt="Profile"
-                   className="w-full h-full object-cover"
-                 />
-               ) : (
-                 <span className="text-center w-full h-full flex items-center justify-center text-sm text-gray-500 dark:text-[#888ea8]">
-                   Upload Photo
-                 </span>
-               )}
-               <label
-                 htmlFor="profileImage"
-                 className="absolute bottom-0 right-0 bg-purple-500 dark:bg-cyan-500 text-white p-1 rounded-full cursor-pointer"
-               >
-                 <FaPen />
-               </label>
-               <input
-                 id="profileImage"
-                 type="file"
-                 className="hidden"
-                 onChange={handleImageUpload}
-               />
-             </div>
-             <p className="text-red-500 text-sm">Profile pic*(jpg, png, jpeg only, Max-size 2MB)</p>
-             <p className="text-gray-500 text-xs">
-               Only Passport size photo is accepted
-             </p>
-           </div>
-
-           {/* Responsive Grid */}
- <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6"> 
-      {/* Full Name */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800">
-      Full Name<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="username"
-      type="text"
-      placeholder="Enter your Name"
-      className="w-full border border-gray-300 rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="username" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Gender Dropdown */}
-  <div className="relative">
-    <label className="block font-semibold mb-1 text-gray-800">
-      Gender<span className="text-red-500">*</span>
-    </label>
-    <div
-      className="w-full border border-gray-300 bg-white  rounded-md px-4 py-1 flex items-center justify-between cursor-pointer"
-      onClick={() => toggleDropdown("gender")}
-    >
-      <span>{values.gender ? values.gender : "Select Gender"}</span>
-      {dropdownStates.gender ? <FaCaretUp /> : <FaCaretDown />}
-    </div>
-    {dropdownStates.gender && (
-      <div className="absolute w-full bg-white dark:bg-[#1e2737] shadow-md rounded-md z-10">
-        {["Male", "Female"].map((option) => (
-          <div
-            key={option}
-            className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-[#2d3747] cursor-pointer"
-            onClick={() => {
-              setFieldValue("gender", option);
-              toggleDropdown("gender");
-            }}
-          >
-            {option}
-          </div>
-        ))}
-      </div>
-    )}
-    <ErrorMessage name="gender" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Date of Birth */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      Date of Birth<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="dob"
-      type="date"
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="dob" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Country */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 ">
-      Country<span className="text-red-500">*</span>
-    </label>
-    <Field
-      as="select"
-      name="country"
-      className="w-full border border-gray-300  rounded-md px-4 py-1"
-    >
-      <option value="India">India</option>
-    </Field>
-    <ErrorMessage name="country" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* State */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      State<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="state"
-      type="text"
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="state" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* City */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      City<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="city"
-      type="text"
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="city" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Complete Address */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      Address<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="completeAddress"
-      type="text"
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="completeAddress" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Pincode */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      Pincode<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="pincode"
-      type="text"
-      maxLength={6}
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="pincode" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* PAN Number */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      PAN Number<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="pannumber"
-      type="text"
-      pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="pannumber" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Aadhar Number */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      Aadhar Number<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="adharnumber"
-      type="text"
-      maxLength={12}
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="adharnumber" component="p" className="text-red-500 text-sm" />
-  </div>
-  
-  {/* gst number */}
-   <div>
-     <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      GST (Optional)
-    </label>
-    <Field
-      name="gst"
-      type="text"
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="gst" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Marital Status Dropdown */}
-  <div className="relative">
-    <label className="block font-semibold mb-1 text-gray-800 ">
-      Marital Status<span className="text-red-500">*</span>
-    </label>
-    <div
-      className="w-full border border-gray-300 bg-white  rounded-md px-4 py-1 flex items-center justify-between cursor-pointer"
-      onClick={() => toggleDropdown("maritalstatus")}
-    >
-      <span>{values.maritalstatus ? values.maritalstatus : "Select Status"}</span>
-      {dropdownStates.maritalstatus ? <FaCaretUp /> : <FaCaretDown />}
-    </div>
-    {dropdownStates.maritalstatus && (
-      <div className="absolute w-full bg-white  shadow-md rounded-md z-10">
-        {["Single", "Married"].map((option) => (
-          <div
-            key={option}
-            className="px-4 py-2 hover:bg-gray-200  cursor-pointer"
-            onClick={() => {
-              setFieldValue("maritalstatus", option);
-              toggleDropdown("maritalstatus");
-            }}
-          >
-            {option}
-          </div>
-        ))}
-      </div>
-    )}
-    <ErrorMessage name="maritalstatus" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Primary Skill */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 dark:text-white">
-      Primary Skill<span className="text-red-500">*</span>
-    </label>
-    <Field
-      as="select"
-      name="primaryskill"
-      className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-2"
-    >
-      <option value="">Select Primary Skill</option>
-      {["Tarot", "Numerology", "Vastu", "Vedic"].map((skill) => (
-        <option key={skill} value={skill}>
-          {skill}
-        </option>
-      ))}
-    </Field>
-    <ErrorMessage name="primaryskill" component="p" className="text-red-500 text-sm" />
-  </div>
-
- {/* All Skills Multi-Select */}
-<div className="relative">
-  <label className="block font-semibold mb-1 text-gray-800">
-    All Skills<span className="text-red-500">*</span>
-  </label>
-  <div
-    className="w-full border border-gray-300 bg-white rounded-md px-4 py-1 flex items-center flex-wrap gap-2 cursor-pointer"
-    onClick={() => toggleDropdown("allskills")}
-  >
-    {values.allskills?.length > 0
-      ? values.allskills.map((skill) => (
-          <span
-            key={skill}
-            className="bg-gray-200 border border-gray-300 rounded-full px-3 py-1 flex items-center gap-2"
-          >
-            {skill}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent dropdown toggle
-                handleMultiSelect("allskills", skill, setFieldValue, values);
-              }}
-              className="text-red-500 hover:text-red-700"
-            >
-              &times;
-            </button>
-          </span>
-        ))
-      : "Select Skills"}
-    {dropdownStates.allskills && (
-      <FaCaretUp className="ml-auto text-gray-500" />
-    )}
-  </div>
-  <div ref={dropdownRef}>
-
-  {dropdownStates.allskills && (
-    <div className="absolute w-full bg-white shadow-md rounded-md z-10">
-      {["Tarot", "Numerology", "Vastu", "Vedic"].map((skill) => (
-        <div
-          key={skill}
-          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-          onClick={() => handleMultiSelect("allskills", skill, setFieldValue, values)}
-        >
-          {skill}
-        </div>
-      ))}
-    </div>
-  )}
-  </div>
-
-  <ErrorMessage name="allskills" component="p" className="text-red-500 text-sm" />
-</div>
-
-{/* Languages Multi-Select */}
-<div className="relative">
-  <label className="block font-semibold mb-1 text-gray-800">
-    Languages<span className="text-red-500">*</span>
-  </label>
-  <div
-    className="w-full border border-gray-300 bg-white rounded-md px-4 py-1 flex items-center flex-wrap gap-2 cursor-pointer"
-    onClick={() => toggleDropdown("languages")}
-  >
-    {values.languages?.length > 0
-      ? values.languages.map((lang) => (
-          <span
-            key={lang}
-            className="bg-gray-200 border border-gray-300 rounded-full px-3 py-1 flex items-center gap-2"
-          >
-            {lang}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent dropdown toggle
-                handleMultiSelect("languages", lang, setFieldValue, values);
-              }}
-              className="text-red-500 hover:text-red-700"
-            >
-              &times;
-            </button>
-          </span>
-        ))
-      : "Select Languages"}
-
-      <div ref={dropdownRef}>
-
-    {dropdownStates.languages && (
-      <FaCaretUp className="ml-auto text-gray-500" />
-    )}
-  </div>
-  {dropdownStates.languages && (
-    <div className="absolute w-full bg-white shadow-md rounded-md z-10">
-      {["Hindi", "English", "Odia"].map((lang) => (
-        <div
-          key={lang}
-          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-          onClick={() => handleMultiSelect("languages", lang, setFieldValue, values)}
-        >
-          {lang}
-        </div>
-      ))}
-    </div>
-  )}
-  </div>
-  <ErrorMessage name="languages" component="p" className="text-red-500 text-sm" />
-</div>
 
 
-  {/* Daily Contribution Hours */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 ">
-      Daily Contribution Hours<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="dailycontributionhour"
-      type="number"
-      min="1"
-      max="20"
-      className="w-full border border-gray-300  rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="dailycontributionhour" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Experience */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 ">
-      Experience in Years<span className="text-red-500">*</span>
-    </label>
-    <Field
-      name="experience"
-      type="number"
-      min="0"
-      className="w-full border border-gray-300 ] rounded-md px-4 py-1"
-    />
-    <ErrorMessage name="experience" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Where Did You Hear About MyAstro */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 ">
-      Where Did You Hear About MyAstro?<span className="text-red-500">*</span>
-    </label>
-    <Field
-      as="select"
-      name="wheredidyouhereaboutmyastro"
-      className="w-full border border-gray-300  rounded-md px-4 py-2"
-    >
-      <option value="">Select Source</option>
-      {["Facebook", "Instagram", "Twitter", "LinkedIn"].map((source) => (
-        <option key={source} value={source}>
-          {source}
-        </option>
-      ))}
-    </Field>
-    <ErrorMessage name="wheredidyouhereaboutmyastro" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Radio Buttons: Working on Other Platforms */}
-  <div>
-    <label className="block font-semibold mb-1 text-gray-800 ">
-      Are You Working on Any Other Online Platform?<span className="text-red-500">*</span>
-    </label>
-    <div className="flex gap-4">
-      <label className="flex items-center gap-2">
-        <Field type="radio" name="workinginonlineplatform" value="yes" />
-        Yes
-      </label>
-      <label className="flex items-center gap-2">
-        <Field type="radio" name="workinginonlineplatform" value="no" />
-        No
-      </label>
-    </div>
-    <ErrorMessage name="workinginonlineplatform" component="p" className="text-red-500 text-sm" />
-  </div>
-
-  {/* Platform */}
-  {values.workinginonlineplatform === "yes" && (
-    <div>
-      <label className="block font-semibold mb-1 text-gray-800 ">
-        Platform<span className="text-red-500">*</span>
-      </label>
-      <Field
-        name="platform"
-        type="text"
-        className="w-full border border-gray-300  rounded-md px-4 py-1"
-      />
-      <ErrorMessage name="platform" component="p" className="text-red-500 text-sm" />
-    </div>
-  )}
-
-</div>
-
-
-           {/* Submit/Back Buttons */}
-           <div className="flex justify-between mt-6">
-           
-             <button
-               type="submit"
-               className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-md"
-             >
-               Next
-             </button>
-           </div>
-
-         </Form>
-         
-       )}
-     </Formik>
-</div>
-   </div>
-)}
 
 
 
