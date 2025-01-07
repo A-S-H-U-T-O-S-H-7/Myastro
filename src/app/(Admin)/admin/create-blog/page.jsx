@@ -1,3 +1,4 @@
+"use client"
 import Createblog from '@/components/Admin/Createblog'
 import React from 'react'
 

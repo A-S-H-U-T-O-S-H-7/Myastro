@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Createblog = () => {
   const [content, setContent] = useState("");
