@@ -5,6 +5,9 @@ import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
+import Link from "next/link";
+import Edituser from "./Edituser";
+
 
 const ApprovedAstrologer = () => {
   const [data, setData] = useState([
@@ -216,7 +219,7 @@ const ApprovedAstrologer = () => {
                     <td className="px-4 text-center py-2">{item.phone}</td>
                     <td className="px-4 py-2 text-center">{item.date}</td>
                     <td className="px-4 py-2 flex justify-center gap-2">
-                      <FaPen className="text-blue-500 cursor-pointer" />
+                    <Link href="/admin/edit-astrologerprofile" > <FaPen className="text-blue-500 cursor-pointer" /></Link> 
                       <FaTrash className="text-red-500 cursor-pointer" />
                     </td>
                   </tr>
@@ -265,6 +268,7 @@ const ApprovedAstrologer = () => {
           </div>
         </div>
       </div>
+      <Edituser/>
     </div>
   );
 };

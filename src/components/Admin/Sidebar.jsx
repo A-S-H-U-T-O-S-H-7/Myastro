@@ -55,7 +55,7 @@ const Sidebar = () => {
       label: "Blog",
       dropdownKey: "blog",
       subItems: [
-        { label: "Add Post", link: "/blog/add-post" },
+        { label: "Add Post", link: "/admin/create-blog" },
         { label: "Manage Posts", link: "/admin/manage-posts" },
       ],
     },

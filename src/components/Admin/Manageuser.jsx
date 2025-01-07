@@ -5,6 +5,7 @@ import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
+import Link from "next/link";
 
 
 const Manageuser = () => {
@@ -228,7 +229,7 @@ const Manageuser = () => {
                 <td className="px-4 text-cneter py-2">{item.email}</td>
                 <td className="px-4 py-2 text-center">{item.date}</td>
                 <td className="px-4 py-4 items-center justify-center text-center flex gap-2">
-                  <FaPen className="text-blue-500 cursor-pointer" />
+                <Link href="edit-userprofile"> <FaPen className="text-blue-500 cursor-pointer" /></Link> 
                   <FaTrash className="text-red-500 cursor-pointer" />
                 </td>
               </tr>

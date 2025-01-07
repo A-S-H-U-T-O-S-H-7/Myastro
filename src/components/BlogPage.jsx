@@ -8,6 +8,8 @@ import { CiSearch } from "react-icons/ci";
 import { MdExpandMore } from "react-icons/md";
 import { MdExpandLess } from "react-icons/md";
 import ENV from "./Env";
+import Navbar from "./Admin/UpdateNavbar";
+import PersonalDetails from "./Admin/PersonalDetailForm";
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState("All Blogs");
@@ -180,6 +182,12 @@ export default function BlogPage() {
                 <BlogCard key={index} post={post} />
               ))}
           </div>
+
+<Navbar/>
+<PersonalDetails/>
+
+
+
 
           {/* Pagination */}
           <div className="flex justify-end items-center mt-6 mb-10 space-x-3">

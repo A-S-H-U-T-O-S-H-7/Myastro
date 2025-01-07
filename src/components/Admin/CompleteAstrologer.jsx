@@ -5,6 +5,9 @@ import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
+import Link from "next/link";
+import { MdCall } from "react-icons/md";
+
 
 
 const CompleteAstrologer = () => {
@@ -209,7 +212,7 @@ const CompleteAstrologer = () => {
                 <td className="px-4 py-2 text-center">{index + 1}</td>
                 
                 <td className="px-4 text-center py-2">
-                    <FaPen className="text-blue-500  cursor-pointer" /></td>
+                    <MdCall className="text-blue-500 w-8 h-8  cursor-pointer" /></td>
                     <td className="px-4 py-2 text-center">
                   <img src={item.photo} alt="User" className="w-10 h-10 rounded-full mx-auto" />
                 </td>
@@ -220,7 +223,7 @@ const CompleteAstrologer = () => {
                     <td className="px-4 py-2 text-center">{item.status}</td>
 
                 <td className="px-4 py-2 flex justify-center gap-2">
-                  <FaPen className="text-blue-500 cursor-pointer" />
+                <Link href="/admin/edit-astrologerprofile"> <FaPen className="text-blue-500 cursor-pointer" /></Link>
                   <FaTrash className="text-red-500 cursor-pointer" />
                 </td>
               </tr>

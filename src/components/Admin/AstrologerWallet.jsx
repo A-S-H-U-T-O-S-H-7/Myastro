@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
+import PaymentPopup from "./PaymentPopup";
 
 const AstrologerWallet = () => {
   const [data, setData] = useState([
@@ -86,6 +87,8 @@ const AstrologerWallet = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState("srno");
   const [sortDirection, setSortDirection] = useState("asc");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
 
   useEffect(() => {
     handleSort("srno"); // Default sorting by SR No. in ascending order
@@ -192,7 +195,9 @@ const AstrologerWallet = () => {
 
                 <td className="px-4   py-2 text-center">{item.walletAmount}</td>
                 <td className="px-4 py-2 flex justify-center gap-2">
-                 <button className="bg-[#00ab55] px-[20px] py-[7px] rounded-[6px] text-[11px] text-white text-center">Pay Now</button>
+                 <button
+                  onClick={() => setIsPopupOpen(true)}
+                   className="bg-[#00ab55] px-[20px] py-[7px] rounded-[6px] text-[11px] text-white text-center">Pay Now</button>
                 </td>
               </tr>
             ))}
@@ -237,6 +242,10 @@ const AstrologerWallet = () => {
       </div>
     </div>
     </div>
+    <PaymentPopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+      />
     </div>
   );
 };

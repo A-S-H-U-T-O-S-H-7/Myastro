@@ -618,7 +618,7 @@ const AstrologerRegistration = () => {
       </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-{/* Full name */}
+{/*user name */}
 <div className="flex flex-col gap-2">
   <label className="text-sm font-semibold text-gray-800">
   Full Name
