@@ -5,6 +5,7 @@ import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
+import EditNotification from "./EditNotification";
 
 
 const Notification = () => {
@@ -14,9 +15,12 @@ const Notification = () => {
         { srNo: 3, date: "2024-12-18", title: "Notification", message: "New Feature!", user: "Alice Brown" },
         { srNo: 4, date: "2024-12-17", title: "Reminder", message: "Meeting at 3 PM", user: "Bob White" },
       ]);
-    // Add more sample data as needed
   
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
+    const handleNotificationSubmit = (notificationData) => {
+      console.log("Notification Data:", notificationData);
+    };
     
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,7 +81,12 @@ const Notification = () => {
 
   return (
     <div>
+      <div className="flex justify-between items-center mr-[15px]">
     <h1 className="text-[#22c7d5] text-[25px] mt-3 ml-[130px]">Notifications</h1>
+    <button 
+    onClick={() => setIsModalVisible(true)}
+    className="rounded-md px-4 py-2 mt-2 hover:bg-green-700 shadow-sm shadow-green-300 text-white font-medium bg-green-600">Send Notification</button>
+    </div>
   <div className=" m-[15px] border border-[#22c7d5] rounded-[8px] ml-[120px]">
     <div className="p-4 bg-[#0e1726]  text-[#888ea8] rounded-lg shadow-md">
 
@@ -149,11 +158,15 @@ const Notification = () => {
                 <td className="px-4 py-2 flex justify-center gap-2">
                   <button
                     className="bg-[#22c7d5] flex items-center gap-2 px-[20px] py-[7px] rounded-[6px] text-[11px] text-white text-center"
-                    onClick={() => handleEdit(item.srNo)}
-                  >
+                    >
                     <FaPen />
                     Edit
                   </button>
+                  <EditNotification
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onSubmit={handleNotificationSubmit}
+      />
                   <button
                     className="bg-red-500 flex items-center gap-2 px-[20px] py-[7px] rounded-[6px] text-[11px] text-white text-center"
                     onClick={() => handleDelete(item.srNo)}

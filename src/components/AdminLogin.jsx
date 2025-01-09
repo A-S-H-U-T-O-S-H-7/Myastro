@@ -45,6 +45,7 @@ function AdminLogin() {
 
         if (response.ok) {
           dispatch(loginAdmin({admin:result?.admin, token: result?.token}));
+          localStorage.setItem("myastro-token", result?.token)
           setLoader(false);
           router.push('/admin/dashboard');
 

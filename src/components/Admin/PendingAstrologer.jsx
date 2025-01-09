@@ -1,143 +1,84 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { MdCall } from "react-icons/md";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
+import ENV from "../Env";
+import Pagination from "./Pagination";
 
 
 const PendingAstrologer = () => {
-  const [data, setData] = useState([
-    {
-      photo: "/user1.jpg",
-      name: "John Doe",
-      walletAmount: 100,
-      gender: "Male",
-      phone: "123-456-7890",
-      email: "john.doe@example.com",
-      date: "2024-01-01",
-    },
-    {
-      photo: "/user2.jpg",
-      name: "Jane Smith",
-      walletAmount: 700,
-      gender: "Female",
-      phone: "987-654-3210",
-      email: "jane.smith@example.com",
-      date: "2024-02-15",
-    },
-    {
-        photo: "/user2.jpg",
-        name: "Jane Smith",
-        walletAmount: 200,
-        gender: "Female",
-        phone: "987-654-3210",
-        email: "jane.smith@example.com",
-        date: "2024-02-15",
-      },
-      {
-        photo: "/user2.jpg",
-        name: "Jane Smith",
-        walletAmount: 900,
-        gender: "Female",
-        phone: "987-654-3210",
-        email: "jane.smith@example.com",
-        date: "2024-02-15",
-      },
-      {
-        photo: "/user2.jpg",
-        name: "Jane Smith",
-        walletAmount: 500,
-        gender: "Female",
-        phone: "987-654-3210",
-        email: "jane.smith@example.com",
-        date: "2024-02-15",
-      },
-      {
-        photo: "/user2.jpg",
-        name: "Jane Smith",
-        walletAmount: 500,
-        gender: "Female",
-        phone: "987-654-3210",
-        email: "jane.smith@example.com",
-        date: "2024-02-15",
-      },
-      {
-        photo: "/user2.jpg",
-        name: "Jane Smith",
-        walletAmount: 500,
-        gender: "Female",
-        phone: "987-654-3210",
-        email: "jane.smith@example.com",
-        date: "2024-02-15",
-      },
-       {
-      photo: "/user2.jpg",
-      name: "Jane Smith",
-      walletAmount: 500,
-      gender: "Female",
-      phone: "987-654-3210",
-      email: "jane.smith@example.com",
-      date: "2024-02-15",
-    },
-    // Add more sample data as needed
-  ]);
-  const [resultsPerPage, setResultsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [astrologers, setAstrologers] = useState([]);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortColumn, setSortColumn] = useState("srno");
-  const [sortDirection, setSortDirection] = useState("asc");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [sortColumn, setSortColumn] = useState("srno");
+  const [sortDirection, setSortDirection] = useState("asc");
+  const [loader, setLoader] = useState(false);
 
-  // Memoized filtered data
-  const filteredData = useMemo(() => {
-    return data
-      .filter((item) =>
-        Object.values(item).some((value) =>
-          String(value).toLowerCase().includes(searchTerm)
-        )
-      )
-      .filter((item) => {
-        if (!startDate && !endDate) return true;
-        const itemDate = new Date(item.date);
-        const start = startDate ? new Date(startDate) : null;
-        const end = endDate ? new Date(endDate) : null;
-
-        return (!start || itemDate >= start) && (!end || itemDate <= end);
+ 
+  const fetchAstrologers = async () => {
+    setLoader(true);
+    try {
+      const queryParams = new URLSearchParams({
+        page,
+        limit,
+        search: searchTerm,
+        sortColumn,
+        sortDirection,
+        startDate: startDate ? new Date(startDate).toISOString() : "",
+        endDate: endDate ? new Date(endDate).toISOString() : "",
       });
-  }, [data, searchTerm, startDate, endDate]);
 
-  // Memoized paginated data
-  const paginatedData = useMemo(() => {
-    const startIndex = (currentPage - 1) * resultsPerPage;
-    return filteredData.slice(startIndex, startIndex + resultsPerPage);
-  }, [filteredData, currentPage, resultsPerPage]);
+      const response = await fetch(
+        `${ENV.API_URL}/admin/manage-pending-astrologers?${queryParams}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("myastro-token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to fetch data");
+
+      const json = await response.json();
+
+      if (json.status) {
+        setAstrologers(json.astrologers || []);
+        setTotalPages(json.pagination.totalPages || 0);
+      } else {
+        setAstrologers([]);
+        setTotalPages(0);
+      }
+    } catch (error) {
+      console.error("Error fetching astrologers:", error.message);
+    } finally {
+      setLoader(false);
+    }
+  };
+  useEffect(() => {
+    fetchAstrologers();
+  }, [page, limit, searchTerm, startDate, endDate, sortColumn, sortDirection]);
+
 
   // Sorting logic
   const handleSort = (column) => {
-    const direction =
-      sortColumn === column && sortDirection === "asc" ? "desc" : "asc";
-    setSortColumn(column);
-    setSortDirection(direction);
-
-    const sortedData = [...data].sort((a, b) => {
-      if (a[column] < b[column]) return direction === "asc" ? -1 : 1;
-      if (a[column] > b[column]) return direction === "asc" ? 1 : -1;
-      return 0;
-    });
-    setData(sortedData);
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(column);
+      setSortDirection("asc");
+    }
   };
 
-  const handleSearch = (event) => setSearchTerm(event.target.value.toLowerCase());
-
-  const handleDateFilter = ({ startDate, endDate }) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
-  };
-
-  const totalPages = Math.ceil(filteredData.length / resultsPerPage);
 
   return (
     <div>
@@ -149,17 +90,22 @@ const PendingAstrologer = () => {
       <DateFilter onFilter={(dates) => handleDateFilter(dates)} />
 
 <div className="flex items-center gap-6">
- <ResultsSelector
-   resultsPerPage={resultsPerPage}
-   onChange={(e) => setResultsPerPage(Number(e.target.value))}
- />
- <SearchBox searchTerm={searchTerm} onSearchChange={handleSearch} />
+<ResultsSelector
+                resultsPerPage={limit}
+                onChange={(e) => setLimit(Number(e.target.value))}
+              />
+              <SearchBox
+                searchTerm={searchTerm}
+                onSearchChange={(e) =>
+                  setSearchTerm(e.target.value.toLowerCase().trim())
+                }
+              />
  </div>
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full table-auto border-collapse min-w-[1500px]">
+        <table className="w-full table-auto border-collapse min-w-[1700px]">
           <thead>
             <tr className="bg-gradient-to-r from-[#1e2737] to-[#0e1726] text-[#bfc9d4]">
               <th
@@ -202,7 +148,7 @@ const PendingAstrologer = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedData.map((item, index) => (
+            {astrologers.map((item, index) => (
               <tr
                 key={index}
                 className="hover:bg-[#1e2737] transition-colors"
@@ -210,15 +156,19 @@ const PendingAstrologer = () => {
                 <td className="px-4 py-2 text-center">{index + 1}</td>
                 
                 <td className="px-4 text-centerr py-2">
-                    <FaPen className="text-blue-500 cursor-pointer" /></td>
+                    <MdCall  className="text-blue-500 w-6 h-6 cursor-pointer" /></td>
                     <td className="px-4 py-2 text-center">
-                  <img src={item.photo} alt="User" className="w-10 h-10 rounded-full mx-auto" />
-                </td>
-                    <td className="px-4 text-center py-2">{item.name}</td>
+                    <img
+                   src={item.photo ? item.photo : "/profileplaceholder.png"}
+                   alt="User"
+                  className="w-10 h-10 rounded-full mx-auto"
+                   />    
+                   </td>
+                    <td className="px-4 text-center py-2">{item.fullname}</td>
                     <td className="px-4 text-center py-2">{item.email}</td>
-                    <td className="px-4 text-center py-2">{item.phone}</td>
-                    <td className="px-4 py-2 text-center">{item.date}</td>
-                    <td className="px-4 py-2 text-center">{item.status}</td>
+                    <td className="px-4 text-center py-2">{item.mobile}</td>
+                    <td className="px-4 py-2 text-center">{item.date ? new Date(item.date).toLocaleDateString('en-GB') : 'N/A'}</td>
+                    <td className="px-4 py-2 text-orange-500 font-bold text-center">{item.status}</td>
                     <td className="px-4 py-2 text-center">
                     <button className="text-sm text-white px-4 py-1 rounded-[6px] bg-[#22c7d5]">Send</button>
                     </td>
@@ -238,40 +188,8 @@ const PendingAstrologer = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
-      <span className="text-[#22c7d5] border border-[#22c7d5] rounded-[8px] px-4 py-2">
-          Showing page <span className="font-bold font-heading">{currentPage}</span> of <span className="font-bold font-heading">{totalPages}</span>
-        </span>
-        <div className="flex items-center gap-2">
-          <button
-            className="px-3 py-1 bg-[#1e2737] text-[#22c7d5] rounded-md hover:bg-[#2d3747]"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          >
-            &lt;
-          </button>
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              className={`px-3 py-1 rounded-md ${
-                currentPage === i + 1
-                  ? "bg-[#22c7d5] text-white"
-                  : "bg-[#1e2737] text-[#888ea8] hover:bg-[#2d3747]"
-              }`}
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
-          <button
-            className="px-3 py-1 bg-[#1e2737] text-[#22c7d5] rounded-md hover:bg-[#2d3747]"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-          >
-            &gt;
-          </button>
-        </div>
-      </div>
+      <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+
     </div>
     </div>
     </div>

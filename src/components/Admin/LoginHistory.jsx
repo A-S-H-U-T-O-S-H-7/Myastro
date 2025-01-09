@@ -5,6 +5,7 @@ import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
+import LoginHistoryView from "./LoginHistoryView";
 
 
 
@@ -15,8 +16,26 @@ const LoginHistory = () => {
         { srNo: 3, date: "2024-12-18", title: "Notification", message: "New Feature!", user: "Alice Brown" },
         { srNo: 4, date: "2024-12-17", title: "Reminder", message: "Meeting at 3 PM", user: "Bob White" },
       ]);
-    // Add more sample data as needed
+
+  const loginHistoryData = [
+    {
+      online: "2024-11-23 11:16:10",
+      offline: "2024-11-23 11:02:32",
+      differences: "1083.95 Hours",
+      nextOnline: "2024-11-23 11:02:00",
+      status: "Online",
+    },
+    {
+      online: "2024-10-15 17:47:46",
+      offline: "2024-10-11 13:11:57",
+      differences: "66.13 Hours",
+      nextOnline: "2024-10-11 13:11:00",
+      status: "Online",
+    },
+  ];
+
   
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
     
   const [resultsPerPage, setResultsPerPage] = useState(10);
@@ -158,20 +177,28 @@ const LoginHistory = () => {
                
                 <td className="px-4 py-2  text-center">
                   <button
+
                     className="bg-[#00ab55]  items-center  gap-2 px-[20px] py-[7px] rounded-[4px] text-[11px] text-white text-center"
                               >
                     Status
                   </button>
+                  
                   </td>
 
                   <td className="px-4 py-2 justify-center flex text-center">
                   <button
+                   onClick={() => setIsModalVisible(true)}
+
                     className="bg-purple-600  flex items-center gap-2 px-[20px] py-[7px] rounded-[6px] text-[11px] text-white text-center"
                                      >
 
                     View
                   </button>
-                
+                  <LoginHistoryView
+                   isVisible={isModalVisible}
+                  onClose={() => setIsModalVisible(false)}
+                  data={loginHistoryData}
+                  />
                   
                 </td>
               </tr>
