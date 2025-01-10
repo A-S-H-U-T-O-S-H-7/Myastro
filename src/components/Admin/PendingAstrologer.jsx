@@ -8,6 +8,7 @@ import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
 import ENV from "../Env";
 import Pagination from "./Pagination";
+import PendingAstrologerRow from "./PendingAstrologerRow";
 
 
 const PendingAstrologer = () => {
@@ -43,6 +44,7 @@ const PendingAstrologer = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("myastro-token")}`,
             "Content-Type": "application/json",
+            credentials: 'include',
           },
         }
       );
@@ -121,7 +123,7 @@ const PendingAstrologer = () => {
                   )
                 )}
               </th>
-              <th className="px-4 py-2">Call</th>
+              <th className="px-4 py-2">Call Details</th>
               <th className="px-4 py-2">Photo</th>
               <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Email</th>
@@ -148,40 +150,13 @@ const PendingAstrologer = () => {
             </tr>
           </thead>
           <tbody>
-            {astrologers.map((item, index) => (
-              <tr
+          {astrologers.map((astrologer, index) => (
+              <PendingAstrologerRow
                 key={index}
-                className="hover:bg-[#1e2737] transition-colors"
-              >
-                <td className="px-4 py-2 text-center">{index + 1}</td>
+                index={index}
+                item={astrologer}
                 
-                <td className="px-4 text-centerr py-2">
-                    <MdCall  className="text-blue-500 w-6 h-6 cursor-pointer" /></td>
-                    <td className="px-4 py-2 text-center">
-                    <img
-                   src={item.photo ? item.photo : "/profileplaceholder.png"}
-                   alt="User"
-                  className="w-10 h-10 rounded-full mx-auto"
-                   />    
-                   </td>
-                    <td className="px-4 text-center py-2">{item.fullname}</td>
-                    <td className="px-4 text-center py-2">{item.email}</td>
-                    <td className="px-4 text-center py-2">{item.mobile}</td>
-                    <td className="px-4 py-2 text-center">{item.date ? new Date(item.date).toLocaleDateString('en-GB') : 'N/A'}</td>
-                    <td className="px-4 py-2 text-orange-500 font-bold text-center">{item.status}</td>
-                    <td className="px-4 py-2 text-center">
-                    <button className="text-sm text-white px-4 py-1 rounded-[6px] bg-[#22c7d5]">Send</button>
-                    </td>
-                    <td className="px-4 py-2 text-center">
-                    <button className="text-sm text-white px-4 py-1 rounded-[6px] bg-[#22c7d5]">Send</button>
-                    </td>
-
-
-                <td className="px-4 py-2 flex justify-center gap-2">
-                  <FaPen className="text-blue-500 cursor-pointer" />
-                  <FaTrash className="text-red-500 cursor-pointer" />
-                </td>
-              </tr>
+              />
             ))}
           </tbody>
         </table>

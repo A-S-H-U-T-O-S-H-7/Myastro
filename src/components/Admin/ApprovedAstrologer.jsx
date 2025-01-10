@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaPen, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
-import Link from "next/link";
 import Pagination from "./Pagination";
 import ENV from "../Env";
+import ApprovedAstrologerRow from "./ApprovedAstrologerRow";
+
 
 const ApprovedAstrologer = () => {
   const [astrologers, setAstrologers] = useState([]);
@@ -41,6 +42,7 @@ const ApprovedAstrologer = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("myastro-token")}`,
             "Content-Type": "application/json",
+            credentials: 'include',
           },
         }
       );
@@ -93,7 +95,7 @@ const ApprovedAstrologer = () => {
 
           {/* Table */}
           <div className="overflow-x-auto rounded-[8px]">
-            <table className="w-full table-auto border-collapse min-w-[1200px]">
+            <table className="w-full table-auto border-collapse min-w-[1400px]">
               <thead>
                 <tr className="bg-gradient-to-r from-[#1e2737] to-[#0e1726] text-[#bfc9d4]">
                   <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort("srno")}>
@@ -107,6 +109,8 @@ const ApprovedAstrologer = () => {
                     )}
                   </th>
                   <th className="px-4 py-2">Photo</th>
+                  <th className="px-4 py-2">Profile</th>
+                  <th className="px-4 py-2">Call Details</th>
                   <th className="px-4 py-2">Name</th>
                   <th className="px-4 py-2">Email</th>
                   <th className="px-4 py-2">Phone</th>
@@ -125,33 +129,14 @@ const ApprovedAstrologer = () => {
                 </tr>
               </thead>
               <tbody>
-                {astrologers.map((item, index) => (
-                  <tr key={index} className="hover:bg-[#1e2737] transition-colors">
-                    <td className="px-4 py-2 text-center">
-                      {(page - 1) * limit + index + 1}
-                    </td>
-                    <td className="px-4 py-2 text-center">
-                      <img
-                        src={item.photo ? item.photo : "/profileplaceholder.png"}
-                        alt="User"
-                        className="w-10 h-10 rounded-full mx-auto"
-                      />
-                    </td>
-                    <td className="px-4 text-center py-2">{item.fullname}</td>
-                    <td className="px-4 text-center py-2">{item.email }</td>
-                    <td className="px-4 text-center py-2">{item.mobile}</td>
-                    <td className="px-4 py-2 text-center">
-                      {item.date ? new Date(item.date).toLocaleDateString("en-GB") : "N/A"}
-                    </td>
-                    <td className="px-4 py-2 text-green-500 font-bold text-center">{item.status}</td>
-                    <td className="px-4 py-2 flex justify-center gap-2">
-                      <Link href="/admin/edit-astrologerprofile">
-                        <FaPen className="text-blue-500 cursor-pointer" />
-                      </Link>
-                      <FaTrash className="text-red-500 cursor-pointer" />
-                    </td>
-                  </tr>
-                ))}
+              {astrologers.map((item, index) => (
+          <ApprovedAstrologerRow
+            key={item.id}
+            item={item}
+            index={index}
+           
+          />
+        ))}
               </tbody>
             </table>
           </div>

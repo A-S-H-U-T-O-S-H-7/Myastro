@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaPen, FaTrash } from "react-icons/fa";
-import { MdCall } from "react-icons/md";
 import ResultsSelector from "./ResultSelector";
 import SearchBox from "./SearchBox";
 import DateFilter from "./DateFilter";
 import Pagination from "./Pagination";
 import ENV from "../Env";
-import Link from "next/link";
+import RejectedAstrologerRow from "./RejectedAstrologerRow";
 
 const RejectedAstrologer = () => {
   const [astrologers, setAstrologers] = useState([]);
@@ -43,6 +41,7 @@ const RejectedAstrologer = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("myastro-token")}`,
             "Content-Type": "application/json",
+            credentials: 'include',
           },
         }
       );
@@ -120,7 +119,7 @@ const RejectedAstrologer = () => {
                   >
                     SR No.
                   </th>
-                  <th className="px-4 py-2">Call</th>
+                  <th className="px-4 py-2">Call Details</th>
                   <th className="px-4 py-2">Photo</th>
                   <th className="px-4 py-2">Name</th>
                   <th className="px-4 py-2">Email</th>
@@ -138,40 +137,12 @@ const RejectedAstrologer = () => {
               <tbody>
                 {astrologers.length > 0 ? (
                   astrologers.map((item, index) => (
-                    <tr
-                      key={item._id}
-                      className="hover:bg-[#1e2737] transition-colors"
-                    >
-                      <td className="px-4 py-2 text-center">
-                        {(page - 1) * limit + index + 1}
-                      </td>
-                      <td className="px-4 text-center py-2">
-                        <MdCall className="text-blue-500 w-6 h-6 cursor-pointer" />
-                      </td>
-                      <td className="px-4 py-2 text-center">
-                      <img
-                       src={item.photo ? item.photo : "/profileplaceholder.png"}
-                         alt="User"
-                        className="w-10 h-10 rounded-full mx-auto"
-                        />
-                      </td>
-                      <td className="px-4 text-center py-2">{item.fullname}</td>
-                      <td className="px-4 text-center py-2">{item.email}</td>
-                      <td className="px-4 text-center py-2">{item.mobile}</td>
-                      <td className="px-4 py-2 text-center">{item.date ? new Date(item.date).toLocaleDateString('en-GB') : 'N/A'}</td>
-
-                      <td className="px-4 py-2 font-bold text-red-600 text-center">
-                        Rejected
-                      </td>
-                      <td className="px-4 py-2 flex items-center justify-center gap-2">
-                        <Link
-                          href={`/admin/edit-astrologerprofile/${item._id}`}
-                        >
-                          <FaPen className="text-blue-500 cursor-pointer" />
-                        </Link>
-                        <FaTrash className="text-red-500 cursor-pointer" />
-                      </td>
-                    </tr>
+                    <RejectedAstrologerRow
+            key={item._id}
+            item={item}
+            index={index}
+           
+          />
                   ))
                 ) : (
                   <tr>
