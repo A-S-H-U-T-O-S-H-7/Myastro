@@ -8,8 +8,8 @@ import { CiSearch } from "react-icons/ci";
 import { MdExpandMore } from "react-icons/md";
 import { MdExpandLess } from "react-icons/md";
 import ENV from "./Env";
-import Navbar from "./Admin/UpdateNavbar";
-import PersonalDetails from "./Admin/PersonalDetailForm";
+import Image from "next/image";
+
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState("All Blogs");
@@ -94,8 +94,9 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen px-[10px] lg:px-[65px] bg-purple-50">
       {/* Banner */}
-      <div className="h-[250px] w-full bg-purple-700 flex items-center justify-center">
-        <h1 className="text-4xl text-white font-bold">Our Blogs</h1>
+      <div className="relative">
+                  <Image className="w-full h-[250px] rounded-lg flex" src="/blogimage.jpg" alt="Icon" width={900} height={900} />
+        
       </div>
 
       {/* Content */}
@@ -181,13 +182,7 @@ export default function BlogPage() {
               .map((post, index) => (
                 <BlogCard key={index} post={post} />
               ))}
-          </div>
-
-<Navbar/>
-<PersonalDetails/>
-
-
-
+          </div>              
 
           {/* Pagination */}
           <div className="flex justify-end items-center mt-6 mb-10 space-x-3">

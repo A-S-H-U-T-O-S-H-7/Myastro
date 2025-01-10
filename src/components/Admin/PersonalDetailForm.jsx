@@ -17,15 +17,13 @@ const PersonalDetails = ({ initialValues, onSubmit }) => {
   
   {/* Photo Preview Box */}
   <div className="w-40 h-40 bg-gray-800  border-2 border-[#22c7d5] rounded-md flex items-center justify-center overflow-hidden">
-    {values.photo ? (
+    
       <img
-        src={URL.createObjectURL(values.photo)}
+        src="/heroimage.jpg"
         alt="Astrologer Photo"
         className="w-full h-full object-cover"
       />
-    ) : (
-      <span className="text-white text-sm">No Photo Available</span>
-    )}
+    
   </div>
   
   {/* Change Button */}

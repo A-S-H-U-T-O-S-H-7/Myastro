@@ -36,10 +36,10 @@ const HeroSection = () => {
         <div className="bg-[#C8A2C8] h-[200px] md:h-[300px] lg:h-[380px] rounded-lg flex">
           <Image
             className="px-3 py-3 w-[160px] h-25 md:w-auto md:h-auto lg:w-auto lg:h-auto"
-            src="/Heroimage2.png"
+            src="/heroimage.png"
             alt="Icon"
-            width={400}
-            height={400}
+            width={900}
+            height={900}
           />
 
           <div className="flex flex-col justify-center pr-5 md:px-10 ">
