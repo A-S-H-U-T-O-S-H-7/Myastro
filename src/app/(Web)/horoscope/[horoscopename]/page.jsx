@@ -1,22 +1,24 @@
-"use client"
-import { useParams } from 'next/navigation';
-import Daysection from '@/components/Daysection'; // Adjust the path as per your structure
-import HoroscopeContainer from '@/components/HoroscopeContainer';
-import CallchatReusable from '@/components/CallchatReusable';
-import RecomendedAstro from '@/components/RecomendedAstro';
+"use client";
+
+import { useParams } from "next/navigation";
+import Daysection from "@/components/Daysection"; // Adjust the path as per your structure
+import HoroscopeContainer from "@/components/HoroscopeContainer";
+import CallchatReusable from "@/components/CallchatReusable";
+import RecomendedAstro from "@/components/RecomendedAstro";
 
 const HoroscopePage = () => {
-  const { horoscopename } = useParams();
+  const params = useParams();
+  const { horoscopename } = params;
 
   const formattedName = horoscopename
-    .split('-')
+    ?.split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 
   return (
     <div>
       <div className="px-[10px] lg:px-[65px]">
-        <h1 className=" py-1 flex text-[#3C0184] justify-center text-[40px] font-heading font-bold">
+        <h1 className="py-1 flex text-[#3C0184] justify-center text-[40px] font-heading font-bold">
           {formattedName}
         </h1>
         <p className="flex justify-center font-semibold py-1 text-[#6c757d]">
@@ -26,10 +28,10 @@ const HoroscopePage = () => {
           Discover what the stars have in store for you with our {formattedName} readings. Our expert astrologers analyze the current planetary positions and alignments to provide you with accurate and insightful predictions for your zodiac sign.
         </p>
         <Daysection />
-       <HoroscopeContainer/>
-       <CallchatReusable/>
+        <HoroscopeContainer />
+        <CallchatReusable />
       </div>
-      <RecomendedAstro/>
+      <RecomendedAstro />
     </div>
   );
 };

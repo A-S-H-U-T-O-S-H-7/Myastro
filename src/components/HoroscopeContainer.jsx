@@ -7,13 +7,18 @@ const HoroscopeContainer = () => {
   return (
     <div className="grid grid-cols-1 py-8 lg:grid-cols-3 gap-5">
       {zodiacSigns.map((sign, index) => (
-        <Link href="/horoscope/todays-horoscope/Aries">
-        <Horoscopecard
+        <Link
           key={index}
-          name={sign.name}
-          image={sign.image}
-          description={sign.description}
-        />
+          href={{
+            pathname: `/horoscope/todays-horoscope/${sign.name.toLowerCase()}`,
+            query: { id: sign.id },
+          }}
+        >
+          <Horoscopecard
+            name={sign.name}
+            image={sign.image}
+            description={sign.description}
+          />
         </Link>
       ))}
     </div>

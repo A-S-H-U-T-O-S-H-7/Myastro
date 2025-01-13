@@ -37,7 +37,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white/60 backdrop-blur-md text-[#212529] sticky top-0 z-50 border-b-2 border-solid border-neutral-200">
       {/* Logo Container */}
-      <div className="container  mx-auto flex justify-between items-center px-5 lg:px-[65px] py-2">
+      <div className="lg:px-[65px] px-[10px] flex justify-between py-2">
         {/* Burger Menu Button */}
         <div className="flex gap-3">
           <button
