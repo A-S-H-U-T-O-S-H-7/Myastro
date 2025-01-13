@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 
 const Footer = () => {
-  return <div className="bg-[#1c1c1c] px-6 py-12 lg:px-28">
+  return <div className="bg-[#1c1c1c] px-[10px] py-12 lg:px-[65px]">
       <h1 className="text-white text-2xl py-2">About Us</h1>
       <p className="text-[#d3d4d4] text-sm pb-6">
         Welcome to myastro.org.in! Our passionate astrologers aim to guide you
