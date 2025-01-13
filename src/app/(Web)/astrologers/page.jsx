@@ -3,6 +3,7 @@ import AstroNavbar from '@/components/AstroNavbar'
 import AstrologerCardContainer from '@/components/AstrologerCardContainer'
 import DetailsContent from '@/components/DetailsContent'
 import FAQ from '@/components/FAQ'
+import Image from 'next/image'
 
 const Astrologers = () => {
   const faqsData = [
@@ -47,6 +48,10 @@ const Astrologers = () => {
 
   return (
     <>
+     <div className="relative px-[10px] lg:px-[65px]">
+              <Image className="w-full h-[250px] my-[10px] quality={100} rounded-lg flex" src="/AstrologerHeroImage.jpg" alt="Icon" width={1900} height={1900}/>
+                  
+            </div>
       <AstroNavbar />
       <AstrologerCardContainer sliceCount={50} />
       <DetailsContent />
