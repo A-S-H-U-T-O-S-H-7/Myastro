@@ -4,34 +4,21 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { CloudHail } from 'lucide-react';
 import ENV from '../Env';
-function BankStep({ step, setStep, astrologerId }) {
+import { useAstrologer } from '@/lib/AstrologerRegistrationContext';
+import { BankDetailsSchema } from '../validations/AstrologerRegistrationValidation';
+function BankStep() {
 
-    const [loader, setLoader] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [formData, setFormData] = useState({
-        ifscCode: "",
-        bankName: "",
-        bankBranch: "",
-        accountType: "",
-        accountNumber: "",
-        confirmAccountNumber: "",
-        bankUPI: "",
-    });
-
-    const bankDetailsSchema = Yup.object().shape({
-        ifscCode: Yup.string()
-            .required("IFSC Code is required"),
-
-        bankName: Yup.string().required("Bank Name is required"),
-        bankBranch: Yup.string().required("Bank Branch is required"),
-        accountType: Yup.string().required("Account Type is required"),
-        accountNumber: Yup.string()
-            .required("Account number is required")
-            .matches(/^\d{9,18}$/, "Enter a valid account number"),
-        confirmAccountNumber: Yup.string()
-            .oneOf([Yup.ref("accountNumber")], "Account numbers must match")
-            .required("Confirm account number is required"),
-    });
+    const {
+        bankData,
+        setBankData,
+        step,
+        setStep,
+        astrologerId,
+        loader,
+        setLoader,
+        errorMessage,
+        setErrorMessage
+    } = useAstrologer();
 
     const handleIFSC = async (ifsc, setFieldValue) => {
         try {
@@ -57,7 +44,7 @@ function BankStep({ step, setStep, astrologerId }) {
 
     }
     const handleSubmit = async (values) => {
-        console.log(values)
+        setBankData(values)
         try {
             setLoader(true);
             setErrorMessage("");
@@ -80,7 +67,7 @@ function BankStep({ step, setStep, astrologerId }) {
             });
 
             const result = await response.json();
-             
+
             if (response.ok) {
                 setLoader(false);
                 setStep(step + 1);
@@ -96,8 +83,8 @@ function BankStep({ step, setStep, astrologerId }) {
     }
     return (
         <Formik
-            initialValues={{ ...formData }}
-            validationSchema={bankDetailsSchema}
+            initialValues={{ ...bankData }}
+            validationSchema={BankDetailsSchema}
             onSubmit={(values) => handleSubmit(values)}
         >
 

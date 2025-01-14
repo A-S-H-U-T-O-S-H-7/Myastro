@@ -48,7 +48,7 @@ const Astrologers = () => {
 
   return (
     <>
-     <div className="relative px-[10px] lg:px-[65px]">
+    <div className="relative px-[10px] lg:px-[65px]">
               <Image className="w-full h-[250px] my-[10px] quality={100} rounded-lg flex" src="/AstrologerHeroImage.jpg" alt="Icon" width={1900} height={1900}/>
                   
             </div>

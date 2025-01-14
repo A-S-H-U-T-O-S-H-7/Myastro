@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { FaUser, FaSms, FaBrain, FaClipboardList, FaUniversity, FaCloudUploadAlt } from "react-icons/fa";
 import PersonalStep from "./steps/PersonalStep";
 import OtpStep from "./steps/OtpStep";
@@ -7,13 +6,10 @@ import SkillStep from "./steps/SkillStep";
 import OtherStep from "./steps/OtherStep";
 import BankStep from "./steps/BankStep";
 import UploadStep from "./steps/UploadStep";
+import { useAstrologer } from "@/lib/AstrologerRegistrationContext";
 const AstrologerRegistration = () => {
 
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({});
-  const [astrologerId, setAstrologerId] = useState("");
-
-  // step data
+  const { step } = useAstrologer();
   const steps = [
     { icon: <FaUser />, label: "Personal Details", shortLabel: "Personal" },
     { icon: <FaSms />, label: "OTP Verify", shortLabel: "OTP" },
@@ -22,13 +18,7 @@ const AstrologerRegistration = () => {
     { icon: <FaUniversity />, label: "Bank Details", shortLabel: "Bank" },
     { icon: <FaCloudUploadAlt />, label: "Uploads", shortLabel: "Uploads" },
   ];
-  const handleNextSteps = () => {
-    if (step < 6) {
-      setStep(step + 1);
-    } else {
-      alert("Form Submitted Successfully!");
-    }
-  }
+
   return (
     <div className="min-h-screen flex flex-col items-center bg-purple-300 px-4 py-8">
       <h1 className="text-4xl font-bold text-black mb-8 text-center">
@@ -60,25 +50,23 @@ const AstrologerRegistration = () => {
               >
                 {item.icon}
               </div>
-              {/* Responsive Label */}
-        <p
-          className={`text-xs lg:text-sm mt-2 ${
-            step >= index + 1 ? "text-gray-800" : "text-gray-400"
-          }`}
-        >
-          <span className="hidden sm:inline">{item.label}</span> {/* Full label for larger screens */}
-          <span className="sm:hidden">{item.shortLabel}</span> {/* Short label for smaller screens */}
-        </p>
+              <p
+                className={`text-xs lg:text-sm mt-2 ${step >= index + 1 ? "text-gray-800" : "text-gray-400"
+                  }`}
+              >
+                <span className="hidden sm:inline">{item.label}</span>
+                <span className="sm:hidden">{item.shortLabel}</span>
+              </p>
             </div>
           ))}
         </div>
       </div>
-      {step === 1 && <PersonalStep step={step} setStep={setStep} formData={formData} setFormData={setFormData} astrologerId={astrologerId} setAstrologerId={setAstrologerId} />}
-      {step === 2 && <OtpStep step={step} setStep={setStep} formData={formData} setFormData={setFormData} astrologerId={astrologerId} setAstrologerId={setAstrologerId} />}
-      {step === 3 && <SkillStep step={step} setStep={setStep} astrologerId={astrologerId} />}
-      {step === 4 && <OtherStep step={step} setStep={setStep} astrologerId={astrologerId} />}
-      {step === 5 && <BankStep step={step} setStep={setStep} astrologerId={astrologerId} />}
-      {step === 6 && <UploadStep step={step} setStep={setStep} astrologerId={astrologerId} />}
+      {step === 1 && <PersonalStep />}
+      {step === 2 && <OtpStep />}
+      {step === 3 && <SkillStep />}
+      {step === 4 && <OtherStep />}
+      {step === 5 && <BankStep />}
+      {step === 6 && <UploadStep />}
     </div>
   );
 };

@@ -19,7 +19,7 @@ const ApprovedAstrologer = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [sortColumn, setSortColumn] = useState("srno");
-  const [sortDirection,  setSortDirection] = useState("asc");
+  const [sortDirection, setSortDirection] = useState("asc");
   const [loader, setLoader] = useState(false);
 
   const fetchAstrologers = async () => {
@@ -42,9 +42,9 @@ const ApprovedAstrologer = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("myastro-token")}`,
             "Content-Type": "application/json",
-            
+
           },
-          credentials: 'include',
+          //credentials: 'include',
         }
       );
 
@@ -130,14 +130,14 @@ const ApprovedAstrologer = () => {
                 </tr>
               </thead>
               <tbody>
-              {astrologers.map((item, index) => (
-          <ApprovedAstrologerRow
-            key={item.id}
-            item={item}
-            index={index}
-           
-          />
-        ))}
+                {astrologers.map((item, index) => (
+                  <ApprovedAstrologerRow
+                    key={item.id}
+                    item={item}
+                    index={index}
+
+                  />
+                ))}
               </tbody>
             </table>
           </div>

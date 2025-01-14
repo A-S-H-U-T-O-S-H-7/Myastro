@@ -3,19 +3,25 @@ import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ENV from '../Env';
-function OtpStep({ step, setStep, formData, setFormData, astrologerId, setAstrologerId }) {
+import { AstrologerOtpSchema } from '../validations/AstrologerRegistrationValidation';
+import { useAstrologer } from '@/lib/AstrologerRegistrationContext';
+import { BeatLoader } from 'react-spinners';
+function OtpStep() {
 
     const [otpTimer, setOtpTimer] = useState(60);
     const [isResendDisabled, setIsResendDisabled] = useState(true);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [loader, setLoader] = useState(false);
 
-    const otpSchema = Yup.object({
-        otp: Yup.string()
-            .trim()
-            .matches(/^\d{6}$/, "OTP must be exactly 6 digits and numeric")
-            .required("OTP is required"),
-    });
+    const {
+        personalData,
+        step,
+        setStep,
+        loader,
+        setLoader,
+        errorMessage,
+        setErrorMessage,
+        setAstrologerId
+    } = useAstrologer();
+
 
     useEffect(() => {
         let timer;
@@ -28,8 +34,34 @@ function OtpStep({ step, setStep, formData, setFormData, astrologerId, setAstrol
         return () => clearInterval(timer);
     }, [otpTimer]);
 
-    const handleResendOTP = () => {
+    const handleResendOTP = async() => {
+        try {
+            setLoader(true);
+            setErrorMessage("");
+            const response = await fetch(`${ENV.API_URL}/astrologer-registration-otp`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    "mobile": personalData.phone,
+                    "email": personalData.email
+                }),
+            });
 
+            const result = await response.json();
+
+            if (response.ok) {
+                setLoader(false);
+            } else {
+                setErrorMessage(result?.message);
+                setLoader(false);
+            }
+        } catch (error) {
+            setErrorMessage("Error submitting data." + error.message);
+            setLoader(false);
+        }
     }
     const handlePersonalDetails = async (values) => {
         try {
@@ -44,10 +76,10 @@ function OtpStep({ step, setStep, formData, setFormData, astrologerId, setAstrol
                 body: JSON.stringify({
                     "step": 1,
                     "otp": Number(values.otp.trim()),
-                    "fullname": formData.fullName,
-                    "email": formData.email,
-                    "mobilenumber": Number(formData.phone),
-                    "whatsappnumber": Number(formData.whatsapp)
+                    "fullname": personalData.fullName,
+                    "email": personalData.email,
+                    "mobilenumber": Number(personalData.phone),
+                    "whatsappnumber": Number(personalData.whatsapp)
                 }),
             });
 
@@ -70,7 +102,7 @@ function OtpStep({ step, setStep, formData, setFormData, astrologerId, setAstrol
     return (
         <Formik
             initialValues={{ otp: "" }}
-            validationSchema={otpSchema}
+            validationSchema={AstrologerOtpSchema}
             onSubmit={(values) => { handlePersonalDetails(values) }}
         >
             {({ isValid, touched }) => (
@@ -84,7 +116,7 @@ function OtpStep({ step, setStep, formData, setFormData, astrologerId, setAstrol
                         <p className="text-gray-700 text-center mb-2">
                             OTP sent to{" "}
                             <span className="font-semibold text-green-600">
-                                +91 {formData?.phone}
+                                +91 {personalData?.phone}
                             </span>
                         </p>
 
@@ -128,12 +160,10 @@ function OtpStep({ step, setStep, formData, setFormData, astrologerId, setAstrol
                         <div className="flex justify-end">
                             <button
                                 type="submit"
-                                className={`bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 ${isValid && touched.otp
-                                    ? "hover:shadow-xl"
-                                    : "opacity-50 cursor-not-allowed"
-                                    }`}
+                                disabled={loader}
+                                className={`bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300`}
                             >
-                                Next
+                               {loader ? (<BeatLoader color="#fff" />) : ("Next")}
                             </button>
                         </div>
 

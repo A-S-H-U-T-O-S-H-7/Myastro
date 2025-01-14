@@ -3,34 +3,27 @@ import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ENV from '../Env';
-function OtherStep({ step, setStep, astrologerId }) {
+import { AdditionalDetailsSchema } from '../validations/AstrologerRegistrationValidation';
+import { useAstrologer } from '@/lib/AstrologerRegistrationContext';
+function OtherStep() {
+    const {
+        otherData,
+        setOtherData,
+        step,
+        setStep,
+        astrologerId,
+        loader,
+        setLoader,
+        errorMessage,
+        setErrorMessage
+    } = useAstrologer();
 
-    const [loader, setLoader] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
-    const additionalDetailsSchema = Yup.object().shape({
-        minCharges: Yup.number()
-            .required("Minimum charges are required")
-            .min(5, "Minimum charge must be at least 5")
-            .max(50, "maximum charge must be at least 50"),
-
-        whyOnboard: Yup.string()
-            .required("Please tell us why you should be onboarded")
-            .min(10, "Minimum 10 characters required"),
-        mainIncomeSource: Yup.string().required("Please select your main income source"),
-        highestQualification: Yup.string().required("Please select your highest qualification"),
-        learnAstrology: Yup.string().required("Please specify where you learned astrology"),
-        minEarnings: Yup.number()
-            .required("Minimum monthly earnings are required"),
-        fulltimeJob: Yup.string().required("Please specify if you have a full-time job"),
-        longBio: Yup.string()
-            .required("Please provide a long bio")
-            .min(50, "Long bio must be at least 50 words"),
-    })
     const handleSubmit = async (values) => {
         try {
             setLoader(true);
             setErrorMessage("");
+            setOtherData(values)
             const response = await fetch(`${ENV.API_URL}/astrologer-step-form`, {
                 method: "POST",
                 headers: {
@@ -74,25 +67,12 @@ function OtherStep({ step, setStep, astrologerId }) {
     return (
         <Formik
             initialValues={{
-                whyOnboard: "",
-                mainIncomeSource: "",
-                highestQualification: "",
-                learnAstrology: "",
-                instalink: "",
-                facebooklink: "",
-                linkedinlink: "",
-                youtubelink: "",
-                websitelink: "",
-                minCharges: "",
-                minEarnings: "",
-                fulltimeJob: "",
-                referredBySomeone: "",
-                longBio: ""
+                ...otherData
             }}
-            validationSchema={additionalDetailsSchema}
-            onSubmit={(values) => { handleSubmit(values);console.log(values) }}
+            validationSchema={AdditionalDetailsSchema}
+            onSubmit={(values) => { handleSubmit(values); }}
         >
-            {({values, setFieldValue, errors, isValid, touched}) => (
+            {({ values, setFieldValue, errors, isValid, touched }) => (
                 <div className="w-full max-w-4xl bg-gradient-to-b from-white via-[#f8f4ff] to-[#eae0ff] shadow-lg rounded-lg p-8 space-y-6">
                     <Form className="space-y-6">
                         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2 ">

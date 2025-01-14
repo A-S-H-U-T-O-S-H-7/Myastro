@@ -4,75 +4,24 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ENV from '../Env';
 import { useRouter } from 'next/navigation';
+import { UploadDocumentsSchema } from '../validations/AstrologerRegistrationValidation';
+import { useAstrologer } from '@/lib/AstrologerRegistrationContext';
 
-function UploadStep({ step, setStep, astrologerId }) {
-    const [loader, setLoader] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-     const router = useRouter();
+function UploadStep() {
+
+    const router = useRouter();
     // File upload validation schema
-    const uploadDocumentsSchema = Yup.object().shape({
-        astrologyCertificate: Yup.mixed()
-            .required("Astrology Certificate is required")
-            .test(
-                "fileType",
-                "Only PDF or JPG files are allowed",
-                (value) => value && ["application/pdf", "image/jpeg"].includes(value.type)
-            )
-            .test(
-                "fileSize",
-                "File size should not exceed 2MB",
-                (value) => value && value.size <= 2 * 1024 * 1024
-            ),
-        biodata: Yup.mixed()
-            .nullable()
-            .test(
-                "fileType",
-                "Only PDF or JPG files are allowed",
-                (value) =>
-                    !value || ["application/pdf", "image/jpeg"].includes(value.type)
-            )
-            .test(
-                "fileSize",
-                "File size should not exceed 2MB",
-                (value) => !value || value.size <= 2 * 1024 * 1024
-            ),
-        panCard: Yup.mixed()
-            .required("PAN Card is required")
-            .test(
-                "fileType",
-                "Only JPG or JPEG files are allowed",
-                (value) => value && ["image/jpeg"].includes(value.type)
-            )
-            .test(
-                "fileSize",
-                "File size should not exceed 2MB",
-                (value) => value && value.size <= 2 * 1024 * 1024
-            ),
-        aadharFront: Yup.mixed()
-            .required("Aadhar Front is required")
-            .test(
-                "fileType",
-                "Only JPG or JPEG files are allowed",
-                (value) => value && ["image/jpeg"].includes(value.type)
-            )
-            .test(
-                "fileSize",
-                "File size should not exceed 2MB",
-                (value) => value && value.size <= 2 * 1024 * 1024
-            ),
-        aadharBack: Yup.mixed()
-            .required("Aadhar Back is required")
-            .test(
-                "fileType",
-                "Only JPG or JPEG files are allowed",
-                (value) => value && ["image/jpeg"].includes(value.type)
-            )
-            .test(
-                "fileSize",
-                "File size should not exceed 2MB",
-                (value) => value && value.size <= 2 * 1024 * 1024
-            ),
-    });
+    const {
+        uploadData,
+        setUploadData,
+        step,
+        setStep,
+        astrologerId,
+        loader,
+        setLoader,
+        errorMessage,
+        setErrorMessage
+    } = useAstrologer();
 
     // Handle image upload
     const handleImageUpload = async (e, setFieldValue) => {
@@ -164,6 +113,7 @@ function UploadStep({ step, setStep, astrologerId }) {
             const response = await fetch(`${ENV.API_URL}/astrologer-final-check/${astrologerId}`, {
                 method: "POST",
                 headers: {
+                    "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
@@ -174,7 +124,7 @@ function UploadStep({ step, setStep, astrologerId }) {
             if (!response.ok) {
                 setErrorMessage(result.error || "Something went wrong.");
             } else {
-              router.push('/astrologer-thankyou');
+                router.push('/astrologer-thankyou');
             }
         } catch (error) {
             setErrorMessage("Error submitting data: " + error.message);
@@ -184,13 +134,9 @@ function UploadStep({ step, setStep, astrologerId }) {
     return (
         <Formik
             initialValues={{
-                astrologyCertificate: null,
-                biodata: null,
-                panCard: null,
-                aadharFront: null,
-                aadharBack: null,
+                ...uploadData
             }}
-            validationSchema={uploadDocumentsSchema}
+            validationSchema={UploadDocumentsSchema}
             onSubmit={(values) => handleFinal()}
         >
             {({ setFieldValue, values, errors, touched }) => (

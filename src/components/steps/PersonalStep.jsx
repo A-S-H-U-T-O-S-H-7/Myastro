@@ -1,47 +1,37 @@
-"use client"
-import React, { useState } from 'react'
+"use client";
+import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import ENV from '../Env';
 import { BeatLoader } from 'react-spinners';
-function PersonalStep({ step, setStep, formData, setFormData, astrologerId, setAstrologerId }) {
+import { PersonalValidationSchema } from '../validations/AstrologerRegistrationValidation';
+import { useAstrologer } from '@/lib/AstrologerRegistrationContext';
+function PersonalStep() {
 
-    const [loader, setLoader] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-
-    const validationSchema = Yup.object({
-        fullName: Yup.string()
-            .matches(/^[a-zA-Z\s]+$/, "Full Name must only contain letters and spaces")
-            .required("Full Name is required"),
-        email: Yup.string()
-            .matches(
-                /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                "Invalid email format"
-            )
-            .required("Email is required"),
-        phone: Yup.string()
-            .matches(/^\d{10}$/, "Must be exactly 10 digits")
-            .required("Phone number is required"),
-        whatsapp: Yup.string()
-            .matches(/^\d{10}$/, "Must be exactly 10 digits")
-            .required("WhatsApp number is required"),
-        terms: Yup.boolean()
-            .oneOf([true], "You must accept the terms and conditions"),
-    });
+    const {
+        personalData,
+        setPersonalData,
+        step,
+        setStep,
+        loader,
+        setLoader,
+        errorMessage,
+        setErrorMessage
+    } = useAstrologer();
 
     const handlePersonalDetails = async (values) => {
         try {
-            setFormData({ ...values });
+            setPersonalData({ ...values });
             setLoader(true);
             setErrorMessage("");
-            const response = await fetch(`${ENV.API_URL}/astrologer-otp`, {
+            const response = await fetch(`${ENV.API_URL}/astrologer-registration-otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    "mobile": values.phone
+                    "mobile": values.phone,
+                    "email": values.email
                 }),
             });
 
@@ -51,7 +41,7 @@ function PersonalStep({ step, setStep, formData, setFormData, astrologerId, setA
                 setLoader(false);
                 setStep(step + 1);
             } else {
-                setErrorMessage(result.error || "Something went wrong.");
+                setErrorMessage(result?.message);
                 setLoader(false);
             }
         } catch (error) {
@@ -61,14 +51,8 @@ function PersonalStep({ step, setStep, formData, setFormData, astrologerId, setA
     }
     return (
         <Formik
-            initialValues={{
-                fullName: "",
-                email: "",
-                phone: "",
-                whatsapp: "",
-                terms: false,
-            }}
-            validationSchema={validationSchema}
+            initialValues={personalData}
+            validationSchema={PersonalValidationSchema}
             onSubmit={(values) => { handlePersonalDetails(values); }}
         >
             {({ isValid, touched }) => (
@@ -76,7 +60,7 @@ function PersonalStep({ step, setStep, formData, setFormData, astrologerId, setA
                     <h2 className="text-2xl font-bold text-center text-gray-800 ">
                         Personal Details
                     </h2>
-                    {errorMessage && <span className='text-red-600 font-thin'>{errorMessage}</span>}
+                    {errorMessage && <p className='text-red-600 font-thin text-center'>{errorMessage}</p>}
                     <div className="flex flex-col space-y-1">
                         <label className=" font-medium text-gray-700 ">
                             Full Name<span className="text-red-500">*</span>
@@ -108,7 +92,7 @@ function PersonalStep({ step, setStep, formData, setFormData, astrologerId, setA
                         <Field
                             name="phone"
                             type="text"
-                             maxLength="10"
+                            maxLength="10"
                             placeholder="Enter your phone number"
                             className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1 focus:outline-none focus:ring-1 focus:ring-purple-500"
                         />
@@ -121,7 +105,7 @@ function PersonalStep({ step, setStep, formData, setFormData, astrologerId, setA
                         <Field
                             name="whatsapp"
                             type="text"
-                             maxLength="10"
+                            maxLength="10"
                             placeholder="Enter your WhatsApp number"
                             className="w-full border border-gray-300 dark:border-[#2d3747] rounded-md px-4 py-1 focus:outline-none focus:ring-1 focus:ring-purple-500"
                         />
