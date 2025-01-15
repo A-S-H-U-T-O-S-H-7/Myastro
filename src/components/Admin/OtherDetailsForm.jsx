@@ -13,6 +13,20 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
         <Form className="bg-[#0e1726] p-6 rounded-lg space-y-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
+    {/*Why do you think we should onboard you?*/}
+    <div className="flex flex-col gap-2">
+        <label className="text-sm font-semibold text-gray-300">
+        Why do you think we should onboard you?:
+        </label>
+        <Field
+          name="whyOnboard"
+          type="text"
+          placeholder="Why do you think we should onboard you?..."
+          className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
+          />
+       
+      </div>        
+
    {/* Main Source of Income Dropdown */}
 <div className="flex flex-col gap-2">
   <label className="text-sm font-semibold text-gray-300">
@@ -20,13 +34,16 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
   </label>
   <Field
     as="select"
-    name="mainIncomeSource"
+    name="mainsourceincome"
     className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
     >
     <option value="">--Select Source Income--</option>
-    <option value="Business">Business</option>
+    <option value="Own Business">Own Business</option>
     <option value="Private Job">Private Job</option>
     <option value="Government Job">Government Job</option>
+    <option value="Studying in College">Studying in College</option>
+    <option value="None Of The Above">None Of The Above</option>
+
   </Field>
   
 </div>
@@ -39,21 +56,18 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
   </label>
   <Field
     as="select"
-    name="highestQualification"
+    name="qualification"
     className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
   >
     <option value="">--Select Qualification--</option>
     <option value="10th">10th</option>
     <option value="12th">12th</option>
-    <option value="Graduate">Graduate</option>
-    <option value="Post Graduate">Post Graduate</option>
-    <option value="PhD">PhD</option>
+    <option value="Diploma">Diploma</option>
+    <option value="Graduated">Graduated</option>
+    <option value="Post Graduated">Post Graduated</option>
+    <option value="PHD">PHD</option>
   </Field>
-  <ErrorMessage
-    name="highestQualification"
-    component="p"
-    className="text-red-500 text-sm"
-  />
+  
 </div>
 
 
@@ -79,7 +93,7 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
               {platform} profile link (optional):
             </label>
             <Field
-              name={`${platform.toLowerCase()}Link`}
+              name={`${platform.toLowerCase()}`}
               type="text"
               placeholder={`Enter your ${platform} profile link...`}
               className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
@@ -87,6 +101,22 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
           </div>
         )
       )}
+       {/* Radio Buttons: Did anybody refer you to Myastro?:*/}
+       <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-300">
+              Did anybody refer you to Myastro?:
+              </label>
+              <div className="flex gap-6 items-center">
+                <label className="flex items-center gap-2 text-sm text-gray-300">
+                  <Field type="radio" name="referredBySomeone" value="Yes" className="text-[#22c7d5] focus:outline-none " />
+                  Yes
+                </label>
+                <label className="flex items-center gap-2 text-sm text-gray-300">
+                  <Field type="radio" name="referredBySomeone" value="No" className="text-[#22c7d5] focus:outline-none " />
+                  No
+                </label>
+              </div>
+            </div>
 
       {/* Minimum charges per minute */}
       <div className="flex flex-col gap-2">

@@ -111,7 +111,7 @@ function OtherStep() {
                                     className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-shadow"
                                 >
                                     <option value="" disabled>Select</option>
-                                    <option value="Business">Business</option>
+                                    <option value="Own Business">Own Business</option>
                                     <option value="Private Job">Private Job</option>
                                     <option value="Government Job">Government Job</option>
                                 </Field>

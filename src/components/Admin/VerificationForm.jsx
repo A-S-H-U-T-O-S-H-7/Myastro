@@ -252,7 +252,7 @@ const VerificationForm = ({ initialValues, onSubmit }) => {
     {/* Icon to view the image */}
     <IoDocumentTextOutline
       className="text-purple-500 w-[40px] h-[40px] cursor-pointer"
-      onClick={() => window.open('/path-to-your-image.jpg', '_blank')}
+      onClick={() => window.open(initialValues.photo, "_blank")}
     />
 
     {/* Upload button */}
@@ -297,7 +297,7 @@ const VerificationForm = ({ initialValues, onSubmit }) => {
     {/* Icon to view the image */}
     <IoDocumentTextOutline
       className="text-purple-500 w-[40px] h-[40px] cursor-pointer"
-      onClick={() => window.open('/path-to-your-image.jpg', '_blank')}
+      onClick={() => window.open(initialValues.pancard, "_blank")}
     />
 
     {/* Upload button */}
@@ -342,7 +342,7 @@ const VerificationForm = ({ initialValues, onSubmit }) => {
     {/* Icon to view the image */}
     <IoDocumentTextOutline
       className="text-purple-500 w-[40px] h-[40px] cursor-pointer"
-      onClick={() => window.open('/path-to-your-image.jpg', '_blank')}
+      onClick={() => window.open(initialValues.aadharFront, "_blank")}
     />
 
     {/* Upload button */}
@@ -387,7 +387,7 @@ const VerificationForm = ({ initialValues, onSubmit }) => {
     {/* Icon to view the image */}
     <IoDocumentTextOutline
       className="text-purple-500 w-[40px] h-[40px] cursor-pointer"
-      onClick={() => window.open('/path-to-your-image.jpg', '_blank')}
+      onClick={() => window.open(initialValues.aadharBack, "_blank")}
     />
 
     {/* Upload button */}
@@ -432,7 +432,52 @@ const VerificationForm = ({ initialValues, onSubmit }) => {
     {/* Icon to view the image */}
     <IoDocumentTextOutline
       className="text-purple-500 w-[40px] h-[40px] cursor-pointer"
-      onClick={() => window.open('/path-to-your-image.jpg', '_blank')}
+      onClick={() => window.open(initialValues.certificate, "_blank")}
+    />
+
+    {/* Upload button */}
+    <label className="flex items-center gap-2 cursor-pointer bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600">
+      <FaUpload className="w-4 h-4" />
+      <span>Upload</span>
+      <input
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => handleFileUpload(e)}
+      />
+    </label>
+  </div>
+</div>
+
+
+
+  {/* Verify Dropdown */}
+  <div className="flex flex-col gap-2 w-full">
+    <label className="text-sm font-semibold text-gray-300">
+      Verify
+    </label>
+    <Field
+      as="select"
+      name="verifyStatus"
+      className="w-full bg-[#1b2e4b] text-[#22c7d5] rounded-md px-4 py-3.5 focus:outline-none focus:ring-1 focus:ring-[#22c7d5]"
+    >
+      <option value="">Choose</option>
+      <option value="Verified">Yes</option>
+      <option value="Not Verified">No</option>
+    </Field>
+  </div>
+</div>
+<div className="flex flex-col md:flex-row gap-4">
+ {/* Astrologer Biodata */}
+<div className="flex flex-col gap-2 w-full">
+  <label className="text-sm font-semibold text-gray-300">
+    Astrologer Biodata
+  </label>
+  <div className="flex items-center gap-4">
+    {/* Icon to view the image */}
+    <IoDocumentTextOutline
+      className="text-purple-500 w-[40px] h-[40px] cursor-pointer"
+      onClick={() => window.open(initialValues.biodata, "_blank")}
     />
 
     {/* Upload button */}

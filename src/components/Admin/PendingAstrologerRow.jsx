@@ -2,6 +2,7 @@
 
 import CallDetails from "./CallDeatils";
 import { FaPen, FaTrash } from "react-icons/fa";
+import Link from "next/link";
 
 const PendingAstrologerRow = ({ item, index }) => {
   return (
@@ -43,7 +44,9 @@ const PendingAstrologerRow = ({ item, index }) => {
       </td>
 
       <td className="px-4 py-2 flex justify-center gap-2">
-        <FaPen className="text-blue-500 cursor-pointer" />
+      <Link href={`/admin/edit-astrologer/${item.id}`}>
+          <FaPen className="text-blue-500 cursor-pointer" />
+        </Link>
         <FaTrash className="text-red-500 cursor-pointer" />
       </td>
     </tr>

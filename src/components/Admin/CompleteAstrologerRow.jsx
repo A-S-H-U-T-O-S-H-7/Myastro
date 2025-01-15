@@ -7,7 +7,7 @@ import CallDetails from "./CallDeatils";
 const CompleteAstrologerRow = ({ item, index }) => {
   return (
     <tr className="hover:bg-[#1e2737] transition-colors">
-            <td className="px-4 py-2 text-center">{index + 1}</td>
+      <td className="px-4 py-2 text-center">{index + 1}</td>
 
       <CallDetails item={item} />
 
@@ -30,7 +30,7 @@ const CompleteAstrologerRow = ({ item, index }) => {
         {item.status || "N/A"}
       </td>
       <td className="px-4 py-2 mt-2 flex justify-center gap-2">
-        <Link href="/admin/edit-astrologerprofile">
+        <Link href={`/admin/edit-astrologer/${item.id}`}>
           <FaPen className="text-blue-500 cursor-pointer" />
         </Link>
         <FaTrash className="text-red-500 cursor-pointer" />
