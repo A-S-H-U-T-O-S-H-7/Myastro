@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
+import CallchatReusable from './CallchatReusable';
 
 function PoojaDetails() {
   return <div>
@@ -108,6 +109,7 @@ function PoojaDetails() {
           </div>
         </div>
       </div>
+      <CallchatReusable/>
     </div>;
 }
 
