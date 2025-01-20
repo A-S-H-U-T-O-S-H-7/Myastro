@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image';
 import CallchatReusable from './CallchatReusable';
+import Link from 'next/link';
 
 function PoojaDetails() {
   return <div>
@@ -30,9 +31,11 @@ function PoojaDetails() {
                 02d : 15h : 39m : 57s left
               </span>
             </div>
+            <Link href="/pooja-payment">
             <button className="mt-4 flex w-full justify-center bg-yellow-400 hover:bg-yellow-500 text-[#444444] text-lg  py-3 px-4 rounded">
               Book Now
             </button>
+            </Link>
           </div>
         </div>
 
