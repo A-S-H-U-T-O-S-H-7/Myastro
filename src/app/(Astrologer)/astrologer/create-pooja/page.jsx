@@ -1,10 +1,11 @@
-import BlogPage from '@/components/BlogPage'
 import React from 'react'
+import CreatePooja from '@/components/Astrologer/CreatePooja'
+
 
 function page() {
   return (
     <div>
-      <BlogPage/>
+      <CreatePooja/>
     </div>
   )
 }

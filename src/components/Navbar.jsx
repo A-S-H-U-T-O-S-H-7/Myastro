@@ -123,6 +123,9 @@ const Navbar = () => {
             <li className="font-hansenG px-4 py-[4px] leading-6 text-[#212529] font-bold mb-1">
               <Link className="hover:text-[#EE8722]" href="/blogs">Blogs</Link>
             </li>
+            <li className="font-hansenG px-4 py-[4px] leading-6 text-[#212529] font-bold mb-1">
+              <Link className="hover:text-[#EE8722]" href="/book-a-pooja">Book a Pooja</Link>
+            </li>
           </ul>
           <div className="flex items-center gap-3">
             {/* Wallet Section */}

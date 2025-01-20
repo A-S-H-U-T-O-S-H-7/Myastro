@@ -342,20 +342,35 @@ useEffect(() => {
                 }} labelledBy="Select Other Skill" />
             </div>
 
-            {/* Primary Skill Dropdown */}
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-gray-300">
-                Primary Skill
-              </label>
-              <Field as="select" name="primaryskill" className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] ">
-                <option value="">Select Primary Skill</option>
-                <option value="Tarot">Tarot</option>
-                <option value="Numerology">Numerology</option>
-                <option value="Vastu">Vastu</option>
-                <option value="Vedic">Vedic</option>
-              </Field>
-              <ErrorMessage name="primaryskill" component="p" className="text-red-500 text-sm" />
-            </div>
+             {/* Primary Skill Dropdown */}
+                      <div className="flex flex-col gap-2">
+                        <label className="text-sm font-semibold text-gray-300">
+                          Primary Skill
+                        </label>
+                        <Field as="select" name="primaryskill" 
+                        className="w-full  bg-[#1b2e4b]  rounded-md px-4 py-3 text-sm text-[#22c7d5] placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] " placeholder=" Select Primary Skill">
+                          <option value="" disabled>
+                            Select Primary Skill
+                          </option>
+                          <option value="Vedic">Vedic</option>
+                          <option value="Nadi">Nadi</option>
+                          <option value="Numerology">Numerology</option>
+                          <option value="Vastu">Vastu</option>
+                          <option value="Prashana">Prashana</option>
+                          <option value="KP">KP</option>
+                          <option value="Lal Kitab">Lal Kitab</option>
+                          <option value="Western">Western</option>
+                          <option value="Tarot">Tarot</option>
+                          <option value="Palmistry">Palmistry</option>
+                          <option value="Horary">Horary</option>
+                          <option value="Face Reading">Face Reading</option>
+                          <option value="Psychic">Psychic</option>
+                          <option value="Life Coach">Life Coach</option>
+                          <option value="Cartomancy">Cartomancy</option>
+                          <option value="Loshu Grid">Loshu Grid</option>
+                          <option value="Psychologist">Psychologist</option>
+                        </Field>
+                      </div>
 
             {/* Radio Buttons: Working on Other Platforms */}
             <div className="flex flex-col gap-2">

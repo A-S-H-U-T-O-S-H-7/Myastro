@@ -9,6 +9,7 @@ import { MdExpandMore } from "react-icons/md";
 import { MdExpandLess } from "react-icons/md";
 import ENV from "./Env";
 import Image from "next/image";
+import PoojaCard from "./PoojaCard";
 
 
 export default function BlogPage() {
@@ -182,7 +183,9 @@ export default function BlogPage() {
               .map((post, index) => (
                 <BlogCard key={index} post={post} />
               ))}
-          </div>              
+          </div>   
+
+          <PoojaCard/>           
 
           {/* Pagination */}
           <div className="flex justify-end items-center mt-6 mb-10 space-x-3">

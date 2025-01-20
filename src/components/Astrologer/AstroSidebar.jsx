@@ -13,6 +13,8 @@ import {
   FaMoneyCheckAlt,
   FaStar,
 } from "react-icons/fa";
+import { PiFlowerLotusDuotone } from "react-icons/pi";
+
 
 const AstroSidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false); // Sidebar state
@@ -31,6 +33,8 @@ const AstroSidebar = () => {
     { icon: <FaShoppingBag className="text-xl" />, label: "Orders", link: "/astrologer/orders" },
     { icon: <FaMoneyCheckAlt className="text-xl" />, label: "Payment Details", link: "/astrologer/payments" },
     { icon: <FaStar className="text-xl" />, label: "Reviews", link: "/astrologer/reviews" },
+    { icon: <PiFlowerLotusDuotone className="text-xl" />, label: "Create Pooja", link: "/astrologer/create-pooja" },
+
   ];
 
   return (

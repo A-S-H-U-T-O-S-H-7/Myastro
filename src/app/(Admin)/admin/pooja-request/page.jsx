@@ -1,10 +1,10 @@
-import BlogPage from '@/components/BlogPage'
+import PoojaDetails from '@/components/Admin/PoojaDetails'
 import React from 'react'
 
 function page() {
   return (
     <div>
-      <BlogPage/>
+      <PoojaDetails/>
     </div>
   )
 }

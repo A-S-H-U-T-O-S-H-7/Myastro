@@ -17,6 +17,8 @@ import {
   FaMoneyCheckAlt,
   FaStar,
 } from "react-icons/fa";
+import { PiFlowerLotusDuotone } from "react-icons/pi";
+
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false); // Sidebar state
@@ -59,6 +61,8 @@ const Sidebar = () => {
         { label: "Manage Posts", link: "/admin/manage-posts" },
       ],
     },
+    { icon: <PiFlowerLotusDuotone className="text-xl" />, label: "Poojas", link: "/admin/pooja-request" },
+
   ];
 
   return (

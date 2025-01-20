@@ -48,7 +48,6 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
   
 </div>
 
-
     {/* Highest Qualification Dropdown */}
 <div className="flex flex-col gap-2">
   <label className="text-sm font-semibold text-gray-300">
@@ -57,7 +56,7 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
   <Field
     as="select"
     name="qualification"
-    className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
+    className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
   >
     <option value="">--Select Qualification--</option>
     <option value="10th">10th</option>
@@ -69,7 +68,6 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
   </Field>
   
 </div>
-
 
       {/* From where did you learn Astrology? */}
       <div className="flex flex-col gap-2">
@@ -102,7 +100,7 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
         )
       )}
        {/* Radio Buttons: Did anybody refer you to Myastro?:*/}
-       <div className="flex flex-col gap-2">
+       <div className="flex flex-col gap-2">  
               <label className="text-sm font-semibold text-gray-300">
               Did anybody refer you to Myastro?:
               </label>
@@ -154,7 +152,7 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
   <Field
     as="select"
     name="fulltimeJob"
-    className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
+    className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
     >
     <option value="">--Select Option--</option>
     <option value="Yes">Yes</option>
@@ -185,9 +183,6 @@ const OtherDetailsForm = ({ initialValues, onSubmit }) => {
     className="w-full bg-[#1b2e4b] text-[#22c7d5] rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#22c7d5]"
   />
 </div>
-
-
-
 
           </div>
          
