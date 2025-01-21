@@ -1,32 +1,28 @@
 "use client";
-
-import { useParams } from "next/navigation";
-import Daysection from "@/components/Daysection"; // Adjust the path as per your structure
+import React from "react";
+import Daysection from "@/components/Daysection";
 import HoroscopeContainer from "@/components/HoroscopeContainer";
 import CallchatReusable from "@/components/CallchatReusable";
 import RecomendedAstro from "@/components/RecomendedAstro";
+import { useHoroscopeService } from "@/lib/HoroscopeServicesContext";
+import { useParams } from "next/navigation";
 
 const HoroscopePage = () => {
-  const params = useParams();
-  const { horoscopename } = params;
+  const { horoscopename } = useParams();
+  const { selectedHoroscope, handleSelectHoroscope } = useHoroscopeService();
+  handleSelectHoroscope(horoscopename);
 
-  const formattedName = horoscopename
-    ?.split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-
+  if (!selectedHoroscope) return <div>Loading...</div>;
   return (
     <div>
       <div className="px-[10px] lg:px-[65px]">
         <h1 className="py-1 flex text-[#3C0184] justify-center text-[40px] font-heading font-bold">
-          {formattedName}
+          {selectedHoroscope.title}
         </h1>
         <p className="flex justify-center font-semibold py-1 text-[#6c757d]">
-          {formattedName}
+          {selectedHoroscope.title}
         </p>
-        <p className="text-[#212529] py-2">
-          Discover what the stars have in store for you with our {formattedName} readings. Our expert astrologers analyze the current planetary positions and alignments to provide you with accurate and insightful predictions for your zodiac sign.
-        </p>
+        <p className="text-[#212529] py-2">{selectedHoroscope.description}</p>
         <Daysection />
         <HoroscopeContainer />
         <CallchatReusable />

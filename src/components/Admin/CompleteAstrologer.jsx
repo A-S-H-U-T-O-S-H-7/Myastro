@@ -20,7 +20,7 @@ const CompleteAstrologer = () => {
   const [endDate, setEndDate] = useState(null);
   const [sortColumn, setSortColumn] = useState("srno");
   const [sortDirection, setSortDirection] = useState("asc");
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   const fetchAstrologers = async () => {
     setLoader(true);
@@ -54,9 +54,11 @@ const CompleteAstrologer = () => {
       if (json.status) {
         setAstrologers(json.astrologers);
         setTotalPages(json.pagination.totalPages);
+        setLoader(false);
       } else {
         setAstrologers([]);
         setTotalPages(0);
+        setLoader(false);
       }
     } catch (error) {
       console.error("Error fetching astrologers:", error.message);
@@ -68,7 +70,7 @@ const CompleteAstrologer = () => {
 
   useEffect(() => {
     fetchAstrologers();
-  }, [page, limit, searchTerm, startDate, endDate, sortColumn, sortDirection]);
+  }, [page, loader, limit, searchTerm, startDate, endDate, sortColumn, sortDirection]);
 
   const handleSort = (column) => {
     if (sortColumn === column) {

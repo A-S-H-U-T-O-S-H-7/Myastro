@@ -167,11 +167,28 @@ const UploadDocumentsSchema = Yup.object().shape({
             (value) => value && value.size <= 2 * 1024 * 1024
         ),
 });
+const VerifyAstrologer = Yup.object().shape({
+  veri_name:Yup.string().required("Please verify astrologer name"),
+  veri_mobile:Yup.string().required("Please verify astrologer mobile"),
+  veri_email:Yup.string().required("Please verify astrologer email"),
+  veri_username:Yup.string().required("Please verify astrologer username"),
+  veri_panno:Yup.string().required("Please verify astrologer pan no."),
+  veri_aadhar:Yup.string().required("Please verify astrologer aadhar no."),
+  veri_acno:Yup.string().required("Please verify astrologer aadhar A/c no."),
+  veri_photo:Yup.string().required("Please verify astrologer photo"),
+  veri_pancard:Yup.string().required("Please verify astrologer pancard"),
+  veri_aadharfront:Yup.string().required("Please verify astrologer aadhar front"),
+  veri_aadharback:Yup.string().required("Please verify astrologer aadhar back"),
+  veri_certificate:Yup.string().required("Please verify astrologer certificate"),
+  veri_biodata:Yup.string().required("Please verify astrologer biodata"),
+  final_veri:Yup.string().required("Please choose final step")
+})
 export {
   PersonalValidationSchema,
   AstrologerOtpSchema,
   SkillDetailsSchema,
   AdditionalDetailsSchema,
   BankDetailsSchema,
-  UploadDocumentsSchema
+  UploadDocumentsSchema,
+  VerifyAstrologer
 };

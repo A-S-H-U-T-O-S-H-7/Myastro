@@ -12,20 +12,24 @@ function AdminLogin() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState("");
+  const [errorEmail, setErrorEmail] = React.useState("");
+  const [errorPassword, setErrorPassword] = React.useState("");
   const [loader, setLoader] = React.useState(false);
 
   const dispatch = useDispatch();
-  const { isAdminAuthenticated, adminDetails,adminToken } = useSelector((state) => state.admin);
-  useEffect(()=>{
-    if(isAdminAuthenticated){
+  const { isAdminAuthenticated, adminDetails, adminToken } = useSelector((state) => state.admin);
+  useEffect(() => {
+    if (isAdminAuthenticated) {
       router.replace('/admin/dashboard');
-    }else{
+    } else {
       router.replace("/admin-login/login");
     }
-  },[])
+  }, [])
   const handelSubmit = async (e) => {
     e.preventDefault();
     if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) && password != "") {
+      setErrorEmail("");
+      setErrorPassword("");
       try {
         setLoader(true);
         setError("");
@@ -44,7 +48,7 @@ function AdminLogin() {
         const result = await response.json();
 
         if (response.ok) {
-          dispatch(loginAdmin({admin:result?.admin, token: result?.token}));
+          dispatch(loginAdmin({ admin: result?.admin, token: result?.token }));
           localStorage.setItem("myastro-token", result?.token)
           setLoader(false);
           router.push('/admin/dashboard');
@@ -59,14 +63,19 @@ function AdminLogin() {
       }
 
     } else {
-      setError("Invalid Email or Password");
+      if (email === "") {
+        setErrorEmail("Email is required");
+      }
+     if (password === "") {
+        setErrorPassword("Password is required");
+      }
       setLoader(false);
-    }
 
+    }
   }
   return (
     <div className="min-h-screen px-[10px] flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-800">
-      <div className="w-full max-w-md px-6 py-8 bg-gray-900 rounded-xl shadow-lg">
+      <div className="w-full max-w-md px-6 border  border-3 border-[#A855F7] py-8 bg-gray-900 rounded-xl shadow-lg">
         {/* Header */}
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-purple-500 mb-2">Myastro</h1>
@@ -77,7 +86,7 @@ function AdminLogin() {
         </div>
 
         {/* Login Form */}
-        
+
         <form className="space-y-6" onSubmit={(e) => { handelSubmit(e) }}>
           {/* Email */}
           <div>
@@ -94,6 +103,7 @@ function AdminLogin() {
               placeholder="Enter your email"
               className="w-full mt-2 px-4 py-2 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
             />
+            {errorEmail && <span className='text-red-600 font-normal mt-1'>{errorEmail}</span>}
           </div>
 
           {/* Password */}
@@ -111,8 +121,9 @@ function AdminLogin() {
               placeholder="Enter your password"
               className="w-full mt-2 px-4 py-2 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
             />
+            {errorPassword && <span className='text-red-600 font-normal mt-1'>{errorPassword}</span>}
           </div>
-        
+
           {/* Login Button */}
           <div>
             <button
