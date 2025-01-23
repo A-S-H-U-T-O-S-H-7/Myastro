@@ -4,34 +4,42 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 const CreatePooja = () => {
-  const [benefits, setBenefits] = useState(["", "", "", ""]);
-  const [howItHappens, setHowItHappens] = useState(["", "", "", ""]);
-  const [aboutPooja, setAboutPooja] = useState(["", "", "", ""]);
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setUploadedImage(reader.result); 
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   // Yup Validation Schema
   const validationSchema = Yup.object().shape({
-    poojaName: Yup.string().required("Pooja Name is required"),
+    poojaName: Yup.string().required("Title is required"),
     dateOfPooja: Yup.string().required("Date of Pooja is required"),
+    price: Yup.number()
+      .required("Price is required")
+      .positive("Price must be a positive number"),
+    discount: Yup.number()
+      .required("Discount is required")
+      .min(0, "Discount cannot be negative")
+      .max(100, "Discount cannot exceed 100%"),
     description: Yup.string().required("Description is required"),
-    benefits: Yup.array()
-      .of(Yup.string().required("Benefit cannot be blank"))
-      .required(),
-    howItHappens: Yup.array()
-      .of(Yup.string().required("Step cannot be blank"))
-      .required(),
-    aboutPooja: Yup.array()
-      .of(Yup.string().required("Point cannot be blank"))
-      .required(),
+    content: Yup.string().required("Content is required"),
   });
 
   // Form Initial Values
   const initialValues = {
     poojaName: "",
     dateOfPooja: "",
+    price: "",
+    discount: "",
     description: "",
-    benefits: benefits,
-    howItHappens: howItHappens,
-    aboutPooja: aboutPooja,
+    content: "",
   };
 
   // Form Submit Handler
@@ -59,43 +67,61 @@ const CreatePooja = () => {
               {/* Pooja Photo */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  Pooja Photo
+                  Thumbnail
                 </label>
-                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600">
-                  <div className="space-y-1 text-center">
-                    <svg
-                      className="mx-auto h-12 w-12 text-gray-400"
-                      stroke="currentColor"
-                      fill="none"
-                      viewBox="0 0 48 48"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <div className="flex text-sm text-gray-600 dark:text-gray-400">
-                      <label className="relative cursor-pointer font-medium text-purple-600 dark:text-cyan-400 hover:text-purple-500 dark:hover:text-cyan-300">
-                        Upload a file
-                        <input type="file" className="sr-only" accept="image/*" />
-                      </label>
-                      <p className="pl-1">or drag and drop</p>
-                    </div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      PNG, JPG, GIF up to 10MB
-                    </p>
-                  </div>
-                </div>
+                <div className="space-y-4 border border-dashed border-gray-800 dark:border-gray-300 py-4 px-4 rounded-md text-center">
+      {!uploadedImage ? (
+        <>
+          <svg
+            className="mx-auto h-12 w-12 text-gray-400"
+            stroke="currentColor"
+            fill="none"
+            viewBox="0 0 48 48"
+            aria-hidden="true"
+          >
+            <path
+              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <div className="flex justify-center text-sm text-gray-400">
+            <label className="relative cursor-pointer border px-4 py-1 rounded-md bg-purple-500 dark:bg-cyan-400  font-medium text-white dark:text-black hover:text-black-300">
+              Upload a file
+              <input
+                type="file"
+                className="sr-only"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            </label>
+          </div>
+          <p className="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
+        </>
+      ) : (
+        <div className="mt-4">
+          <img
+            src={uploadedImage}
+            alt="Uploaded"
+            className="mx-auto h-40 w-auto rounded-lg border border-gray-300"
+          />
+          <button
+            onClick={() => setUploadedImage(null)}
+            className="mt-2 text-sm text-cyan-400 hover:text-cyan-300"
+          >
+            Upload another file
+          </button>
+        </div>
+      )}
+    </div>
               </div>
 
               {/* Pooja Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    Pooja Name
+                    Title
                   </label>
                   <Field
                     name="poojaName"
@@ -125,6 +151,42 @@ const CreatePooja = () => {
                     className="text-red-500 text-sm"
                   />
                 </div>
+
+                {/* Price */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    Price (₹)
+                  </label>
+                  <Field
+                    name="price"
+                    type="number"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-cyan-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    placeholder="Enter price"
+                  />
+                  <ErrorMessage
+                    name="price"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
+
+                {/* Discount */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    Discount (%)
+                  </label>
+                  <Field
+                    name="discount"
+                    type="number"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-cyan-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    placeholder="Enter discount percentage"
+                  />
+                  <ErrorMessage
+                    name="discount"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
               </div>
 
               {/* Description */}
@@ -146,70 +208,23 @@ const CreatePooja = () => {
                 />
               </div>
 
-              {/* Benefits */}
-              <div className="space-y-4">
+              {/* Content */}
+              <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  Benefits
+                  Content
                 </label>
-                {values.benefits.map((benefit, index) => (
-                  <div key={index} className="space-y-2">
-                    <Field
-                      name={`benefits[${index}]`}
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-cyan-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                      placeholder={`Benefit ${index + 1}`}
-                    />
-                    <ErrorMessage
-                      name={`benefits[${index}]`}
-                      component="div"
-                      className="text-red-500 text-sm"
-                    />
-                  </div>
-                ))}
-              </div>
-
-              {/* How It Happens */}
-              <div className="space-y-4">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  How Will It Happen
-                </label>
-                {values.howItHappens.map((step, index) => (
-                  <div key={index} className="space-y-2">
-                    <Field
-                      name={`howItHappens[${index}]`}
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-cyan-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                      placeholder={`Step ${index + 1}`}
-                    />
-                    <ErrorMessage
-                      name={`howItHappens[${index}]`}
-                      component="div"
-                      className="text-red-500 text-sm"
-                    />
-                  </div>
-                ))}
-              </div>
-
-              {/* About Pooja */}
-              <div className="space-y-4">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  About This Pooja
-                </label>
-                {values.aboutPooja.map((point, index) => (
-                  <div key={index} className="space-y-2">
-                    <Field
-                      name={`aboutPooja[${index}]`}
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-cyan-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                      placeholder={`Point ${index + 1}`}
-                    />
-                    <ErrorMessage
-                      name={`aboutPooja[${index}]`}
-                      component="div"
-                      className="text-red-500 text-sm"
-                    />
-                  </div>
-                ))}
+                <Field
+                  as="textarea"
+                  name="content"
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-cyan-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  placeholder="Enter pooja content"
+                />
+                <ErrorMessage
+                  name="content"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
               {/* Submit Button */}

@@ -1,10 +1,10 @@
-import AdminLogin from '@/components/AdminLogin'
+import ApprovedPoojas from '@/components/Admin/ApprovedPoojas'
 import React from 'react'
 
 function page() {
   return (
     <div>
-      <AdminLogin/>
+      <ApprovedPoojas/>
     </div>
   )
 }

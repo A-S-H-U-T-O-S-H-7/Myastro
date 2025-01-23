@@ -1,10 +1,10 @@
-import PoojaDetails from '@/components/Admin/PoojaDetails'
+import EditPoojaRequest from '@/components/Admin/EditPoojaRequest'
 import React from 'react'
 
 function page() {
   return (
     <div>
-      <PoojaDetails/>
+      <EditPoojaRequest/>
     </div>
   )
 }
