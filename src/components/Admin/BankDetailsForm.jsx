@@ -107,7 +107,7 @@ const BankDetailsForm = ({ initialValues, activeTab, setActiveTab, astrologerid 
                 className="w-full  bg-[#1b2e4b] text-[#22c7d5]  rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#22c7d5] "
               >
                 <option value="">--Choose Account Type--</option>
-                <option value="Savings">Savings</option>
+                <option value="saving">Saving</option>
                 <option value="Current">Current</option>
               </Field>
               <ErrorMessage

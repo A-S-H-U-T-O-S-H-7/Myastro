@@ -3,7 +3,7 @@ import WorkInProgress from '@/components/Admin/WorkInProgress'
 
 function page() {
   return (
-    <div>
+    <div className='h-screen'>
       <WorkInProgress/>
     </div>
   )

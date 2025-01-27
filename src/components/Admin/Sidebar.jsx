@@ -46,9 +46,6 @@ const Sidebar = () => {
     { icon: <FaUser className="text-xl" />, label: "Users", link: "/admin/manageuser" },
     { icon: <FaWallet className="text-xl" />, label: "Transactions", link: "/admin/managetransactions" },
     { icon: <FaPhoneAlt className="text-xl" />, label: "Calls Report", link: "/admin/callreport" },
-
-   
-
     { icon: <FaCommentDots className="text-xl" />, label: "Chats Report", link: "/admin/chatreport" },
     { icon: <FaShoppingBag className="text-xl" />, label: "Orders", link: "/admin/orders" },
     { icon: <FaWallet className="text-xl" />, label: "Astrologer Wallet", link: "/admin/astrologerwallet" },
@@ -64,17 +61,8 @@ const Sidebar = () => {
         { label: "Manage Posts", link: "/admin/manage-posts" },
       ],
     },
-    {
-      icon: <PiFlowerLotusDuotone className="text-xl" />,
-      label: "Poojas",
-      dropdownKey: "Poojas",
-      subItems: [
-        { label: "Pending Poojas", link: "/admin/pending-poojas" },
-        { label: "Approved Poojas", link: "/admin/approved-poojas" },
-        { label: "Rejected Poojas", link: "/admin/rejected-poojas" },
-      ],
-    },
-   
+    { icon: <PiFlowerLotusDuotone className="text-xl" />, label: "Poojas", link: "/admin/pooja-request" },
+
   ];
 
   return (

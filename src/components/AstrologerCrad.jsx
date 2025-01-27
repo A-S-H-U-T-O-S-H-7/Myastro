@@ -20,6 +20,7 @@ const AstrologerCard = ({ data }) => {
   const { selectAstrologersData } = useSelector((state) => state.astrologers);
   const { isAuthenticated, popup, details, userToken } = useSelector((state) => state.user);
   const [callStatus, setCallStatus] = useState(false);
+  const [chatStatus,setChatStatus] = useState(false);
 
   const handleSelectAstrologer = useCallback(
     debounce((astrologer) => {
@@ -72,8 +73,48 @@ const AstrologerCard = ({ data }) => {
       setCallStatus(false);
     }
   };
+  const handleChat = async (astrologer) => {
 
- console.log(details)
+    if (!isAuthenticated) {
+      dispatch(showLoginPopup());
+      return;
+    }
+
+    if (chatStatus) {
+      toast.warning(`Already making a chat to ${astrologer?.username}`);
+      return;
+    }
+
+    const walletAmount = details?.wallet_amount || 0;
+    const requiredAmount = 100;
+
+    if (walletAmount >= requiredAmount) {
+      const chat = await fetch(`${ENV.API_URL}/user/user-connect-chat-astrologer`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}`,
+          "Accept": 'application/json'
+        },
+        body: JSON.stringify({
+          astrologerId: astrologer.id,
+          totalamount: requiredAmount
+        }),
+      });
+      const response = await chat.json();
+      if (response.status === true) {
+        toast.success(`Chatting ${response?.message}`);
+        setChatStatus(true);
+      } else {
+        toast.error(`Failed to Chatting ${astrologer?.username}`);
+        setChatStatus(false);
+      }
+
+    } else {
+      toast.error(`Please recharge, your wallet must have at least ${requiredAmount} to make a chat.`);
+      setChatStatus(false);
+    }
+  };
   return (
     <div
       className="min-w-[360px] h-[174px] px-[12px] py-[8px] bg-gray-100 hover:shadow-2xl transition-shadow duration-300 shadow-md hover:shadow-[#542875] rounded-lg flex border "
@@ -149,7 +190,9 @@ const AstrologerCard = ({ data }) => {
             )}
             {/* Hide "Chat Now" button on /call-with-astrologer */}
             {pathname !== "/talk-to-astrologer" && (
-              <button className="px-1  w-full justify-center font-semibold  py-2 gap-2 border hover:bg-[#317F7F] hover:text-white hover:border-[#317F7F] border-[#317F7F] text-[#317F7F] text-xs flex items-center rounded-md">
+              <button className="px-1  w-full justify-center font-semibold  py-2 gap-2 border hover:bg-[#317F7F] hover:text-white hover:border-[#317F7F] border-[#317F7F] text-[#317F7F] text-xs flex items-center rounded-md"
+                onClick={() => { handleChat(data) }}
+              >
                 <IoChatbox size={15} />
                 Chat Now
               </button>

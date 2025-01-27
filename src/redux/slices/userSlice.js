@@ -5,7 +5,7 @@ const initialState = {
   loading: false,
   popup: false,
   details: {},
-  userToken:""
+  userToken: "",
 };
 
 const userSlice = createSlice({
@@ -25,6 +25,7 @@ const userSlice = createSlice({
       state.popup = false;
     },
     loginSuccess(state, action) {
+      console.log(action);
       state.loading = false;
       state.isAuthenticated = true;
       state.popup = false;

@@ -118,7 +118,7 @@ const UserSignup = () => {
       {popup && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-[100]">
           {/* Popup container */}
-          <div className="relative bg-white w-full max-w-md rounded-lg shadow-lg p-6">
+          <div className="relative bg-white w-full max-w-md rounded-lg border-2 border-[#3C0184] shadow-lg p-6">
             {/* Close Button */}
             <button
               className="absolute top-4 right-4 text-gray-600 text-xl focus:outline-none"

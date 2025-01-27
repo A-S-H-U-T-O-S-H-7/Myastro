@@ -1,11 +1,11 @@
 import PaymentSection from '@/components/PaymentSection'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const page = () => {
   return (
-    <div>
-      <PaymentSection/> 
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentSection />
+    </Suspense>
   )
 }
 
