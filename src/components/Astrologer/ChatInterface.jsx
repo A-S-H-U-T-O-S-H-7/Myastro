@@ -57,6 +57,7 @@ const ChatInterface = () => {
   };
 
   return (
+    <div className="h-screen">
     <div className="flex flex-col rounded-md ml-[100px] md:ml-[120px] mr-[15px] my-[10px] h-[480px] bg-[#0e1726] text-[#888ea8]">
       <div className="flex h-full rounded-md overflow-hidden">
         {/* Sidebar */}
@@ -184,6 +185,7 @@ const ChatInterface = () => {
           </footer>
         </div>
       </div>
+    </div>
     </div>
   );
 };

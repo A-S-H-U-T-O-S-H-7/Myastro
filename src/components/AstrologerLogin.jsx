@@ -221,7 +221,7 @@ export default function AstrologerLogin() {
               </p>
               <p className="text-gray-500 mt-2 text-center text-sm">
                 Don’t have an account?{" "}
-                <a href="/signup" className="text-purple-500 underline">
+                <a href="/astrologer-registration" className="text-purple-500 underline">
                   Sign Up
                 </a>
               </p>
@@ -245,7 +245,7 @@ export default function AstrologerLogin() {
                     className="w-8 h-8 lg:w-12 lg:h-12 border-2 border-indigo-400 text-center rounded text-gray-700 shadow focus:outline-none focus:border-purple-500"
                     onInput={(e) => handleOtpInput(e, index)}
                     onKeyDown={(e) => handleBackspace(e, index)}
-                    onKeyUp={handleEnterKey}
+                    
                   />
                 ))}
               </div>
