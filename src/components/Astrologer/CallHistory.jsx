@@ -22,6 +22,7 @@ const CallHistory = () => {
 
   const fetchCalls = async () => {
     setLoader(true);
+   
     try {
       const queryParams = new URLSearchParams({
         page,
@@ -38,14 +39,14 @@ const CallHistory = () => {
         {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("myastro-token")}`,
+            Authorization:`Bearer ${localStorage.getItem("myastro-token")}`,
             "Content-Type": "application/json",
             
           },
         }
         
       );
-      console.log(localStorage.getItem("myastro-token")); 
+      console.log('token:',localStorage.getItem("myastro-token")); 
       console.log("Response status:", response.status);
 
 
@@ -157,14 +158,13 @@ const CallHistory = () => {
                   <td className="px-6 py-2 text-center">{item.date}</td>
                   <td className="px-6 text-center py-2">{item.name}</td>
                   <td className="px-6 text-center py-2">{item.name}</td>
-                  <td className="px-6 text-center py-2">{item.callStart}</td>
-                  <td className="px-6 text-center py-2">{item.callEnd}</td>
-                  <td className="px-6 text-center py-2">
-                    {calculateDuration(item.callStart, item.callEnd)}
+                  <td className="px-6 text-center py-2">{item.call_start}</td>
+                  <td className="px-6 text-center py-2">{item.call_end}</td>
+                  <td className="px-6 text-center py-2">{item.duration}
                   </td>
                   <td className="px-6 text-center py-2">{item.status}</td>
 
-                  <td className="px-6 py-2 text-center">{item.walletAmount}</td>
+                  <td className="px-6 py-2 text-center">{item.amounts}</td>
                 </tr>
               ))}
             </tbody>

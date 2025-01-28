@@ -153,14 +153,14 @@ function PaymentSection() {
               <LuIndianRupee size={15} /> {plan.amount * 18 / 100}/-
             </p>
           </div>
-          <div className="flex justify-between px-[10px]">
+          {/* <div className="flex justify-between px-[10px]">
             <p className="font-sans font-semibold text-[#198754]">
               Extra Bonus
             </p>
             <p className="font-sans font-semibold text-[#198754] flex items-center">
               <LuIndianRupee size={15} /> {plan.offer}/-
             </p>
-          </div>
+          </div> */}
           <div className="flex justify-between px-[10px]">
             <p className="font-sans font-semibold text-[#e58a5c]">
               Total Amount
@@ -171,7 +171,7 @@ function PaymentSection() {
           </div>
 
           {/* Gift Box */}
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <div className="w-auto lg:w-[520px] min-h-[75px] px-2 flex rounded-[6px] border justify-center border-dashed border-[#198754]">
               <Image src="/gift.png" width={50} height={50} alt="gift" />
               <div className="flex items-center justify-center">
@@ -184,7 +184,7 @@ function PaymentSection() {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Payment Button */}
           <div className="flex justify-center">
